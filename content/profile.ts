@@ -1,10 +1,15 @@
+import type { L10n } from "@/lib/i18n";
+
 export const profile = {
   name: "Alif Suryadi",
   nameJa: "アリフ・スルヤディ",
   role: "Full-Stack Developer & Machine Learning Enthusiast",
   shortRole: "Full-Stack Developer",
   location: "Indonesia",
-  bio: "Self-taught Full-Stack Developer yang membangun teknologi yang memberi nilai dan membantu orang mencapai tujuannya. Sejak 2022 membantu pemilik bisnis lokal membuat website yang menarik, aksesibel, dan cepat. Aktif mendalami Machine Learning untuk memperkuat proyek-proyeknya.",
+  bio: {
+    en: "Self-taught Full-Stack Developer who builds technology that creates value and helps people reach their goals. Since 2022 I've been helping local business owners launch websites that look great, stay accessible and load fast. I'm actively diving into Machine Learning to make my projects even stronger.",
+    id: "Self-taught Full-Stack Developer yang membangun teknologi yang memberi nilai dan membantu orang mencapai tujuannya. Sejak 2022 membantu pemilik bisnis lokal membuat website yang menarik, aksesibel, dan cepat. Aktif mendalami Machine Learning untuk memperkuat proyek-proyeknya.",
+  } satisfies L10n,
   email: "alifsuryadi037@gmail.com",
   github: "https://github.com/alifsuryadi",
   linkedin: "https://www.linkedin.com/in/alifsuryadi/",

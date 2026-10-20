@@ -1,8 +1,17 @@
 import { sectionTitles, type SectionId } from "@/content/japanese-phrases";
+import type { Lang } from "@/lib/i18n";
 import { DecodeText } from "./DecodeText";
 
 /** Vertical Japanese section marker on the screen edge. Decorative. */
-export function SectionTitle({ id, side = "left" }: { id: SectionId; side?: "left" | "right" }) {
+export function SectionTitle({
+  id,
+  side = "left",
+  lang,
+}: {
+  id: SectionId;
+  side?: "left" | "right";
+  lang: Lang;
+}) {
   const t = sectionTitles[id];
   return (
     <div
@@ -21,7 +30,7 @@ export function SectionTitle({ id, side = "left" }: { id: SectionId; side?: "lef
         className="vertical-jp text-muted text-[0.7rem] tracking-[0.3em]"
         style={{ textOrientation: "mixed" }}
       >
-        {t.translation.toUpperCase()}
+        {t.translation[lang].toUpperCase()}
       </span>
     </div>
   );

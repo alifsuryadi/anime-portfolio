@@ -5,6 +5,7 @@ import { gsap } from "@/lib/gsap";
 import { bus } from "@/lib/scroll-state";
 import { useQuality } from "@/components/QualityProvider";
 import { ChibiArt } from "./ChibiArt";
+import { useT } from "@/components/LangProvider";
 
 const MAX_WAIT = 3200;
 
@@ -14,13 +15,16 @@ const MAX_WAIT = 3200;
  */
 export function LoadingScreen() {
   const { quality, setReady } = useQuality();
+  const t = useT();
   const [pct, setPct] = useState(0);
   const [gone, setGone] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const chibi = useRef<HTMLDivElement>(null);
+  const done = useRef(false);
 
   useEffect(() => {
-    if (quality === null) return;
+    // Finish exactly once, even if the quality mode changes mid-load.
+    if (quality === null || done.current) return;
     const flags = {
       fonts: false,
       load: document.readyState === "complete",
@@ -38,6 +42,7 @@ export function LoadingScreen() {
 
     const finish = () => {
       finished = true;
+      done.current = true;
       document.documentElement.dataset.loaded = "true";
       setReady(true);
       const reduced = quality === "static";
@@ -101,7 +106,7 @@ export function LoadingScreen() {
       className="loader text-paper fixed inset-0 z-[100]"
       role="status"
       aria-live="polite"
-      aria-label={`Memuat halaman, ${pct}%`}
+      aria-label={`${t("loading")}, ${pct}%`}
     >
       <div data-loader-panel="top" className="bg-ink absolute inset-x-0 top-0 h-1/2" />
       <div data-loader-panel="bottom" className="bg-ink absolute inset-x-0 bottom-0 h-1/2">

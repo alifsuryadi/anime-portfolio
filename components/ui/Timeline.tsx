@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import type { Station } from "@/content/experience";
+import { useLang, useT } from "@/components/LangProvider";
 
 const LINE = ["var(--sakura)", "var(--neon-cyan)", "var(--sunset)", "#B48CFF", "var(--paper)"];
 
@@ -12,6 +13,8 @@ const LINE = ["var(--sakura)", "var(--neon-cyan)", "var(--sunset)", "#B48CFF", "
  */
 export function Timeline({ stations }: { stations: Station[] }) {
   const ref = useRef<HTMLOListElement>(null);
+  const lang = useLang();
+  const t = useT();
 
   useGSAP(
     () => {
@@ -111,7 +114,7 @@ export function Timeline({ stations }: { stations: Station[] }) {
                   {s.stationJa}
                 </span>
                 <span className="text-muted text-xs tracking-[0.25em] uppercase">
-                  {s.station} station
+                  {s.station} {t("station")}
                 </span>
               </p>
               <div
@@ -120,11 +123,11 @@ export function Timeline({ stations }: { stations: Station[] }) {
               >
                 <h3 className="font-display text-xl md:text-2xl">{s.title}</h3>
                 <p className="text-cyan mt-1 text-sm">
-                  {s.org}
-                  {s.period ? <span className="text-muted"> · {s.period}</span> : null}
+                  {s.org[lang]}
+                  {s.period ? <span className="text-muted"> · {s.period[lang]}</span> : null}
                 </p>
                 <ul className="text-paper/90 mt-3 list-none space-y-1.5">
-                  {s.points.map((pt) => (
+                  {s.points[lang].map((pt) => (
                     <li
                       key={pt}
                       className="before:bg-sakura relative pl-5 before:absolute before:top-[0.6em] before:left-0 before:size-2 before:rotate-45"

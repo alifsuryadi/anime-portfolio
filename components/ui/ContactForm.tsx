@@ -3,24 +3,23 @@
 import { useState } from "react";
 import { z } from "zod";
 import { profile } from "@/content/profile";
+import { useT } from "@/components/LangProvider";
 
-const schema = z.object({
-  name: z.string().trim().min(2, "Nama minimal 2 karakter."),
-  email: z.string().trim().email("Format email belum benar."),
-  message: z
-    .string()
-    .trim()
-    .min(10, "Pesan minimal 10 karakter.")
-    .max(2000, "Pesan maksimal 2000 karakter."),
-});
+const makeSchema = (t: ReturnType<typeof useT>) =>
+  z.object({
+    name: z.string().trim().min(2, t("errName")),
+    email: z.string().trim().email(t("errEmail")),
+    message: z.string().trim().min(10, t("errMessageShort")).max(2000, t("errMessageLong")),
+  });
 
-type Fields = z.infer<typeof schema>;
+type Fields = z.infer<ReturnType<typeof makeSchema>>;
 type Errors = Partial<Record<keyof Fields, string>>;
 
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
 
 /** Contact form validated with Zod. Sends via Formspree when configured, otherwise opens a prefilled email. */
 export function ContactForm() {
+  const t = useT();
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -29,7 +28,7 @@ export function ContactForm() {
     const form = e.currentTarget;
     const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
     if (data.website) return; // honeypot
-    const parsed = schema.safeParse(data);
+    const parsed = makeSchema(t).safeParse(data);
     if (!parsed.success) {
       const next: Errors = {};
       for (const issue of parsed.error.issues)
@@ -44,7 +43,7 @@ export function ContactForm() {
       const body = encodeURIComponent(
         `${parsed.data.message}\n\n— ${parsed.data.name} (${parsed.data.email})`,
       );
-      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(`Halo Alif, dari ${parsed.data.name}`)}&body=${body}`;
+      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(`${t("mailSubject")} ${parsed.data.name}`)}&body=${body}`;
       setStatus("sent");
       return;
     }
@@ -71,7 +70,7 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="name" className="mb-1.5 block text-sm font-semibold">
-            Nama{" "}
+            {t("formName")}{" "}
             <span lang="ja" aria-hidden="true" className="font-jp text-muted">
               名前
             </span>
@@ -115,7 +114,7 @@ export function ContactForm() {
       </div>
       <div>
         <label htmlFor="message" className="mb-1.5 block text-sm font-semibold">
-          Pesan{" "}
+          {t("formMessage")}{" "}
           <span lang="ja" aria-hidden="true" className="font-jp text-muted">
             メッセージ
           </span>
@@ -144,18 +143,16 @@ export function ContactForm() {
       />
       <div className="flex flex-wrap items-center gap-4">
         <button type="submit" className="btn-neon" data-magnetic disabled={status === "sending"}>
-          {status === "sending" ? "Mengirim…" : "Kirim pesan"}{" "}
+          {status === "sending" ? t("formSending") : t("formSend")}{" "}
           <span aria-hidden="true" lang="ja" className="font-jp">
             送信
           </span>
         </button>
         <p id="form-status" role="status" className="text-sm">
-          {status === "sent" && (
-            <span className="text-cyan">Terima kasih! Pesanmu sudah terkirim. ありがとう!</span>
-          )}
+          {status === "sent" && <span className="text-cyan">{t("formSent")}</span>}
           {status === "error" && (
             <span className="text-sakura">
-              Gagal mengirim. Coba lagi, atau email langsung ke{" "}
+              {t("formError")}{" "}
               <a className="underline" href={`mailto:${profile.email}`}>
                 {profile.email}
               </a>

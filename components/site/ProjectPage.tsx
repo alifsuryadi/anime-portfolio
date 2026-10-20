@@ -4,54 +4,61 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProject, projects } from "@/content/projects";
 import { profile } from "@/content/profile";
-import { jsonLdString, projectJsonLd, siteUrl } from "@/lib/seo";
+import { localePath, ogLocale, translate, type Lang } from "@/lib/i18n";
+import { alternates, jsonLdString, projectJsonLd, siteUrl } from "@/lib/seo";
 import { DecodeText } from "@/components/anim/DecodeText";
 
-type Params = { slug: string };
+export const projectParams = () => projects.map((p) => ({ slug: p.slug }));
 
-export const dynamicParams = false;
-
-export function generateStaticParams(): Params[] {
-  return projects.map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { slug } = await params;
+export function projectMetadata(slug: string, lang: Lang): Metadata {
   const p = getProject(slug);
   if (!p) return {};
   const title = `${p.name}: ${p.role}`;
+  const path = `/projects/${p.slug}`;
   return {
     title,
-    description: p.summary,
-    alternates: { canonical: `/projects/${p.slug}` },
+    description: p.summary[lang],
+    alternates: alternates(lang, path),
     openGraph: {
       type: "article",
-      url: `/projects/${p.slug}`,
+      locale: ogLocale[lang],
+      url: localePath(lang, path),
       title: `${title} | ${profile.name}`,
-      description: p.summary,
+      description: p.summary[lang],
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${profile.name}`,
-      description: p.summary,
+      description: p.summary[lang],
     },
   };
 }
 
-export default async function ProjectPage({ params }: { params: Promise<Params> }) {
-  const { slug } = await params;
+export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
   const p = getProject(slug);
   if (!p) notFound();
+  const t = translate(lang);
   const i = projects.findIndex((x) => x.slug === p.slug);
   const prev = projects[(i - 1 + projects.length) % projects.length];
   const next = projects[(i + 1) % projects.length];
+  const href = (path: string) => localePath(lang, path);
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Beranda", item: `${siteUrl}/` },
-      { "@type": "ListItem", position: 2, name: "Karya", item: `${siteUrl}/#projects` },
-      { "@type": "ListItem", position: 3, name: p.name, item: `${siteUrl}/projects/${p.slug}` },
+      { "@type": "ListItem", position: 1, name: t("crumbHome"), item: `${siteUrl}${href("/")}` },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: t("crumbWork"),
+        item: `${siteUrl}${href("/#projects")}`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: p.name,
+        item: `${siteUrl}${href(`/projects/${p.slug}`)}`,
+      },
     ],
   };
 
@@ -59,7 +66,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: jsonLdString(projectJsonLd(p)) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdString(projectJsonLd(p, lang)) }}
       />
       <script
         type="application/ld+json"
@@ -67,17 +74,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       />
       <main id="main" data-scene="detail" className="relative z-10 px-4 pt-28 pb-24 md:px-8">
         <article className="mx-auto max-w-5xl">
-          <nav aria-label="Breadcrumb" className="text-muted text-sm">
+          <nav aria-label={t("breadcrumb")} className="text-muted text-sm">
             <ol className="flex flex-wrap gap-2">
               <li>
-                <Link href="/" className="hover:text-cyan">
-                  Beranda
+                <Link href={href("/")} className="hover:text-cyan">
+                  {t("crumbHome")}
                 </Link>{" "}
                 /
               </li>
               <li>
-                <Link href="/#projects" className="hover:text-cyan">
-                  Karya
+                <Link href={href("/#projects")} className="hover:text-cyan">
+                  {t("crumbWork")}
                 </Link>{" "}
                 /
               </li>
@@ -101,7 +108,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           <div className="border-paper bg-paper relative mt-10 aspect-[16/9] overflow-hidden border-4 shadow-[12px_12px_0_var(--sakura)]">
             <Image
               src={p.image}
-              alt={p.imageAlt}
+              alt={p.imageAlt[lang]}
               fill
               priority
               sizes="(min-width: 1024px) 64rem, 100vw"
@@ -111,8 +118,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
           <div className="mt-12 grid gap-10 md:grid-cols-12">
             <div className="bg-ink/70 text-paper/90 space-y-4 rounded-sm text-lg leading-relaxed backdrop-blur-sm md:col-span-8">
-              <p className="text-paper font-semibold">{p.summary}</p>
-              {p.description.map((d) => (
+              <p className="text-paper font-semibold">{p.summary[lang]}</p>
+              {p.description[lang].map((d) => (
                 <p key={d}>{d}</p>
               ))}
             </div>
@@ -134,8 +141,8 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     className="btn-neon"
                     data-magnetic
                   >
-                    Lihat live <span aria-hidden="true">↗</span>
-                    <span className="sr-only">(tab baru)</span>
+                    {t("viewLive")} <span aria-hidden="true">↗</span>
+                    <span className="sr-only">{t("newTab")}</span>
                   </a>
                 )}
                 <a
@@ -145,31 +152,31 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                   className="btn-neon btn-neon--cyan"
                   data-magnetic
                 >
-                  Repository GitHub <span aria-hidden="true">↗</span>
-                  <span className="sr-only">(tab baru)</span>
+                  {t("repo")} <span aria-hidden="true">↗</span>
+                  <span className="sr-only">{t("newTab")}</span>
                 </a>
               </div>
             </aside>
           </div>
 
           <nav
-            aria-label="Proyek lain"
+            aria-label={t("otherProjects")}
             className="border-line mt-20 grid gap-4 border-t pt-8 sm:grid-cols-2"
           >
             <Link
-              href={`/projects/${prev.slug}`}
+              href={href(`/projects/${prev.slug}`)}
               className="group border-line hover:border-sakura border-2 p-5"
             >
-              <span className="text-muted text-xs">← Sebelumnya</span>
+              <span className="text-muted text-xs">{t("prev")}</span>
               <span className="font-display group-hover:text-sakura mt-1 block text-2xl">
                 {prev.name}
               </span>
             </Link>
             <Link
-              href={`/projects/${next.slug}`}
+              href={href(`/projects/${next.slug}`)}
               className="group border-line hover:border-cyan border-2 p-5 text-right"
             >
-              <span className="text-muted text-xs">Berikutnya →</span>
+              <span className="text-muted text-xs">{t("next")}</span>
               <span className="font-display group-hover:text-cyan mt-1 block text-2xl">
                 {next.name}
               </span>

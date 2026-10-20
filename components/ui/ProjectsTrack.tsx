@@ -6,6 +6,8 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenis";
 import type { Project } from "@/content/projects";
+import { localePath } from "@/lib/i18n";
+import { useLang, useT } from "@/components/LangProvider";
 
 const SFX = ["ドン!", "ゴゴゴ", "バーン", "シュッ", "キラッ"];
 const CLIPS = [
@@ -29,6 +31,8 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
   const wrap = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const st = useRef<ScrollTrigger | null>(null);
+  const lang = useLang();
+  const t = useT();
 
   useGSAP(
     () => {
@@ -110,14 +114,13 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
             作品集
           </span>
           <h2 id="projects-title" className="heading-section relative max-w-[10ch]">
-            Karya pilihan
+            {t("projectsTitle")}
           </h2>
           <p className="relative max-w-xs text-base font-medium">
-            {projects.length} chapter, dari AI finansial sampai marketplace. Arahkan kursor ke panel
-            untuk mewarnainya, klik untuk membaca ceritanya.
+            {projects.length} {t("projectsIntro")}
           </p>
           <span aria-hidden="true" className="font-display relative hidden text-sm md:block">
-            GULIR →
+            {t("projectsScroll")}
           </span>
         </div>
 
@@ -130,7 +133,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
               className="panel group relative h-[62svh] min-h-[22rem] w-[82vw] shrink-0 snap-center md:w-[min(46vw,40rem)]"
             >
               <Link
-                href={`/projects/${p.slug}`}
+                href={localePath(lang, `/projects/${p.slug}`)}
                 data-cursor="project"
                 className="bg-ink flex h-full flex-col p-1.5 outline-offset-8"
                 style={{ clipPath: CLIPS[i % CLIPS.length] }}
@@ -138,7 +141,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
                 <div className="bg-paper relative flex-1 overflow-hidden">
                   <Image
                     src={p.image}
-                    alt={p.imageAlt}
+                    alt={p.imageAlt[lang]}
                     fill
                     sizes="(min-width: 768px) 46vw, 82vw"
                     className="manga-img object-cover object-top"
@@ -171,7 +174,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
                     <h3 className="font-display mt-1 text-2xl leading-none md:text-3xl">
                       {p.name}
                     </h3>
-                    <p className="mt-2 line-clamp-2 max-w-md text-sm">{p.summary}</p>
+                    <p className="mt-2 line-clamp-2 max-w-md text-sm">{p.summary[lang]}</p>
                   </div>
                   <span
                     aria-hidden="true"

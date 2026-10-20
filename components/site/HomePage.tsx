@@ -1,3 +1,4 @@
+import type { Lang } from "@/lib/i18n";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Skills } from "@/components/sections/Skills";
@@ -6,16 +7,16 @@ import { Experience } from "@/components/sections/Experience";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
-export default function Home() {
+export function HomePage({ lang }: { lang: Lang }) {
   return (
     <>
       <main id="main" className="relative z-10">
-        <Hero />
-        <About />
-        <Skills />
+        <Hero lang={lang} />
+        <About lang={lang} />
+        <Skills lang={lang} />
         <Projects />
-        <Experience />
-        <Contact />
+        <Experience lang={lang} />
+        <Contact lang={lang} />
       </main>
       <Footer />
     </>

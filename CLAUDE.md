@@ -3,6 +3,8 @@
 Portfolio Alif Suryadi, "Neo-Tokyo at Dusk". Next.js 15 App Router (SSG) + R3F. Full context in `README.md`.
 
 ## Rules
+
+- Bilingual: English is the default at `/`, Indonesian at `/id`. Every UI string goes in `dict` (`lib/i18n.ts`) with both `en` and `id`; content uses `L10n` values. Never hard-code copy in components.
 - All page text must be in the SSG HTML. Three.js only loads via `dynamic(..., { ssr: false })` inside the single global `<Canvas>` (`components/three/Scene.tsx`). Never add a second canvas.
 - Never read `window`/`localStorage` during render; use `useEffect`. Per-frame values go through `lib/scroll-state.ts` (mutable, no React state).
 - Choreography (pose, expression, camera per section) lives only in `lib/scenes.config.ts`. Sections opt in with `data-scene="<id>"`.
@@ -12,4 +14,5 @@ Portfolio Alif Suryadi, "Neo-Tokyo at Dusk". Next.js 15 App Router (SSG) + R3F. 
 - Content lives in `content/*.ts`. Don't invent experience dates or employers.
 
 ## Commands
+
 `npm run dev` · `npm run build` · `npm run lint` · `npm run typecheck` · `npm run fonts` · `npm run icons`

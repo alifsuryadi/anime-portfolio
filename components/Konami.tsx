@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useQuality } from "./QualityProvider";
+import { useT } from "./LangProvider";
 
 const CODE = [
   "ArrowUp",
@@ -19,6 +20,7 @@ const CODE = [
 /** Easter egg: the Konami code toggles chibi mode. */
 export function Konami() {
   const { chibi, setChibi } = useQuality();
+  const t = useT();
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,12 +31,12 @@ export function Konami() {
       if (i === CODE.length) {
         i = 0;
         setChibi(!chibi);
-        setToast(!chibi ? "ちびモード ON! Mode chibi aktif" : "ちびモード OFF");
+        setToast(!chibi ? t("chibiOn") : "ちびモード OFF");
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [chibi, setChibi]);
+  }, [chibi, setChibi, t]);
 
   useEffect(() => {
     if (!toast) return;

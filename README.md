@@ -20,22 +20,35 @@ npm run typecheck
 
 Variabel lingkungan (lihat `.env.example`):
 
-| Nama | Fungsi |
-|---|---|
-| `NEXT_PUBLIC_SITE_URL` | URL kanonis (canonical, sitemap, OG, JSON-LD). Di Vercel otomatis jatuh ke `VERCEL_PROJECT_PRODUCTION_URL`. |
-| `NEXT_PUBLIC_FORMSPREE_ID` | ID form Formspree. Kalau kosong, form kontak membuka email yang sudah terisi (mailto). |
+| Nama                       | Fungsi                                                                                                      |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`     | URL kanonis (canonical, sitemap, OG, JSON-LD). Di Vercel otomatis jatuh ke `VERCEL_PROJECT_PRODUCTION_URL`. |
+| `NEXT_PUBLIC_FORMSPREE_ID` | ID form Formspree. Kalau kosong, form kontak membuka email yang sudah terisi (mailto).                      |
 
 Deploy: import repo ini di Vercel, tanpa konfigurasi tambahan. Set `NEXT_PUBLIC_SITE_URL`
 ke domain final supaya canonical dan sitemap benar.
 
+## Dua bahasa (EN / ID)
+
+English adalah bahasa default di `/`, Bahasa Indonesia di `/id` (termasuk `/id/projects/<slug>`).
+Tiap bahasa punya root layout sendiri (`app/(en)` dan `app/(id)`) supaya `<html lang>`,
+metadata, Open Graph locale, dan JSON-LD sesuai. Semua halaman memasang `hreflang`
+(`en`, `id`, `x-default`), dan sitemap memuat kedua versi beserta alternatifnya.
+
+- Teks UI ada di `dict` dalam `lib/i18n.ts` (selalu isi `en` dan `id`).
+- Konten di `content/*.ts` memakai nilai `L10n` (`{ en, id }`).
+- Komponen server memakai `translate(lang)`, komponen client memakai `useT()` / `useLang()`.
+- Tombol **EN / ID** di navbar pindah ke halaman yang sama di bahasa lain, termasuk section yang sedang dibuka.
+
 ## Arsitektur
 
 ```
-app/                layout (font, metadata, JSON-LD), page, projects/[slug] (SSG),
-                    opengraph-image (next/og), sitemap, robots, manifest, ikon
+app/                (en)/ dan (id)/id/: root layout per bahasa, page, projects/[slug] (SSG),
+                    opengraph-image (next/og), 404; plus sitemap, robots, manifest, ikon
 components/
+  site/             RootDocument, HomePage, ProjectPage, NotFoundPage (dipakai kedua bahasa)
   three/            Scene (satu <Canvas> global), CameraRig, Character (VRM / chibi),
-                    ChibiModel, VrmModel, SakuraField, SkillOrbs, Torii, Rooftop,
+                    ChibiModel, faceTextures (mata/mulut/blush anime), VrmModel, SakuraField, SkillOrbs, Torii, Rooftop,
                     Skyline, Sky, ShootingStars, Effects, choreo.ts (driver pose)
   anim/             KanjiScramble, DecodeText, SplitText, CursorFollower,
                     SectionTransition, SectionTitle, Backdrop
@@ -43,7 +56,7 @@ components/
   ui/               Navbar, LoadingScreen, TiltCard, SkillTree, ProjectsTrack,
                     Timeline, ContactForm, StatBars, ChibiArt, StaticCharacter
 content/            profile, projects, skills, experience, japanese-phrases
-lib/                scenes.config.ts, gsap, lenis, quality, scroll-state, seo, og
+lib/                i18n, scenes.config.ts, gsap, lenis, quality, scroll-state, seo, og, fonts
 assets/             subset font (dibuat oleh `npm run fonts`)
 public/             projects/, models/, sequences/, CV, ikon
 ```
@@ -52,7 +65,7 @@ Alur data:
 
 1. `SmoothScroll` menjalankan Lenis yang tersinkron dengan ScrollTrigger, lalu menulis
    progres scroll ke `scrollState` (objek mutable, tidak memicu render React).
-2. Setiap elemen `data-scene="…"` adalah satu *key*. `scrollState.sectionFloat` (mis. `2.4`
+2. Setiap elemen `data-scene="…"` adalah satu _key_. `scrollState.sectionFloat` (mis. `2.4`
    = 40% dari section 2 ke 3) dipakai `CameraRig` dan `CharacterDriver` untuk mem-blend
    kamera, posisi, pose, dan ekspresi dari `lib/scenes.config.ts`.
 3. Canvas WebGL dimuat dengan `dynamic(..., { ssr: false })` setelah browser idle, jadi
@@ -60,25 +73,27 @@ Alur data:
 
 ### Mode kualitas
 
-| Mode | Kapan | Isi |
-|---|---|---|
-| High | Desktop dengan GPU | Semua efek: bloom, chromatic aberration (naik saat scroll cepat), vignette, grain, 500 kelopak sakura |
-| Low | HP / layar sempit / CPU atau RAM kecil, atau `PerformanceMonitor` mendeteksi FPS turun | Tanpa post-processing, ±160 kelopak |
-| Static | `prefers-reduced-motion`, tombol "Animasi" dimatikan, tidak ada WebGL, atau renderer software (tanpa GPU) | Tanpa canvas: ilustrasi chibi 2D, transisi dan teks decode dimatikan |
+| Mode   | Kapan                                                                                                     | Isi                                                                                                   |
+| ------ | --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| High   | Desktop dengan GPU                                                                                        | Semua efek: bloom, chromatic aberration (naik saat scroll cepat), vignette, grain, 500 kelopak sakura |
+| Low    | HP / layar sempit / CPU atau RAM kecil, atau `PerformanceMonitor` mendeteksi FPS turun                    | Tanpa post-processing, ±160 kelopak                                                                   |
+| Static | `prefers-reduced-motion`, tombol "Animasi" dimatikan, tidak ada WebGL, atau renderer software (tanpa GPU) | Tanpa canvas: ilustrasi chibi 2D, transisi dan teks decode dimatikan                                  |
 
-Tombol **Animasi** di navbar menyimpan pilihan pengguna di `localStorage`.
+Tombol **Animasi** di navbar menyimpan pilihan pengguna di `localStorage`. Untuk menguji
+mode tertentu di perangkat apa pun, tambahkan `?quality=high`, `?quality=low`, atau
+`?quality=static` ke URL.
 
 ## Konsep tiap section
 
-| Section | Momen interaktif |
-|---|---|
-| Hero 始まり | Karakter di tengah rooftop, langit senja shader (matahari bergaris, awan fbm). Huruf nama "melompat" saat disentuh kursor, `KanjiScramble` men-decode peran, scroll indicator berbentuk kunai. |
-| About 自己紹介 | Karakter pindah ke kanan dan melambai. Kartu profil karakter (SSR, kelas "Full-Stack Mage", stat bar) miring 3D mengikuti kursor dengan kilau holo. |
-| Skills 技術 | Pose "cast", orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi. |
-| Projects 作品 | Halaman manga kertas, panel horizontal yang di-pin. Hover: halftone hitam-putih jadi berwarna + distorsi (SVG displacement). Masuk/keluar dengan panel wipe. Canvas di-pause selama halaman kertas menutupi layar. |
-| Experience 経験 | Timeline jalur kereta Tokyo: kereta mini berjalan ikut scroll dan menyalakan stasiun. Karakter berjalan menyamping, langkahnya mengikuti kecepatan scroll. |
-| Contact 連絡 | Karakter menghadap kamera dan tersenyum dengan balon "お待ちしています!". Form tervalidasi Zod, tombol magnetic, link sosial efek glitch. |
-| Footer 終わり | Malam: kamera menghadap torii, karakter bersorak. Klik langit untuk bintang jatuh, gerakkan kursor untuk meniup sakura, ありがとう men-decode, tombol kembali-ke-atas berbentuk kunai. Easter egg: Konami code → mode chibi. |
+| Section         | Momen interaktif                                                                                                                                                                                                             |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hero 始まり     | Karakter di tengah rooftop, langit senja shader (matahari bergaris, awan fbm). Huruf nama "melompat" saat disentuh kursor, `KanjiScramble` men-decode peran, scroll indicator berbentuk kunai.                               |
+| About 自己紹介  | Karakter pindah ke kanan dan melambai. Kartu profil karakter (SSR, kelas "Full-Stack Mage", stat bar) miring 3D mengikuti kursor dengan kilau holo.                                                                          |
+| Skills 技術     | Pose "cast", orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi.                                                                            |
+| Projects 作品   | Halaman manga kertas, panel horizontal yang di-pin. Hover: halftone hitam-putih jadi berwarna + distorsi (SVG displacement). Masuk/keluar dengan panel wipe. Canvas di-pause selama halaman kertas menutupi layar.           |
+| Experience 経験 | Timeline jalur kereta Tokyo: kereta mini berjalan ikut scroll dan menyalakan stasiun. Karakter berjalan menyamping, langkahnya mengikuti kecepatan scroll.                                                                   |
+| Contact 連絡    | Karakter menghadap kamera dan tersenyum dengan balon "お待ちしています!". Form tervalidasi Zod, tombol magnetic, link sosial efek glitch.                                                                                    |
+| Footer 終わり   | Malam: kamera menghadap torii, karakter bersorak. Klik langit untuk bintang jatuh, gerakkan kursor untuk meniup sakura, ありがとう men-decode, tombol kembali-ke-atas berbentuk kunai. Easter egg: Konami code → mode chibi. |
 
 Global: cursor titik + hitodama (roh api kecil bermata) dengan pegas dan jejak kelopak
 sakura. Kursor membesar dengan 見る di atas link, jadi lingkaran panah di atas panel proyek,
@@ -88,7 +103,11 @@ section: ledakan speed lines + flash singkat saat scroll cepat.
 ## Mengganti karakter (VRM)
 
 Sekarang situs memakai **karakter chibi prosedural** (`components/three/ChibiModel.tsx`),
-desain original yang dibangun dari primitif three.js dengan rig yang sama seperti VRM.
+desain original bergaya moe: rambut lavender dengan twin tail dan pita sakura, headphone
+telinga kucing, mata besar berkilau, mulut "ω", hoodie kebesaran, dan rok lipit. Wajahnya
+digambar sebagai tekstur canvas di `components/three/faceTextures.ts` (ganti warna iris,
+bentuk mulut, atau blush di sana), dan rig-nya sama seperti VRM. Ilustrasi 2D yang sama
+ada di `components/ui/ChibiArt.tsx`. Jangan memakai karakter anime berhak cipta.
 Untuk memakai model VRM:
 
 1. Buat karakter original di [VRoid Studio](https://vroid.com/en/studio) (atau pakai model
@@ -152,10 +171,10 @@ yang terlihat atau teks `sr-only`.
 Lighthouse (build produksi, Chromium headless di container tanpa GPU, jadi diukur dalam
 mode Static):
 
-| | Performance | Accessibility | Best Practices | SEO |
-|---|---|---|---|---|
-| Mobile | 94 | 100 | 100 | 100 |
-| Desktop | 100 | 100 | 100 | 100 |
+|         | Performance | Accessibility | Best Practices | SEO |
+| ------- | ----------- | ------------- | -------------- | --- |
+| Mobile  | 94          | 100           | 100            | 100 |
+| Desktop | 100         | 100           | 100            | 100 |
 
 Belum diuji: mode High/Low di GPU sungguhan, Safari, Firefox, dan HP kelas menengah.
 Jalankan Lighthouse sekali lagi di perangkat nyata setelah deploy.

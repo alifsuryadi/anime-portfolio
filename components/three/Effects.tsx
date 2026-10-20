@@ -28,8 +28,8 @@ export function Effects() {
     <EffectComposer multisampling={0}>
       <Bloom
         mipmapBlur
-        intensity={0.85}
-        luminanceThreshold={0.62}
+        intensity={0.7}
+        luminanceThreshold={0.9}
         luminanceSmoothing={0.25}
         radius={0.7}
       />

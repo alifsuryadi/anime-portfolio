@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { profile } from "@/content/profile";
 import type { Project } from "@/content/projects";
+import { localePath, ogLocale, schemaLang, type L10n, type Lang } from "@/lib/i18n";
 
 function resolveSiteUrl() {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
@@ -11,9 +13,14 @@ function resolveSiteUrl() {
 
 export const siteUrl = resolveSiteUrl();
 
-export const siteTitle = `${profile.name} | Full-Stack Developer Indonesia`;
-export const siteDescription =
-  "Portfolio Alif Suryadi, Full-Stack Developer & Machine Learning Enthusiast dari Indonesia. Membangun website dan aplikasi yang cepat, aksesibel, dan berbasis AI dengan React, Next.js, Go, Flutter, dan TensorFlow.";
+export const siteTitle: L10n = {
+  en: `${profile.name} | Full-Stack Developer from Indonesia`,
+  id: `${profile.name} | Full-Stack Developer Indonesia`,
+};
+export const siteDescription: L10n = {
+  en: "Portfolio of Alif Suryadi, a Full-Stack Developer & Machine Learning Enthusiast from Indonesia. Fast, accessible, AI-powered websites and apps built with React, Next.js, Go, Flutter and TensorFlow.",
+  id: "Portfolio Alif Suryadi, Full-Stack Developer & Machine Learning Enthusiast dari Indonesia. Membangun website dan aplikasi yang cepat, aksesibel, dan berbasis AI dengan React, Next.js, Go, Flutter, dan TensorFlow.",
+};
 
 export const keywords = [
   "Alif Suryadi",
@@ -26,14 +33,58 @@ export const keywords = [
   "Portfolio",
 ];
 
-export function personJsonLd() {
+/** hreflang alternates for a locale-neutral path like "/" or "/projects/x". */
+export function alternates(lang: Lang, path: string): Metadata["alternates"] {
+  return {
+    canonical: localePath(lang, path),
+    languages: {
+      en: localePath("en", path),
+      id: localePath("id", path),
+      "x-default": localePath("en", path),
+    },
+  };
+}
+
+export function siteMetadata(lang: Lang): Metadata {
+  return {
+    metadataBase: new URL(siteUrl),
+    title: { default: siteTitle[lang], template: `%s | ${profile.name}` },
+    description: siteDescription[lang],
+    keywords,
+    authors: [{ name: profile.name, url: siteUrl }],
+    creator: profile.name,
+    alternates: alternates(lang, "/"),
+    openGraph: {
+      type: "website",
+      locale: ogLocale[lang],
+      alternateLocale: lang === "en" ? ogLocale.id : ogLocale.en,
+      url: localePath(lang, "/"),
+      siteName: `${profile.name} Portfolio`,
+      title: siteTitle[lang],
+      description: siteDescription[lang],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteTitle[lang],
+      description: siteDescription[lang],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+    formatDetection: { telephone: false },
+  };
+}
+
+export function personJsonLd(lang: Lang) {
   return {
     "@type": "Person",
     "@id": `${siteUrl}/#person`,
     name: profile.name,
     alternateName: profile.nameJa,
     jobTitle: profile.role,
-    description: profile.bio,
+    description: profile.bio[lang],
     email: `mailto:${profile.email}`,
     url: siteUrl,
     image: `${siteUrl}${profile.photo}`,
@@ -51,36 +102,37 @@ export function personJsonLd() {
   };
 }
 
-export function siteJsonLd() {
+export function siteJsonLd(lang: Lang) {
   return {
     "@context": "https://schema.org",
     "@graph": [
-      personJsonLd(),
+      personJsonLd(lang),
       {
         "@type": "WebSite",
         "@id": `${siteUrl}/#website`,
         url: siteUrl,
         name: `${profile.name} Portfolio`,
-        inLanguage: "id-ID",
+        inLanguage: ["en-US", "id-ID"],
         author: { "@id": `${siteUrl}/#person` },
       },
     ],
   };
 }
 
-export function projectJsonLd(project: Project) {
+export function projectJsonLd(project: Project, lang: Lang) {
+  const url = `${siteUrl}${localePath(lang, `/projects/${project.slug}`)}`;
   return {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    "@id": `${siteUrl}/projects/${project.slug}#work`,
+    "@id": `${url}#work`,
     name: project.name,
-    description: project.summary,
-    url: `${siteUrl}/projects/${project.slug}`,
+    description: project.summary[lang],
+    url,
     image: `${siteUrl}${project.image}`,
-    inLanguage: "id-ID",
+    inLanguage: schemaLang[lang],
     keywords: project.stack.join(", "),
-    creator: { "@type": "Person", name: profile.name, url: siteUrl },
-    ...(project.live ? { sameAs: [project.live, project.repo] } : { sameAs: [project.repo] }),
+    creator: { "@id": `${siteUrl}/#person` },
+    sameAs: project.live ? [project.live, project.repo] : [project.repo],
   };
 }
 

@@ -3,7 +3,7 @@ import { getProject, projects } from "@/content/projects";
 
 export const size = ogSize;
 export const contentType = "image/png";
-export const alt = "Proyek Alif Suryadi";
+export const alt = "Alif Suryadi project";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));

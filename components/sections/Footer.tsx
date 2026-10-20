@@ -8,10 +8,14 @@ import { bus } from "@/lib/scroll-state";
 import { profile, socials } from "@/content/profile";
 import { DecodeText } from "@/components/anim/DecodeText";
 import { useQuality } from "@/components/QualityProvider";
+import { useLang, useT } from "@/components/LangProvider";
+import { localePath } from "@/lib/i18n";
 
 /** Final scene: night sky over the rooftop torii. Click the sky for shooting stars. */
 export function Footer() {
   const { quality } = useQuality();
+  const t = useT();
+  const lang = useLang();
   const kunai = useRef<HTMLSpanElement>(null);
   const sky = useRef<HTMLButtonElement>(null);
 
@@ -65,7 +69,7 @@ export function Footer() {
         className="relative flex-1 overflow-hidden text-left"
       >
         <span className="text-muted absolute top-24 left-1/2 w-max max-w-[90vw] -translate-x-1/2 text-center text-xs tracking-[0.3em] uppercase">
-          Klik langit untuk bintang jatuh · tiup sakura dengan kursor
+          {t("footerHint")}
         </span>
         {quality === "static" && <StaticTorii />}
       </button>
@@ -81,12 +85,12 @@ export function Footer() {
               className="font-jp text-paper block text-[18vw] leading-none font-bold md:text-[12vw]"
             />
             <span className="text-muted mt-2 block text-sm tracking-[0.3em] uppercase">
-              Arigatō · Terima kasih sudah mampir
+              {t("thanks")}
             </span>
           </p>
 
           <div className="border-line mt-12 flex flex-col items-center justify-between gap-8 border-t pt-8 md:flex-row">
-            <nav aria-label="Tautan footer">
+            <nav aria-label={t("footerLinks")}>
               <ul className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
                 {socials.map((s) => (
                   <li key={s.label}>
@@ -107,8 +111,8 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <Link href="/#projects" className="hover:text-cyan">
-                    Karya
+                  <Link href={localePath(lang, "/#projects")} className="hover:text-cyan">
+                    {t("navProjects")}
                   </Link>
                 </li>
               </ul>
@@ -130,12 +134,12 @@ export function Footer() {
                   <path d="M10 27 L17 36 L10 58 L3 36 Z" fill="var(--paper)" />
                 </svg>
               </span>
-              Kembali ke atas
+              {t("backToTop")}
             </button>
 
             <p className="text-muted text-center text-xs">
               © <span suppressHydrationWarning>{new Date().getFullYear()}</span> {profile.name}.
-              Dibuat dengan Next.js & Three.js.
+              {t("madeWith")}
               <br />
               <span className="opacity-70">Psst… ↑ ↑ ↓ ↓ ← → ← → B A</span>
             </p>

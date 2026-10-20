@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { skillGroups, skills, type SkillGroup } from "@/content/skills";
 import { bus } from "@/lib/scroll-state";
+import { useLang, useT } from "@/components/LangProvider";
 
 const GROUPS = Object.keys(skillGroups) as SkillGroup[];
 const ACCENT: Record<SkillGroup, string> = {
@@ -21,6 +22,8 @@ export function SkillTree() {
   const [hover, setHover] = useState<{ g: SkillGroup; i: number } | null>(null);
   const [open, setOpen] = useState<string | null>(null);
   const root = useRef<HTMLDivElement>(null);
+  const lang = useLang();
+  const t = useT();
 
   useEffect(() => {
     bus.emit("skill-hover", hover?.g ?? null);
@@ -51,7 +54,7 @@ export function SkillTree() {
         return (
           <section
             key={g}
-            aria-label={skillGroups[g].label}
+            aria-label={skillGroups[g].label[lang]}
             className="relative flex flex-col items-start"
             style={{ ["--c" as string]: color }}
           >
@@ -68,7 +71,7 @@ export function SkillTree() {
               >
                 {skillGroups[g].jp}
               </span>
-              <h3 className="text-sm font-bold tracking-wide">{skillGroups[g].label}</h3>
+              <h3 className="text-sm font-bold tracking-wide">{skillGroups[g].label[lang]}</h3>
             </div>
             <ul className="mt-1 ml-6 flex flex-col">
               {list.map((s, i) => {
@@ -113,7 +116,7 @@ export function SkillTree() {
                     <div
                       id={id}
                       role="region"
-                      aria-label={`Tentang ${s.name}`}
+                      aria-label={`${t("skillAbout")} ${s.name}`}
                       hidden={!isOpen}
                       className="bg-ink text-paper absolute top-full left-2 z-20 mt-1 w-56 border-2 p-3 text-xs leading-relaxed shadow-[6px_6px_0_var(--c)]"
                       style={{ borderColor: color }}
@@ -121,7 +124,7 @@ export function SkillTree() {
                       <p className="mb-1 font-bold" style={{ color }}>
                         {s.name}
                       </p>
-                      {s.note}
+                      {s.note[lang]}
                     </div>
                   </li>
                 );

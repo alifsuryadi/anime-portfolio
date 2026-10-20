@@ -1,10 +1,12 @@
 import { backdropWords } from "@/content/japanese-phrases";
 import { profile, socials } from "@/content/profile";
+import { translate, type Lang } from "@/lib/i18n";
 import { SectionTitle } from "@/components/anim/SectionTitle";
 import { Backdrop } from "@/components/anim/Backdrop";
 import { ContactForm } from "@/components/ui/ContactForm";
 
-export function Contact() {
+export function Contact({ lang }: { lang: Lang }) {
+  const t = translate(lang);
   return (
     <section
       id="contact"
@@ -13,16 +15,13 @@ export function Contact() {
       className="relative px-4 py-28 md:px-8 md:py-40"
     >
       <Backdrop word={backdropWords.contact} />
-      <SectionTitle id="contact" />
+      <SectionTitle id="contact" lang={lang} />
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-12">
         <div className="lg:col-span-7">
           <h2 id="contact-title" className="heading-section">
-            Ayo bikin <span className="text-sakura">episode</span> berikutnya
+            {t("contactTitleA")} <span className="text-sakura">{t("contactTitleB")}</span>
           </h2>
-          <p className="text-paper/90 mt-6 max-w-xl text-lg">
-            Punya ide website, aplikasi, atau fitur AI? Ceritakan saja. Saya biasanya membalas dalam
-            1–2 hari.
-          </p>
+          <p className="text-paper/90 mt-6 max-w-xl text-lg">{t("contactIntro")}</p>
           <div className="border-paper bg-night/80 mt-10 border-2 p-5 shadow-[10px_10px_0_var(--neon-cyan)] backdrop-blur-sm md:p-8">
             <ContactForm />
           </div>
@@ -38,7 +37,7 @@ export function Contact() {
                 >
                   {s.label}
                   <span className="sr-only">
-                    {s.href.startsWith("http") ? " (tab baru)" : `: ${profile.email}`}
+                    {s.href.startsWith("http") ? t("newTab") : `: ${profile.email}`}
                   </span>
                 </a>
               </li>
@@ -54,7 +53,7 @@ export function Contact() {
             <p lang="ja" className="font-jp text-lg font-bold">
               お待ちしています!
             </p>
-            <p className="text-xs">Saya tunggu pesanmu!</p>
+            <p className="text-xs">{t("bubble")}</p>
             <span className="border-ink bg-paper absolute -bottom-3 left-8 size-5 rotate-45 border-r-2 border-b-2" />
           </div>
         </div>

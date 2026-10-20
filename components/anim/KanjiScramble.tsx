@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Phrase } from "@/content/japanese-phrases";
 import { useQuality } from "@/components/QualityProvider";
+import { useLang } from "@/components/LangProvider";
 import { useScramble } from "./useScramble";
 
 type Props = {
@@ -28,6 +29,7 @@ export function KanjiScramble({
   label,
 }: Props) {
   const { quality } = useQuality();
+  const lang = useLang();
   const [index, setIndex] = useState(0);
   const { text, run } = useScramble(phrases[0].ja);
   const root = useRef<HTMLDivElement>(null);
@@ -69,7 +71,8 @@ export function KanjiScramble({
         {label ? `${label}: ` : null}
         {phrases.map((p, i) => (
           <span key={p.ja}>
-            <span lang="ja">{p.ja}</span> ({p.translation}){i < phrases.length - 1 ? ", " : ""}
+            <span lang="ja">{p.ja}</span> ({p.translation[lang]})
+            {i < phrases.length - 1 ? ", " : ""}
           </span>
         ))}
       </p>
@@ -77,7 +80,7 @@ export function KanjiScramble({
         {text}
       </p>
       <p aria-hidden="true" className={translationClassName}>
-        {phrases[index].translation}
+        {phrases[index].translation[lang]}
       </p>
     </div>
   );
