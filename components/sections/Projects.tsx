@@ -6,6 +6,7 @@ export function Projects() {
     <section
       id="projects"
       data-scene="projects"
+      data-covers-canvas
       aria-labelledby="projects-title"
       className="bg-paper text-ink relative z-10"
     >

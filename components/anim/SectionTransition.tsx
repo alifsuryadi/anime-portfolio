@@ -26,8 +26,10 @@ export function SectionTransition() {
       if (now - lastAt < 700) return;
       lastAt = now;
       const fast = scrollState.energy > 0.35;
-      if (to === "projects" || from === "projects") {
-        const dir = to === "projects" ? 1 : -1;
+      // Paper pages (manga panels, gacha cards) get a page-wipe instead of speed lines.
+      const paper = (id: SceneId | null) => id === "projects" || id === "achievements";
+      if (paper(to) || paper(from)) {
+        const dir = paper(to) ? 1 : -1;
         gsap.fromTo(
           wipe.current,
           { xPercent: -110 * dir, skewX: -12, opacity: 1 },

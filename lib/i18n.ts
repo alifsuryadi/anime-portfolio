@@ -84,6 +84,14 @@ export const dict = {
     id: "Side quest sebelumnya, masing-masing punya halaman sendiri.",
   },
   earlierStops: { en: "Earlier stations", id: "Stasiun sebelumnya" },
+  eyecatchTbc: { en: "To be continued…", id: "Bersambung…" },
+  eyecatchNext: { en: "Next episode", id: "Episode berikutnya" },
+  gachaHint: {
+    en: "Ten cards in the deck. Tap one to reveal it, or open them all.",
+    id: "Ada sepuluh kartu di dek. Ketuk satu untuk membukanya, atau buka semuanya.",
+  },
+  revealAll: { en: "Reveal all", id: "Buka semua" },
+  shuffleBack: { en: "Shuffle back", id: "Tutup lagi" },
   skillsTitleA: { en: "Skill", id: "Pohon" },
   skillsTitleB: { en: "tree", id: "skill" },
   techStack: { en: "Tech stack", id: "Tech stack" },
@@ -106,8 +114,8 @@ export const dict = {
   achTitleA: { en: "Achievement", id: "Pencapaian" },
   achTitleB: { en: "unlocked", id: "terbuka" },
   achIntro: {
-    en: "The loot from the journey: a degree, an honor, three languages and ten certifications.",
-    id: "Hasil dari perjalanan ini: satu gelar, satu penghargaan, tiga bahasa, dan sepuluh sertifikasi.",
+    en: "The loot from the journey: a degree, an honor and three languages, plus a deck of certifications to pull.",
+    id: "Hasil dari perjalanan ini: satu gelar, satu penghargaan, dan tiga bahasa, plus satu dek sertifikasi untuk ditarik.",
   },
   aboutMore: {
     en: "Education, certifications & languages",

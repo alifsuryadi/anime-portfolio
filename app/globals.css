@@ -336,3 +336,42 @@ html[data-quality="static"] .grain,
 html[data-quality="static"] .scroll-kunai {
   animation: none;
 }
+
+/* ───────────────────────── Gacha cards ───────────────────────── */
+.gacha-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-snap);
+}
+.gacha-card[data-open="false"] .gacha-inner {
+  transform: rotateY(180deg);
+}
+.gacha-card:hover .gacha-inner,
+.gacha-card:focus-visible .gacha-inner {
+  translate: 0 -6px;
+}
+.gacha-face {
+  backface-visibility: hidden;
+}
+/* The front is the default (no-JS / reduced motion shows it); the back sits rotated. */
+.gacha-face[data-face="back"] {
+  transform: rotateY(180deg);
+}
+.gacha-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.65) 45%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: gacha-shine 2.4s ease-in-out infinite;
+  mix-blend-mode: soft-light;
+}
+@keyframes gacha-shine {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
