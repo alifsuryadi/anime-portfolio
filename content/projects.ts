@@ -63,12 +63,12 @@ export const projects: Project[] = [
       en: [
         "Biro Klasifikasi Indonesia (BKI) is Indonesia's national classification society, a state-owned enterprise that keeps ships and marine structures safe to internationally recognized standards.",
         "For the new BKI system I built the ship register and vessel lists, the ship status change workflow, certificate generation, and automatic email delivery, with scheduled cron jobs for the background work.",
-        "Built with Laravel on SQL Server, as a Fullstack Developer at PT Fox Global Intertech, supporting BKI's critical survey data management.",
+        "Built with Laravel on SQL Server, as a Fullstack Developer at PT Fox Global Intertech (Foxion), supporting BKI's critical survey data management.",
       ],
       id: [
         "Biro Klasifikasi Indonesia (BKI) adalah biro klasifikasi nasional Indonesia, BUMN yang menjaga keselamatan kapal dan struktur laut sesuai standar internasional.",
         "Untuk sistem BKI yang baru, saya membangun register dan daftar kapal, alur perubahan status kapal, pembuatan sertifikat, dan pengiriman email otomatis, dengan cron job terjadwal untuk proses di belakang layar.",
-        "Dibangun dengan Laravel dan SQL Server, sebagai Fullstack Developer di PT Fox Global Intertech, untuk mendukung pengelolaan data survei penting BKI.",
+        "Dibangun dengan Laravel dan SQL Server, sebagai Fullstack Developer di PT Fox Global Intertech (Foxion), untuk mendukung pengelolaan data survei penting BKI.",
       ],
     },
     stack: ["Laravel", "PHP", "SQL Server", "Cron jobs", "Email automation"],

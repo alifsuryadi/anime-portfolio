@@ -7,8 +7,8 @@ export const profile = {
   shortRole: "Full-Stack Engineer",
   location: "Indonesia",
   bio: {
-    en: "A results-driven Software Engineer with 3+ years of experience architecting, leading and developing full-stack applications and machine learning solutions. I build serverless backends (Node.js, Go), responsive frontends (React, Next.js) and AI/ML systems, on GCP and AWS with Docker and CI/CD. Today I'm a Fullstack Developer at PT Fox Global Intertech, building systems for Biro Klasifikasi Indonesia, and the founder & CEO of Livales.",
-    id: "Software Engineer berorientasi hasil dengan pengalaman 3+ tahun merancang, memimpin, dan mengembangkan aplikasi full-stack serta solusi machine learning. Saya membangun backend serverless (Node.js, Go), frontend responsif (React, Next.js), dan sistem AI/ML, di GCP dan AWS dengan Docker dan CI/CD. Kini saya Fullstack Developer di PT Fox Global Intertech, membangun sistem untuk Biro Klasifikasi Indonesia, sekaligus founder & CEO Livales.",
+    en: "A results-driven Software Engineer with 3+ years of experience architecting, leading and developing full-stack applications and machine learning solutions. I build serverless backends (Node.js, Go), responsive frontends (React, Next.js) and AI/ML systems, on GCP and AWS with Docker and CI/CD. Today I'm a Fullstack Developer at PT Fox Global Intertech (Foxion), building systems for Biro Klasifikasi Indonesia, and the founder & CEO of Livales.",
+    id: "Software Engineer berorientasi hasil dengan pengalaman 3+ tahun merancang, memimpin, dan mengembangkan aplikasi full-stack serta solusi machine learning. Saya membangun backend serverless (Node.js, Go), frontend responsif (React, Next.js), dan sistem AI/ML, di GCP dan AWS dengan Docker dan CI/CD. Kini saya Fullstack Developer di PT Fox Global Intertech (Foxion), membangun sistem untuk Biro Klasifikasi Indonesia, sekaligus founder & CEO Livales.",
   } satisfies L10n,
   bioExtra: {
     en: "Proven at leading projects and mentoring team members. Known for end-to-end project ownership, clean architecture and data-driven optimizations.",

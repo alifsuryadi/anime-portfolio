@@ -190,7 +190,7 @@ export const experience: Station[] = [
     station: "Kōwan",
     stationJa: "港湾駅",
     title: "Fullstack Developer",
-    org: "PT Fox Global Intertech",
+    org: "PT Fox Global Intertech (Foxion Technologies)",
     place: p("Jakarta (on-site)", "Jakarta (on-site)"),
     period: p("Jun 2025 – present", "Jun 2025 – sekarang"),
     points: {
