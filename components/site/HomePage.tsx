@@ -5,6 +5,7 @@ import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
 import { Achievements } from "@/components/sections/Achievements";
+import { Eyecatch } from "@/components/sections/Eyecatch";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 
@@ -17,6 +18,7 @@ export function HomePage({ lang }: { lang: Lang }) {
         <Skills lang={lang} />
         <Projects />
         <Experience lang={lang} />
+        <Eyecatch />
         <Achievements lang={lang} />
         <Contact lang={lang} />
       </main>

@@ -24,30 +24,33 @@ import { Effects } from "./Effects";
 /** Pauses rendering when the tab is hidden or the paper (projects) page fully covers the canvas. */
 function FrameGate({ pathname }: { pathname: string }) {
   const setFrameloop = useThree((s) => s.setFrameloop);
-  // The canvas outlives client navigations, so re-bind to the current page's
-  // #projects on every route change (and start rendering again meanwhile).
+  // Pause while an opaque full-screen section ([data-covers-canvas]) fills the
+  // viewport. The canvas outlives client navigations, so re-bind on every route.
   useEffect(() => {
-    let covered = false;
-    let st: ScrollTrigger | null = null;
-    const apply = () => setFrameloop(document.hidden || covered ? "never" : "always");
+    const active = new Set<Element>();
+    const triggers: ScrollTrigger[] = [];
+    const apply = () => setFrameloop(document.hidden || active.size > 0 ? "never" : "always");
     apply();
     const raf = requestAnimationFrame(() => {
-      const el = document.getElementById("projects");
-      if (!el) return;
-      st = ScrollTrigger.create({
-        trigger: el,
-        start: "top top",
-        end: "bottom bottom",
-        onToggle: (self) => {
-          covered = self.isActive;
-          apply();
-        },
+      document.querySelectorAll("[data-covers-canvas]").forEach((el) => {
+        triggers.push(
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top top",
+            end: "bottom bottom",
+            onToggle: (self) => {
+              if (self.isActive) active.add(el);
+              else active.delete(el);
+              apply();
+            },
+          }),
+        );
       });
     });
     document.addEventListener("visibilitychange", apply);
     return () => {
       cancelAnimationFrame(raf);
-      st?.kill();
+      triggers.forEach((t) => t.kill());
       document.removeEventListener("visibilitychange", apply);
       setFrameloop("always");
     };

@@ -36,7 +36,7 @@ export function RootDocument({ lang, children }: { lang: Lang; children: React.R
           {t("skip")}
         </a>
         <noscript>
-          <style>{`.loader{display:none!important}`}</style>
+          <style>{`.loader{display:none!important}.gacha-card .gacha-inner{transform:none!important}`}</style>
         </noscript>
         <LangProvider lang={lang}>
           <Providers>
