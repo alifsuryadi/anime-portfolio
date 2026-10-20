@@ -14,6 +14,8 @@ export type Project = {
   live?: string;
   image: string;
   imageAlt: L10n;
+  /** "contain" for device mockups that must not be cropped (default "cover"). */
+  imageFit?: "cover" | "contain";
   /** Accent colour token used by the manga panel. */
   accent: "sakura" | "cyan" | "sunset";
 };
@@ -73,10 +75,11 @@ export const projects: Project[] = [
     },
     stack: ["Laravel", "PHP", "SQL Server", "Cron jobs", "Email automation"],
     live: "https://new.bki.co.id/",
-    image: "/projects/bki.webp",
+    image: "/projects/bki-mockup.webp",
+    imageFit: "contain",
     imageAlt: {
-      en: "BKI ship monitoring dashboard with ship register totals and vessel status",
-      id: "Dashboard monitoring kapal BKI dengan total register kapal dan status kapal",
+      en: "BKI on laptop and phone: the ship monitoring dashboard and a change request detail screen",
+      id: "BKI di laptop dan HP: dashboard monitoring kapal dan layar detail permohonan",
     },
     accent: "cyan",
   },
@@ -101,10 +104,11 @@ export const projects: Project[] = [
     },
     stack: ["Laravel", "PHP", "PostgreSQL"],
     live: "https://sekalipay.com/",
-    image: "/projects/sekalipay.webp",
+    image: "/projects/sekalipay-mockup.webp",
+    imageFit: "contain",
     imageAlt: {
-      en: "Sekalipay home page with a reseller banner and flash sale",
-      id: "Beranda Sekalipay dengan banner reseller dan flash sale",
+      en: "Sekalipay on laptop and phone: the e-wallet and bank top-up home page and the premium apps catalogue",
+      id: "Sekalipay di laptop dan HP: beranda top up e-wallet dan bank serta katalog aplikasi premium",
     },
     accent: "sunset",
   },

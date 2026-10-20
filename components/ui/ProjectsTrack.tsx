@@ -144,7 +144,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
                     alt={p.imageAlt[lang]}
                     fill
                     sizes="(min-width: 768px) 46vw, 82vw"
-                    className="manga-img object-cover object-top"
+                    className={`manga-img ${p.imageFit === "contain" ? "object-contain p-4" : "object-cover object-top"}`}
                   />
                   <div aria-hidden="true" className="manga-dots halftone absolute inset-0" />
                   <span

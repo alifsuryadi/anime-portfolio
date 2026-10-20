@@ -112,7 +112,9 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
               fill
               priority
               sizes="(min-width: 1024px) 64rem, 100vw"
-              className="object-cover object-top"
+              className={
+                p.imageFit === "contain" ? "object-contain p-6" : "object-cover object-top"
+              }
             />
           </div>
 
