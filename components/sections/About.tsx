@@ -5,7 +5,6 @@ import { translate, type Lang } from "@/lib/i18n";
 import { SectionTitle } from "@/components/anim/SectionTitle";
 import { Backdrop } from "@/components/anim/Backdrop";
 import { TiltCard } from "@/components/ui/TiltCard";
-import { StatBars } from "@/components/ui/StatBars";
 
 export function About({ lang }: { lang: Lang }) {
   const t = translate(lang);
@@ -68,7 +67,40 @@ export function About({ lang }: { lang: Lang }) {
               </p>
             </div>
             <div className="border-line mt-4 border-t pt-4">
-              <StatBars stats={profile.stats} />
+              <dl className="space-y-2.5">
+                {profile.specialties.map((s, i) => (
+                  <div key={s.label}>
+                    <dt className="flex items-center gap-2 text-xs font-semibold">
+                      <span
+                        aria-hidden="true"
+                        className="size-2 rotate-45"
+                        style={{
+                          background: [
+                            "var(--sakura)",
+                            "var(--neon-cyan)",
+                            "var(--sunset)",
+                            "#B48CFF",
+                          ][i % 4],
+                        }}
+                      />
+                      {s.label}{" "}
+                      <span lang="ja" aria-hidden="true" className="font-jp text-muted">
+                        {s.jp}
+                      </span>
+                    </dt>
+                    <dd className="mt-1 flex flex-wrap gap-1.5 pl-4">
+                      {s.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="border-line bg-ink/80 border px-1.5 py-0.5 text-[0.7rem]"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </article>
         </TiltCard>

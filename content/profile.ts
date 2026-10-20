@@ -38,12 +38,12 @@ export const profile = {
   photo: "/profile.webp",
   /** RPG flavour for the character profile card. Edit freely. */
   characterClass: "Full-Stack Mage",
-  /** Stat bars on the profile card (0–100). These are self-assessments, edit to taste. */
-  stats: [
-    { label: "Frontend", jp: "前衛", value: 94 },
-    { label: "Backend", jp: "後衛", value: 92 },
-    { label: "Machine Learning", jp: "機械学習", value: 75 },
-    { label: "Cloud & DevOps", jp: "雲", value: 78 },
+  /** Specialties on the profile card: the tools actually used, no self-rated scores. */
+  specialties: [
+    { label: "Frontend", jp: "前衛", tools: ["React", "Next.js", "Flutter"] },
+    { label: "Backend", jp: "後衛", tools: ["Laravel", "Node.js", "Go"] },
+    { label: "Machine Learning", jp: "機械学習", tools: ["TensorFlow", "LLM", "NLP"] },
+    { label: "Cloud & DevOps", jp: "雲", tools: ["GCP", "AWS", "Docker"] },
   ],
   education: {
     school: "Universitas Putra Indonesia YPTK Padang",
