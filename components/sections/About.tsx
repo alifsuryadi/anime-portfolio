@@ -67,40 +67,32 @@ export function About({ lang }: { lang: Lang }) {
               </p>
             </div>
             <div className="border-line mt-4 border-t pt-4">
-              <dl className="space-y-2.5">
-                {profile.specialties.map((s, i) => (
-                  <div key={s.label}>
-                    <dt className="flex items-center gap-2 text-xs font-semibold">
-                      <span
-                        aria-hidden="true"
-                        className="size-2 rotate-45"
-                        style={{
-                          background: [
-                            "var(--sakura)",
-                            "var(--neon-cyan)",
-                            "var(--sunset)",
-                            "#B48CFF",
-                          ][i % 4],
-                        }}
-                      />
-                      {s.label}{" "}
-                      <span lang="ja" aria-hidden="true" className="font-jp text-muted">
-                        {s.jp}
-                      </span>
-                    </dt>
-                    <dd className="mt-1 flex flex-wrap gap-1.5 pl-4">
-                      {s.tools.map((tool) => (
-                        <span
-                          key={tool}
-                          className="border-line bg-ink/80 border px-1.5 py-0.5 text-[0.7rem]"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </dd>
-                  </div>
+              <p className="text-muted text-[0.65rem] font-bold tracking-widest uppercase">
+                {t("elements")}
+              </p>
+              <ul className="mt-2 grid grid-cols-2 gap-2">
+                {profile.elements.map((e) => (
+                  <li
+                    key={e.label}
+                    className="bg-ink/80 flex items-center gap-2.5 border p-2"
+                    style={{ borderColor: e.color }}
+                  >
+                    <span
+                      lang="ja"
+                      aria-hidden="true"
+                      className="font-jp grid size-8 shrink-0 place-items-center rounded-full border-2 text-xs font-bold"
+                      style={{
+                        borderColor: e.color,
+                        color: e.color,
+                        boxShadow: `0 0 10px ${e.color}`,
+                      }}
+                    >
+                      {e.jp}
+                    </span>
+                    <span className="text-xs leading-tight font-semibold">{e.label}</span>
+                  </li>
                 ))}
-              </dl>
+              </ul>
             </div>
           </article>
         </TiltCard>
