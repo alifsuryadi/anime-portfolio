@@ -67,6 +67,12 @@ export const skills: Skill[] = [
     "BKI's ship register, Sekalipay's affiliate system and a BUMN document system.",
     "Register kapal BKI, sistem affiliate Sekalipay, dan sistem dokumen BUMN.",
   ),
+  s(
+    "Tailwind CSS",
+    "web",
+    "Utility-first styling, from Naima's ESG platform to this site.",
+    "Styling utility-first, dari platform ESG Naima sampai situs ini.",
+  ),
   s("Node.js", "data", "JavaScript on the server.", "Runtime JavaScript di sisi server."),
   s(
     "Express.js",
@@ -79,6 +85,12 @@ export const skills: Skill[] = [
     "data",
     "Go HTTP framework for high-performance APIs.",
     "HTTP framework Go untuk API berperforma tinggi.",
+  ),
+  s(
+    "Flask",
+    "data",
+    "Python APIs for ML models, like the FinBoost chatbot.",
+    "API Python untuk model ML, seperti chatbot FinBoost.",
   ),
   s(
     "REST API",
@@ -119,8 +131,8 @@ export const skills: Skill[] = [
   s(
     "Docker",
     "ops",
-    "The same environment from laptop to server.",
-    "Lingkungan yang konsisten dari laptop sampai server.",
+    "Containerized services and blue-green deployments.",
+    "Service dalam container dan blue-green deployment.",
   ),
   s(
     "GCP",
@@ -129,13 +141,30 @@ export const skills: Skill[] = [
     "Cloud Functions serverless dan Cloud Storage (Studyo.io), deploy ML (FinBoost).",
   ),
   s(
+    "Cloud Run",
+    "ops",
+    "Serverless containers, e.g. the FinBoost chatbot service.",
+    "Container serverless, misalnya service chatbot FinBoost.",
+  ),
+  s(
     "AWS",
     "ops",
-    "Serverless architectures and Go back-ends.",
-    "Arsitektur serverless dan back-end Go.",
+    "Go microservices on ECS and serverless backends.",
+    "Microservice Go di ECS dan backend serverless.",
   ),
   s("Git", "ops", "Version control and team collaboration.", "Version control dan kolaborasi tim."),
-  s("CI/CD", "ops", "Automated build, test and deploy.", "Build, test, dan deploy otomatis."),
+  s(
+    "CI/CD",
+    "ops",
+    "GitHub Actions pipelines, e.g. at Naima Sustainability.",
+    "Pipeline GitHub Actions, misalnya di Naima Sustainability.",
+  ),
+  s(
+    "n8n",
+    "ops",
+    "Workflow automation without the glue code.",
+    "Otomasi workflow tanpa banyak kode perekat.",
+  ),
   s(
     "TensorFlow",
     "ml",
@@ -147,6 +176,12 @@ export const skills: Skill[] = [
     "ml",
     "Deep learning research and experiments.",
     "Riset dan eksperimen deep learning.",
+  ),
+  s(
+    "Hugging Face",
+    "ml",
+    "Pretrained models and NLP pipelines.",
+    "Model pretrained dan pipeline NLP.",
   ),
   s(
     "LLM (GenAI)",

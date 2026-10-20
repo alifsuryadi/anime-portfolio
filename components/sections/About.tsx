@@ -85,7 +85,9 @@ export function About({ lang }: { lang: Lang }) {
               <dd className="mt-1">
                 <span className="block font-semibold">{profile.education.degree[lang]}</span>
                 <span className="text-paper/80 block">{profile.education.school}</span>
-                <span className="text-muted block text-xs">{profile.education.period}</span>
+                <span className="text-muted block text-xs">
+                  {profile.education.period} · {profile.education.gpa}
+                </span>
               </dd>
             </div>
             <div className="border-sunset bg-ink/70 border-l-2 p-3 backdrop-blur-sm">
@@ -113,8 +115,8 @@ export function About({ lang }: { lang: Lang }) {
               <dd className="mt-2">
                 <ul className="flex flex-wrap gap-2">
                   {profile.certifications.map((c) => (
-                    <li key={c} className="chip">
-                      {c}
+                    <li key={c.name} className="chip" title={`${c.issuer}, ${c.date}`}>
+                      {c.name} <span className="text-muted">· {c.issuer}</span>
                     </li>
                   ))}
                 </ul>

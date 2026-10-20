@@ -7,12 +7,12 @@ export const profile = {
   shortRole: "Full-Stack Engineer",
   location: "Indonesia",
   bio: {
-    en: "Full-Stack & Machine Learning Engineer with 3+ years of hands-on experience turning ideas into production software. I design serverless architectures on AWS and GCP, build React and Next.js interfaces, and integrate NLP models such as GPT, LLaMA and BERT to create smart features for ed-tech, ESG and SaaS products. Today I'm a Full Stack Engineer at Foxion Technologies and the founder & CEO of Livales.",
-    id: "Full-Stack & Machine Learning Engineer dengan pengalaman 3+ tahun mengubah ide menjadi software siap produksi. Saya merancang arsitektur serverless di AWS dan GCP, membangun antarmuka React dan Next.js, serta mengintegrasikan model NLP seperti GPT, LLaMA, dan BERT untuk fitur cerdas di produk ed-tech, ESG, dan SaaS. Kini saya Full Stack Engineer di Foxion Technologies sekaligus founder & CEO Livales.",
+    en: "A results-driven Software Engineer with 3+ years of experience architecting, leading and developing full-stack applications and machine learning solutions. I build serverless backends (Node.js, Go), responsive frontends (React, Next.js) and AI/ML systems, on GCP and AWS with Docker and CI/CD. Today I'm a Fullstack Developer at PT Fox Global Intertech, building systems for Biro Klasifikasi Indonesia, and the founder & CEO of Livales.",
+    id: "Software Engineer berorientasi hasil dengan pengalaman 3+ tahun merancang, memimpin, dan mengembangkan aplikasi full-stack serta solusi machine learning. Saya membangun backend serverless (Node.js, Go), frontend responsif (React, Next.js), dan sistem AI/ML, di GCP dan AWS dengan Docker dan CI/CD. Kini saya Fullstack Developer di PT Fox Global Intertech, membangun sistem untuk Biro Klasifikasi Indonesia, sekaligus founder & CEO Livales.",
   } satisfies L10n,
   bioExtra: {
-    en: "I thrive in fast-moving teams where clean code, thoughtful UX and continuous learning drive the roadmap. Known for rapid prototyping, clear communication and mentoring junior developers.",
-    id: "Saya paling nyaman di tim yang bergerak cepat, di mana kode yang rapi, UX yang matang, dan belajar terus-menerus jadi arah kerja. Dikenal cepat membuat prototipe, berkomunikasi dengan jelas, dan senang membimbing developer junior.",
+    en: "Proven at leading projects and mentoring team members. Known for end-to-end project ownership, clean architecture and data-driven optimizations.",
+    id: "Terbiasa memimpin proyek dan membimbing anggota tim. Dikenal dengan kepemilikan proyek end-to-end, arsitektur yang rapi, dan optimasi berbasis data.",
   } satisfies L10n,
   email: "alifsuryadi037@gmail.com",
   github: "https://github.com/alifsuryadi",
@@ -23,18 +23,19 @@ export const profile = {
   characterClass: "Full-Stack Mage",
   /** Stat bars on the profile card (0–100). These are self-assessments, edit to taste. */
   stats: [
-    { label: "Frontend", jp: "前衛", value: 90 },
-    { label: "Backend", jp: "後衛", value: 88 },
+    { label: "Frontend", jp: "前衛", value: 94 },
+    { label: "Backend", jp: "後衛", value: 92 },
     { label: "Machine Learning", jp: "機械学習", value: 75 },
     { label: "Cloud & DevOps", jp: "雲", value: 78 },
   ],
   education: {
-    school: "Universitas Putra Indonesia YPTK",
+    school: "Universitas Putra Indonesia YPTK Padang",
     degree: {
-      en: "Bachelor's degree, Computer Science",
-      id: "Sarjana Ilmu Komputer",
+      en: "Bachelor of Informatics Engineering",
+      id: "Sarjana Teknik Informatika",
     } satisfies L10n,
-    period: "2021 – 2025",
+    period: "Aug 2021 – Mar 2025",
+    gpa: "GPA 3.66 / 4.00",
   },
   honors: [
     {
@@ -43,15 +44,29 @@ export const profile = {
     },
   ] satisfies L10n[],
   certifications: [
-    "Machine Learning Specialization",
-    "Mathematics for Machine Learning and Data Science Specialization",
-    "Meta & Hacktiv8 Llama DevLab ID",
-    "Responsive Web Design",
-    'Workshop Flutter "Flutter Authentication"',
+    { name: "Golang: Backend Development", issuer: "SanberCode", date: "Aug 2025" },
+    { name: "Implement DevOps Workflows in Google Cloud", issuer: "Google", date: "Jul 2025" },
+    { name: "Code Generation and Optimization", issuer: "IBM", date: "Jun 2025" },
+    {
+      name: "IBM Generative AI & Machine Learning",
+      issuer: "Hacktiv8 Indonesia",
+      date: "Dec 2024",
+    },
+    { name: "Advanced Algorithms", issuer: "Hacktiv8 Indonesia", date: "Nov 2024" },
+    { name: "IT Bootcamp ReactJS", issuer: "Enigma", date: "Aug 2024" },
+    { name: "Problem Solving Certificate", issuer: "HackerRank", date: "Jul 2024" },
+    {
+      name: "TensorFlow: Advanced Techniques Specialization",
+      issuer: "DeepLearning.AI",
+      date: "May 2024",
+    },
+    { name: "Machine Learning Specialization", issuer: "Stanford University", date: "Apr 2024" },
+    { name: "Full-Stack Web Developer: Online Shop", issuer: "BuildWithAngga", date: "Dec 2023" },
   ],
   languages: [
-    { en: "English (professional working)", id: "Bahasa Inggris (profesional)" },
-    { en: "Indonesian (native)", id: "Bahasa Indonesia (penutur asli)" },
+    { en: "Indonesian (fluent)", id: "Bahasa Indonesia (fasih)" },
+    { en: "English (professional)", id: "Bahasa Inggris (profesional)" },
+    { en: "Japanese (basic) · 日本語", id: "Bahasa Jepang (dasar) · 日本語" },
   ] satisfies L10n[],
 } as const;
 

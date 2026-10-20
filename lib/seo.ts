@@ -18,8 +18,8 @@ export const siteTitle: L10n = {
   id: `${profile.name} | Full-Stack Developer Indonesia`,
 };
 export const siteDescription: L10n = {
-  en: "Alif Suryadi is a Full-Stack & Machine Learning Engineer from Indonesia, Full Stack Engineer at Foxion Technologies and founder & CEO of Livales. Serverless apps on AWS and GCP, React/Next.js interfaces, Laravel and Go back-ends, and NLP features with GPT, LLaMA and BERT.",
-  id: "Alif Suryadi adalah Full-Stack & Machine Learning Engineer dari Indonesia, Full Stack Engineer di Foxion Technologies serta founder & CEO Livales. Aplikasi serverless di AWS dan GCP, antarmuka React/Next.js, back-end Laravel dan Go, serta fitur NLP dengan GPT, LLaMA, dan BERT.",
+  en: "Alif Suryadi is a Full-Stack & Machine Learning Engineer from Indonesia, Fullstack Developer at PT Fox Global Intertech (building systems for Biro Klasifikasi Indonesia) and founder & CEO of Livales. Serverless backends on GCP and AWS, React/Next.js frontends, Laravel and Go, and AI/ML systems.",
+  id: "Alif Suryadi adalah Full-Stack & Machine Learning Engineer dari Indonesia, Fullstack Developer di PT Fox Global Intertech (membangun sistem untuk Biro Klasifikasi Indonesia) serta founder & CEO Livales. Backend serverless di GCP dan AWS, frontend React/Next.js, Laravel dan Go, serta sistem AI/ML.",
 };
 
 export const keywords = [
@@ -95,12 +95,20 @@ export function personJsonLd(lang: Lang) {
     knowsAbout: [
       "Full-Stack Development",
       "Machine Learning",
+      "Natural Language Processing",
       "React",
       "Next.js",
+      "Laravel",
       "Go",
-      "Flutter",
+      "AWS",
+      "Google Cloud Platform",
       "TensorFlow",
     ],
+    worksFor: [
+      { "@type": "Organization", name: "PT Fox Global Intertech" },
+      { "@type": "Organization", name: "Livales", url: "https://livales.com/" },
+    ],
+    alumniOf: { "@type": "CollegeOrUniversity", name: profile.education.school },
     sameAs: [profile.github, profile.linkedin],
   };
 }

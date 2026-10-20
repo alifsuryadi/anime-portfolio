@@ -185,10 +185,9 @@ Jalankan Lighthouse sekali lagi di perangkat nyata setelah deploy.
 
 ## Hal yang perlu kamu lengkapi
 
-- Profil, pengalaman, pendidikan, dan sertifikasi diambil dari PDF profil LinkedIn (Oktober
-  2026). Perbarui `content/profile.ts` dan `content/experience.ts` kalau ada yang berubah.
+- Profil, pengalaman, pendidikan, dan sertifikasi diambil dari CV terbaru
+  (`public/AlifSuryadi-Resume.pdf`, Oktober 2026), dilengkapi PDF profil LinkedIn. Perbarui `content/profile.ts` dan `content/experience.ts` kalau ada yang berubah.
   Alamat dan nomor HP sengaja tidak dimasukkan ke situs.
-- `public/AlifSuryadi-Resume.pdf` masih CV lama dari portfolio sebelumnya; ganti dengan versi terbaru.
 - `content/profile.ts`: angka stat bar adalah placeholder penilaian diri, sesuaikan.
 - Model VRM (opsional), lihat di atas.
 - `NEXT_PUBLIC_SITE_URL` dan `NEXT_PUBLIC_FORMSPREE_ID` di Vercel.

@@ -43,11 +43,11 @@ export const experience: Station[] = [
     period: p("Apr 2023 – Aug 2023", "Apr 2023 – Agu 2023"),
     points: {
       en: [
-        "Identified and fixed 25+ front-end bugs on WordPress-based sites, improving stability and functionality.",
+        "Identified and resolved 25+ front-end bugs on WordPress-based sites, significantly improving stability and functionality.",
         "Documented issues and remediation steps to streamline hand-offs to senior developers.",
       ],
       id: [
-        "Menemukan dan memperbaiki 25+ bug front-end di situs berbasis WordPress, meningkatkan stabilitas dan fungsionalitas.",
+        "Menemukan dan memperbaiki 25+ bug front-end di situs berbasis WordPress, meningkatkan stabilitas dan fungsionalitas secara signifikan.",
         "Mendokumentasikan masalah dan langkah perbaikan agar serah terima ke developer senior lebih lancar.",
       ],
     },
@@ -57,17 +57,17 @@ export const experience: Station[] = [
     station: "Shika",
     stationJa: "歯科駅",
     title: "Software Engineer",
-    org: "INATECHNO",
+    org: "Inatechno",
     place: p("Padang, West Sumatra", "Padang, Sumatera Barat"),
-    period: p("Oct 2023 – Mar 2024", "Okt 2023 – Mar 2024"),
+    period: p("Oct 2023 – Feb 2024", "Okt 2023 – Feb 2024"),
     points: {
       en: [
-        'Led a team of 2 through the development lifecycle of the "Maryam Dental Care" MVP (Flutter & Laravel).',
-        "Iterated on UI/UX with designers based on user feedback and wrote unit tests for backend reliability.",
+        'Led a team of 2 through the development lifecycle of the "Maryam Dental Care" MVP (Flutter & Laravel), tested by 20+ beta users.',
+        "Iterated on UI/UX with the design team based on user feedback and wrote unit tests for backend reliability.",
       ],
       id: [
-        'Memimpin tim 2 orang dalam siklus pengembangan MVP "Maryam Dental Care" (Flutter & Laravel).',
-        "Mengiterasi UI/UX bersama desainer berdasarkan masukan pengguna dan menulis unit test untuk keandalan backend.",
+        'Memimpin tim 2 orang dalam siklus pengembangan MVP "Maryam Dental Care" (Flutter & Laravel), diuji oleh 20+ pengguna beta.',
+        "Mengiterasi UI/UX bersama tim desain berdasarkan masukan pengguna dan menulis unit test untuk keandalan backend.",
       ],
     },
   },
@@ -96,16 +96,16 @@ export const experience: Station[] = [
     stationJa: "機械駅",
     title: "Machine Learning Cohort",
     org: "Bangkit Academy (Google, Tokopedia, Gojek & Traveloka)",
-    place: p("Bandung, West Java", "Bandung, Jawa Barat"),
+    place: p("Bandung, West Java (remote)", "Bandung, Jawa Barat (remote)"),
     period: p("Feb 2024 – Jul 2024", "Feb 2024 – Jul 2024"),
     points: {
       en: [
-        "Deep learning with TensorFlow and deploying ML models to cloud, edge and mobile.",
-        "Capstone (Entrepreneur Track): a generative AI chatbot with GPT-2 and LLaMA 3, plus LSTM question suggestions. This became FinBoost.",
+        "Led a 2-person ML team building a financial coach chatbot powered by GPT-2 and LLaMA 3 (FinBoost), with 100+ users on its waiting list.",
+        "Containerized the Flask service with Docker and deployed it on Google Cloud Run.",
       ],
       id: [
-        "Deep learning dengan TensorFlow dan deploy model ML ke cloud, edge, dan mobile.",
-        "Capstone (Entrepreneur Track): chatbot generative AI dengan GPT-2 dan LLaMA 3, plus saran pertanyaan dengan LSTM. Proyek ini menjadi FinBoost.",
+        "Memimpin tim ML 2 orang membangun chatbot pelatih keuangan berbasis GPT-2 dan LLaMA 3 (FinBoost), dengan 100+ pengguna di waiting list.",
+        "Mengemas service Flask dengan Docker dan men-deploy-nya di Google Cloud Run.",
       ],
     },
   },
@@ -114,17 +114,17 @@ export const experience: Station[] = [
     station: "Midori",
     stationJa: "緑駅",
     title: "Full Stack Engineer",
-    org: "Naima",
+    org: "Naima Sustainability",
     place: p("Padang, West Sumatra", "Padang, Sumatera Barat"),
     period: p("Jul 2024 – Oct 2024", "Jul 2024 – Okt 2024"),
     points: {
       en: [
-        "Prototyped an ESG (Environmental, Social, Governance) SaaS platform for sustainability tracking.",
-        "Front-end in React and Tailwind; back-end in Go on AWS.",
+        "Prototyped an ESG (Environmental, Social, Governance) SaaS platform with React, Go microservices and AWS ECS.",
+        "Built CI/CD pipelines with GitHub Actions and Docker for blue-green deployments.",
       ],
       id: [
-        "Membuat prototipe platform SaaS ESG (Environmental, Social, Governance) untuk pelacakan keberlanjutan.",
-        "Front-end dengan React dan Tailwind; back-end dengan Go di AWS.",
+        "Membuat prototipe platform SaaS ESG (Environmental, Social, Governance) dengan React, microservice Go, dan AWS ECS.",
+        "Membangun pipeline CI/CD dengan GitHub Actions dan Docker untuk blue-green deployment.",
       ],
     },
   },
@@ -134,15 +134,15 @@ export const experience: Station[] = [
     stationJa: "感情駅",
     title: "Generative AI & Machine Learning",
     org: "Hacktiv8 Indonesia",
-    place: p("South Jakarta", "Jakarta Selatan"),
+    place: p("Jakarta (remote)", "Jakarta (remote)"),
     period: p("Aug 2024 – Dec 2024", "Agu 2024 – Des 2024"),
     points: {
       en: [
-        "Built a movie-review sentiment analysis pipeline with GPT-3 and IBM Watson NLU, reaching 93% accuracy.",
+        "Built a movie-review sentiment analysis pipeline with GPT-3 prompt engineering and IBM Watson NLU, reaching 93% accuracy.",
         "Deployed it as an inference API on IBM Cloud and wrote the technical documentation.",
       ],
       id: [
-        "Membangun pipeline analisis sentimen ulasan film dengan GPT-3 dan IBM Watson NLU, akurasi 93%.",
+        "Membangun pipeline analisis sentimen ulasan film dengan prompt engineering GPT-3 dan IBM Watson NLU, akurasi 93%.",
         "Men-deploy-nya sebagai inference API di IBM Cloud dan menulis dokumentasi teknisnya.",
       ],
     },
@@ -151,18 +151,18 @@ export const experience: Station[] = [
     id: "studyo",
     station: "Rondon",
     stationJa: "倫敦駅",
-    title: "Back End Developer",
+    title: "Backend Developer",
     org: "Studyo.io",
     place: p("London, United Kingdom (remote)", "London, Inggris (remote)"),
     period: p("Sep 2024 – May 2025", "Sep 2024 – Mei 2025"),
     points: {
       en: [
-        "Built a student–tutor meeting service with the Agora SDK for video and audio.",
-        "Serverless endpoints with Cloud Functions, recordings in Cloud Storage, and real-time notifications with Firebase Cloud Messaging.",
+        "Led backend development for a tutoring MVP on a serverless GCP architecture with Cloud Functions and Firestore.",
+        "Real-time video meetings with the Agora SDK and push notifications via Firebase Cloud Messaging.",
       ],
       id: [
-        "Membangun layanan meeting siswa–tutor dengan Agora SDK untuk video dan audio.",
-        "Endpoint serverless dengan Cloud Functions, rekaman di Cloud Storage, dan notifikasi real-time dengan Firebase Cloud Messaging.",
+        "Memimpin pengembangan backend MVP tutoring dengan arsitektur serverless di GCP (Cloud Functions dan Firestore).",
+        "Video meeting real-time dengan Agora SDK dan push notification lewat Firebase Cloud Messaging.",
       ],
     },
   },
@@ -186,6 +186,25 @@ export const experience: Station[] = [
     },
   },
   {
+    id: "fox-global",
+    station: "Kōwan",
+    stationJa: "港湾駅",
+    title: "Fullstack Developer",
+    org: "PT Fox Global Intertech",
+    place: p("Jakarta (on-site)", "Jakarta (on-site)"),
+    period: p("Jun 2025 – present", "Jun 2025 – sekarang"),
+    points: {
+      en: [
+        "Develop and maintain Laravel and SQL Server web applications for PT Biro Klasifikasi Indonesia's critical survey data management.",
+        "Translate client business requirements into functional, user-friendly and high-performance features.",
+      ],
+      id: [
+        "Mengembangkan dan memelihara aplikasi web Laravel dan SQL Server untuk pengelolaan data survei penting PT Biro Klasifikasi Indonesia.",
+        "Menerjemahkan kebutuhan bisnis klien menjadi fitur yang fungsional, mudah dipakai, dan berperforma tinggi.",
+      ],
+    },
+  },
+  {
     id: "livales",
     station: "Taisetsu",
     stationJa: "大切駅",
@@ -201,23 +220,6 @@ export const experience: Station[] = [
       id: [
         "Mendirikan perusahaan teknologi Indonesia yang membuat aplikasi untuk mendekatkan orang dengan orang tersayang dan dunia yang ingin mereka kenal.",
         "Solo developer di balik Kana Speed (belajar bahasa Jepang lewat kuis) dan Kado Livales (pencari kado), dengan aplikasi lain yang sedang dibuat.",
-      ],
-    },
-  },
-  {
-    id: "foxion",
-    station: "Kōwan",
-    stationJa: "港湾駅",
-    title: "Full Stack Engineer",
-    org: "Foxion Technologies",
-    place: p("Tanjung Priok, Jakarta", "Tanjung Priok, Jakarta"),
-    period: p("Jul 2025 – present", "Jul 2025 – sekarang"),
-    points: {
-      en: [
-        "Delivering digital solutions with the Foxion team for a state-owned enterprise (BUMN) under the Danantara holding.",
-      ],
-      id: [
-        "Mengembangkan solusi digital bersama tim Foxion untuk sebuah BUMN di bawah holding Danantara.",
       ],
     },
   },
