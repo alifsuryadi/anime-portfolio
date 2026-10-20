@@ -77,7 +77,7 @@ export const projects: Project[] = [
     },
     stack: ["Laravel", "PHP", "SQL Server", "Cron jobs", "Email automation"],
     live: "https://new.bki.co.id/",
-    image: "/projects/bki-mockup.webp",
+    image: "/projects/bki-mockup-hd.webp",
     imageFit: "contain",
     imageAlt: {
       en: "BKI on laptop and phone: the ship monitoring dashboard and a change request detail screen",
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     },
     stack: ["Laravel", "PHP", "PostgreSQL"],
     live: "https://sekalipay.com/",
-    image: "/projects/sekalipay-mockup.webp",
+    image: "/projects/sekalipay-mockup-hd.webp",
     imageFit: "contain",
     imageAlt: {
       en: "Sekalipay on laptop and phone: the e-wallet and bank top-up home page and the premium apps catalogue",
