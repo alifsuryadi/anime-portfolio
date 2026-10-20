@@ -9,7 +9,8 @@ export type Project = {
   summary: L10n;
   description: L10n<string[]>;
   stack: string[];
-  repo: string;
+  /** Public repository, if any. */
+  repo?: string;
   live?: string;
   image: string;
   imageAlt: L10n;
@@ -18,6 +19,83 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "livales",
+    name: "Livales",
+    jp: "大切な人へ",
+    role: "Founder, CEO & Solo Developer",
+    summary: {
+      en: "My own Indonesian tech company: apps that bring you closer to the people you love, and the world you want to know.",
+      id: "Perusahaan teknologi saya sendiri: aplikasi yang mendekatkan kamu dengan orang tersayang, dan dunia yang ingin kamu kenal.",
+    },
+    description: {
+      en: [
+        "Livales is an Indonesian technology company that designs and builds its own apps. I founded it and run it as CEO, and I design, build and ship every product myself as a solo developer.",
+        "The shelf so far: Kana Speed, a free web app for learning Japanese through quizzes, and Kado Livales, gift recommendations from Indonesian marketplaces with wishlists and group gifts. More apps are in development.",
+        "The company website is bilingual, prerendered for SEO and hosted on Netlify, with Firebase behind the sign-up form.",
+      ],
+      id: [
+        "Livales adalah perusahaan teknologi Indonesia yang merancang dan membangun aplikasinya sendiri. Saya mendirikannya dan memimpinnya sebagai CEO, sekaligus merancang, membangun, dan merilis setiap produk sendiri sebagai solo developer.",
+        "Produk yang sudah rilis: Kana Speed, web app gratis untuk belajar bahasa Jepang lewat kuis, dan Kado Livales, rekomendasi kado dari marketplace Indonesia lengkap dengan wishlist dan patungan. Aplikasi lainnya sedang dibuat.",
+        "Website perusahaannya dua bahasa, di-prerender untuk SEO, di-hosting di Netlify, dengan Firebase untuk form pendaftaran.",
+      ],
+    },
+    stack: ["React", "TypeScript", "Vite", "Tailwind CSS", "Firebase", "Netlify"],
+    repo: "https://github.com/livales/livales-landing-page",
+    live: "https://livales.com/",
+    image: "/projects/livales.webp",
+    imageAlt: {
+      en: "Livales company website: closer to the people you love, and the world you want to know",
+      id: "Website Livales: lebih dekat dengan orang tersayang, dan dunia yang ingin kamu kenal",
+    },
+    accent: "sakura",
+  },
+  {
+    slug: "bki",
+    name: "BKI",
+    jp: "船級協会",
+    role: "Full-Stack Developer",
+    // TODO(Alif): add the stack, your scope and a real screenshot (public/projects/bki.webp).
+    summary: {
+      en: "The new website of Biro Klasifikasi Indonesia (BKI), Indonesia's state-owned ship classification society.",
+      id: "Website baru Biro Klasifikasi Indonesia (BKI), BUMN biro klasifikasi kapal Indonesia.",
+    },
+    description: {
+      en: [
+        "Biro Klasifikasi Indonesia (BKI) is Indonesia's national classification society, a state-owned enterprise that provides classification, certification and consultancy for the maritime, offshore and industrial sectors.",
+        "I worked on its new website as a Full-Stack Developer.",
+      ],
+      id: [
+        "Biro Klasifikasi Indonesia (BKI) adalah biro klasifikasi nasional Indonesia, BUMN yang menyediakan layanan klasifikasi, sertifikasi, dan konsultasi untuk sektor maritim, lepas pantai, dan industri.",
+        "Saya mengerjakan website barunya sebagai Full-Stack Developer.",
+      ],
+    },
+    stack: [],
+    live: "https://new.bki.co.id/",
+    image: "/projects/bki.webp",
+    imageAlt: { en: "BKI website project cover", id: "Sampul proyek website BKI" },
+    accent: "cyan",
+  },
+  {
+    slug: "sekalipay",
+    name: "Sekalipay",
+    jp: "セカリペイ",
+    role: "Full-Stack Developer",
+    // TODO(Alif): describe the product, your scope and stack, and add a real screenshot.
+    summary: {
+      en: "Sekalipay, where I worked as a Full-Stack Developer.",
+      id: "Sekalipay, tempat saya bekerja sebagai Full-Stack Developer.",
+    },
+    description: {
+      en: ["I worked on Sekalipay as a Full-Stack Developer."],
+      id: ["Saya mengerjakan Sekalipay sebagai Full-Stack Developer."],
+    },
+    stack: [],
+    live: "https://sekalipay.com/",
+    image: "/projects/sekalipay.webp",
+    imageAlt: { en: "Sekalipay project cover", id: "Sampul proyek Sekalipay" },
+    accent: "sunset",
+  },
   {
     slug: "finboost",
     name: "FinBoost",

@@ -130,9 +130,9 @@ export function projectJsonLd(project: Project, lang: Lang) {
     url,
     image: `${siteUrl}${project.image}`,
     inLanguage: schemaLang[lang],
-    keywords: project.stack.join(", "),
+    ...(project.stack.length ? { keywords: project.stack.join(", ") } : {}),
     creator: { "@id": `${siteUrl}/#person` },
-    sameAs: project.live ? [project.live, project.repo] : [project.repo],
+    sameAs: [project.live, project.repo].filter(Boolean),
   };
 }
 

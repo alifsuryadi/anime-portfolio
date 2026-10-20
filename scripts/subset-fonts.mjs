@@ -26,13 +26,13 @@ for (const f of files)
 const ascii = Array.from({ length: 95 }, (_, i) => String.fromCharCode(32 + i)).join("");
 const jp = [...glyphs].sort().join("") + "・…ー「」！？";
 
-async function fetchFont(family, weight, text, out) {
+async function fetchFont(family, weight, text, out, ua = UA) {
   const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(family)}:wght@${weight}&text=${encodeURIComponent(text)}&display=swap`;
-  const css = await (await fetch(url, { headers: { "User-Agent": UA } })).text();
+  const css = await (await fetch(url, { headers: { "User-Agent": ua } })).text();
   const src = css.match(/url\((https:[^)]+)\)/)?.[1];
   if (!src) throw new Error(`No font url for ${family}: ${css.slice(0, 200)}`);
   const buf = Buffer.from(
-    await (await fetch(src, { headers: { "User-Agent": UA } })).arrayBuffer(),
+    await (await fetch(src, { headers: { "User-Agent": ua } })).arrayBuffer(),
   );
   await writeFile(out, buf);
   console.log(`${out}: ${(buf.length / 1024).toFixed(1)} KB`);
@@ -51,4 +51,6 @@ await fetchFont(
   ascii + jp,
   "assets/fonts/zen-kaku-gothic-new-700-subset.woff2",
 );
+// TrueType copy for next/og (Satori can't read woff2). An old UA makes Google serve TTF.
+await fetchFont("Dela Gothic One", 400, ascii + "·–—’" + jp, "assets/dela-og.ttf", "Mozilla/4.0");
 console.log(`${glyphs.size} Japanese glyphs`);

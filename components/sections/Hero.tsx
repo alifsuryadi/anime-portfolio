@@ -19,16 +19,6 @@ export function Hero({ lang }: { lang: Lang }) {
       <SectionTitle id="hero" side="right" lang={lang} />
 
       <div className="mx-auto w-full max-w-7xl">
-        <div className="mb-6 flex flex-wrap items-center gap-3 text-sm">
-          <span className="chip border-sakura/60 text-paper">
-            <span aria-hidden="true" className="text-sakura mr-1">
-              ●
-            </span>
-            {t("heroOpen")}
-          </span>
-          <span className="chip text-muted">{profile.location}</span>
-        </div>
-
         <h1 id="hero-title" className="display-xl">
           <SplitText text="ALIF" className="text-paper block" />
           <SplitText

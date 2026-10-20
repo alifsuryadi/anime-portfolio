@@ -51,7 +51,6 @@ export const dict = {
   switchLang: { en: "Baca dalam Bahasa Indonesia", id: "Read in English" },
   loading: { en: "Loading page", id: "Memuat halaman" },
 
-  heroOpen: { en: "Open to projects & collaborations", id: "Terbuka untuk proyek & kolaborasi" },
   heroRoleLabel: { en: "Role", id: "Peran" },
   heroLine: {
     en: "Building fast, accessible and slightly magical web experiences, from Indonesia.",
@@ -79,8 +78,8 @@ export const dict = {
 
   projectsTitle: { en: "Selected work", id: "Karya pilihan" },
   projectsIntro: {
-    en: "chapters, from AI finance to a marketplace. Hover a panel to colour it in, click to read the story.",
-    id: "chapter, dari AI finansial sampai marketplace. Arahkan kursor ke panel untuk mewarnainya, klik untuk membaca ceritanya.",
+    en: "chapters, from my own startup and a state-owned company's website to AI finance. Hover a panel to colour it in, click to read the story.",
+    id: "chapter, dari startup saya sendiri dan website BUMN sampai AI finansial. Arahkan kursor ke panel untuk mewarnainya, klik untuk membaca ceritanya.",
   },
   projectsScroll: { en: "SCROLL →", id: "GULIR →" },
 

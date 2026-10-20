@@ -99,4 +99,38 @@ export const experience: Station[] = [
       ],
     },
   },
+  {
+    id: "fullstack-bki-sekalipay",
+    station: "Kōwan",
+    stationJa: "港湾駅",
+    title: "Full-Stack Developer",
+    org: { en: "BKI · Sekalipay", id: "BKI · Sekalipay" },
+    points: {
+      en: [
+        "Worked on the new website of Biro Klasifikasi Indonesia (BKI), Indonesia's state-owned classification society.",
+        "Full-stack development on Sekalipay.",
+      ],
+      id: [
+        "Mengerjakan website baru Biro Klasifikasi Indonesia (BKI), BUMN biro klasifikasi Indonesia.",
+        "Pengembangan full-stack di Sekalipay.",
+      ],
+    },
+  },
+  {
+    id: "livales",
+    station: "Shūten",
+    stationJa: "終点駅",
+    title: "Founder, CEO & Solo Developer",
+    org: { en: "Livales", id: "Livales" },
+    points: {
+      en: [
+        "Founded Livales, an Indonesian tech company building apps that bring people closer to the ones they love and the world they want to know.",
+        "Designed, built and shipped Kana Speed (learn Japanese through quizzes) and Kado Livales (gift finder) on my own, with more apps in development.",
+      ],
+      id: [
+        "Mendirikan Livales, perusahaan teknologi Indonesia yang membuat aplikasi untuk mendekatkan orang dengan orang tersayang dan dunia yang ingin mereka kenal.",
+        "Merancang, membangun, dan merilis sendiri Kana Speed (belajar bahasa Jepang lewat kuis) dan Kado Livales (pencari kado), dengan aplikasi lain yang sedang dibuat.",
+      ],
+    },
+  },
 ];

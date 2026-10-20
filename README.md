@@ -139,11 +139,15 @@ dipakai ilustrasi SVG `ChibiArt` (tetap tanpa animasi untuk pengguna `prefers-re
 
 ## Menambah proyek
 
-1. Taruh gambar di `public/projects/<slug>.webp` (rasio bebas, idealnya 16:10, ≥ 1200 px).
+1. Taruh gambar di `public/projects/<slug>.webp` (idealnya 16:10, ≥ 1200 px). Belum punya
+   screenshot? Buat sampul sementara bergaya manga:
+   `node scripts/make-cover.mjs <slug> "<Nama>" "<Role>" "#3BF4FB"`.
 2. Tambahkan entri di `content/projects.ts` (`slug`, `name`, `jp`, `role`, `summary`,
-   `description`, `stack`, `repo`, `live?`, `image`, `imageAlt`, `accent`).
-3. Halaman `/projects/<slug>`, OG image, sitemap, dan JSON-LD `CreativeWork` dibuat otomatis.
-4. Kalau `jp` memakai kanji baru, jalankan `npm run fonts` (lihat di bawah).
+   `description`, `stack`, `repo?`, `live?`, `image`, `imageAlt`, `accent`). Urutan array =
+   urutan panel, jadi taruh yang terbaru di atas. `stack` boleh kosong dan `repo` opsional.
+3. Halaman `/projects/<slug>` dan `/id/projects/<slug>`, OG image, sitemap, dan JSON-LD
+   `CreativeWork` dibuat otomatis.
+4. Kalau `jp` memakai kanji/kana baru, jalankan `npm run fonts`.
 
 ## Teks Jepang dan font
 
@@ -152,7 +156,7 @@ subset kecil yang di-host sendiri lewat `next/font/local`. Ini menurunkan CSS da
 ke ±47 KB dan membuat FCP mobile < 1 detik. **Setelah menambah teks Jepang baru**, jalankan:
 
 ```bash
-npm run fonts   # memindai app/, components/, content/, lib/ dan membuat ulang assets/fonts/*
+npm run fonts   # memindai app/, components/, content/, lib/ lalu membuat ulang assets/fonts/* dan assets/dela-og.ttf (font OG image)
 ```
 
 Semua teks Jepang dekoratif diberi `aria-hidden` + `lang="ja"`, dan selalu ada terjemahan
@@ -181,8 +185,11 @@ Jalankan Lighthouse sekali lagi di perangkat nyata setelah deploy.
 
 ## Hal yang perlu kamu lengkapi
 
-- `content/experience.ts`: periode dan organisasi untuk stasiun yang belum punya `period`.
-  Isinya hanya fakta yang sudah publik di portfolio lama.
+- `content/experience.ts`: periode untuk stasiun yang belum punya `period` (termasuk Livales,
+  BKI, dan Sekalipay).
+- `content/projects.ts`: deskripsi, cakupan kerja, dan stack untuk **BKI** dan **Sekalipay**
+  (ditandai `TODO`), plus screenshot asli untuk `public/projects/bki.webp` dan
+  `public/projects/sekalipay.webp` (sekarang sampul sementara).
 - `content/profile.ts`: angka stat bar adalah placeholder penilaian diri, sesuaikan.
 - Model VRM (opsional), lihat di atas.
 - `NEXT_PUBLIC_SITE_URL` dan `NEXT_PUBLIC_FORMSPREE_ID` di Vercel.

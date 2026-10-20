@@ -124,15 +124,21 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
               ))}
             </div>
             <aside className="md:col-span-4">
-              <h2 className="text-muted text-sm font-bold tracking-widest uppercase">Tech stack</h2>
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {p.stack.map((s) => (
-                  <li key={s} className="chip">
-                    {s}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex flex-col gap-3">
+              {p.stack.length > 0 && (
+                <>
+                  <h2 className="text-muted text-sm font-bold tracking-widest uppercase">
+                    Tech stack
+                  </h2>
+                  <ul className="mt-3 mb-8 flex flex-wrap gap-2">
+                    {p.stack.map((s) => (
+                      <li key={s} className="chip">
+                        {s}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <div className="flex flex-col gap-3">
                 {p.live && (
                   <a
                     href={p.live}
@@ -145,16 +151,18 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
                     <span className="sr-only">{t("newTab")}</span>
                   </a>
                 )}
-                <a
-                  href={p.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-neon btn-neon--cyan"
-                  data-magnetic
-                >
-                  {t("repo")} <span aria-hidden="true">↗</span>
-                  <span className="sr-only">{t("newTab")}</span>
-                </a>
+                {p.repo && (
+                  <a
+                    href={p.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-neon btn-neon--cyan"
+                    data-magnetic
+                  >
+                    {t("repo")} <span aria-hidden="true">↗</span>
+                    <span className="sr-only">{t("newTab")}</span>
+                  </a>
+                )}
               </div>
             </aside>
           </div>
