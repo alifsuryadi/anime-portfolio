@@ -21,7 +21,7 @@ const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
 export function ContactForm() {
   const t = useT();
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "mailto" | "error">("idle");
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +44,8 @@ export function ContactForm() {
         `${parsed.data.message}\n\n— ${parsed.data.name} (${parsed.data.email})`,
       );
       window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(`${t("mailSubject")} ${parsed.data.name}`)}&body=${body}`;
-      setStatus("sent");
+      // We can't know whether the mail app opened or the message was sent.
+      setStatus("mailto");
       return;
     }
     setStatus("sending");
@@ -91,7 +92,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-semibold">
-            Email{" "}
+            {t("formEmail")}{" "}
             <span lang="ja" aria-hidden="true" className="font-jp text-muted">
               メール
             </span>
@@ -150,6 +151,15 @@ export function ContactForm() {
         </button>
         <p id="form-status" role="status" className="text-sm">
           {status === "sent" && <span className="text-cyan">{t("formSent")}</span>}
+          {status === "mailto" && (
+            <span className="text-cyan">
+              {t("formMailto")}{" "}
+              <a className="underline" href={`mailto:${profile.email}`}>
+                {profile.email}
+              </a>
+              .
+            </span>
+          )}
           {status === "error" && (
             <span className="text-sakura">
               {t("formError")}{" "}

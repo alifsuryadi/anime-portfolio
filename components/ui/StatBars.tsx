@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 type Stat = { label: string; jp: string; value: number };
@@ -8,9 +9,12 @@ type Stat = { label: string; jp: string; value: number };
 /** RPG stat bars that charge up when the card enters the viewport. */
 export function StatBars({ stats }: { stats: readonly Stat[] }) {
   const ref = useRef<HTMLDListElement>(null);
+  const motion = useMotion();
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         gsap.from("[data-bar]", {
@@ -23,7 +27,7 @@ export function StatBars({ stats }: { stats: readonly Stat[] }) {
       });
       return () => mm.revert();
     },
-    { scope: ref },
+    { scope: ref, dependencies: [motion], revertOnUpdate: true },
   );
 
   return (

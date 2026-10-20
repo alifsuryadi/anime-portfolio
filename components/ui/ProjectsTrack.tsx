@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenis";
 import type { Project } from "@/content/projects";
@@ -29,6 +30,7 @@ const ACCENT = {
  */
 export function ProjectsTrack({ projects }: { projects: Project[] }) {
   const wrap = useRef<HTMLDivElement>(null);
+  const motion = useMotion();
   const track = useRef<HTMLDivElement>(null);
   const st = useRef<ScrollTrigger | null>(null);
   const lang = useLang();
@@ -36,9 +38,10 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        if (document.documentElement.dataset.quality === "static") return;
         const el = track.current!;
         const distance = () => el.scrollWidth - window.innerWidth;
         const tween = gsap.to(el, {
@@ -79,7 +82,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
       });
       return () => mm.revert();
     },
-    { scope: wrap },
+    { scope: wrap, dependencies: [motion], revertOnUpdate: true },
   );
 
   // Keyboard users: focusing an off-screen panel scrolls the pinned track to it.
@@ -89,6 +92,8 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
     const panel = (e.target as HTMLElement).closest<HTMLElement>("[data-panel]");
     if (!panel) return;
     const max = track.current.scrollWidth - window.innerWidth;
+    // Track fits the viewport (or layout not settled): nothing to scroll to.
+    if (!(max > 0)) return;
     const x = Math.min(max, Math.max(0, panel.offsetLeft - window.innerWidth * 0.2));
     scrollToTarget(trigger.start + (x / max) * (trigger.end - trigger.start), { immediate: true });
   };

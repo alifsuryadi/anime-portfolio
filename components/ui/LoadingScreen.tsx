@@ -16,7 +16,10 @@ const MAX_WAIT = 3200;
 export function LoadingScreen() {
   const { quality, setReady } = useQuality();
   const t = useT();
-  const [pct, setPct] = useState(0);
+  // Progress is written straight to the DOM: no React re-render every frame.
+  const barA = useRef<HTMLDivElement>(null);
+  const barB = useRef<HTMLDivElement>(null);
+  const num = useRef<HTMLSpanElement>(null);
   const [gone, setGone] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const chibi = useRef<HTMLDivElement>(null);
@@ -73,6 +76,12 @@ export function LoadingScreen() {
         .to("[data-loader-content]", { opacity: 0, duration: 0.25 }, "<");
     };
 
+    const paint = (v: number) => {
+      if (barA.current) barA.current.style.width = `${v}%`;
+      if (barB.current) barB.current.style.width = `${Math.max(0, v - 12)}%`;
+      if (num.current) num.current.textContent = `${v}%`;
+    };
+
     const tick = () => {
       const elapsed = performance.now() - started;
       const target =
@@ -81,9 +90,9 @@ export function LoadingScreen() {
           : (flags.fonts ? 35 : 10) + (flags.load ? 30 : 0) + (flags.scene ? 35 : 0);
       shown += (target - shown) * 0.12 + 0.15;
       shown = Math.min(shown, target, 100);
-      setPct(Math.round(shown));
+      paint(Math.round(shown));
       if (shown >= 99.5 && !finished) {
-        setPct(100);
+        paint(100);
         finish();
         return;
       }
@@ -101,13 +110,8 @@ export function LoadingScreen() {
   if (gone) return null;
 
   return (
-    <div
-      ref={root}
-      className="loader text-paper fixed inset-0 z-[100]"
-      role="status"
-      aria-live="polite"
-      aria-label={`${t("loading")}, ${pct}%`}
-    >
+    <div ref={root} className="loader text-paper fixed inset-0 z-[100]" role="status">
+      <span className="sr-only">{t("loading")}</span>
       <div data-loader-panel="top" className="bg-ink absolute inset-x-0 top-0 h-1/2" />
       <div data-loader-panel="bottom" className="bg-ink absolute inset-x-0 bottom-0 h-1/2">
         <div className="halftone text-night absolute inset-0" />
@@ -117,19 +121,21 @@ export function LoadingScreen() {
           <div ref={chibi} className="h-28 w-24 opacity-0">
             <ChibiArt pose="cheer" happy />
           </div>
-          <p lang="ja" className="font-jp text-xl font-bold tracking-widest">
+          <p lang="ja" aria-hidden="true" className="font-jp text-xl font-bold tracking-widest">
             読み込み中…
           </p>
           <div className="border-paper relative h-3 w-full -skew-x-12 border-2">
-            <div className="bg-sakura absolute inset-y-0 left-0" style={{ width: `${pct}%` }} />
-            <div
-              className="bg-cyan absolute inset-y-0 left-0 mix-blend-screen"
-              style={{ width: `${Math.max(0, pct - 12)}%` }}
-            />
+            <div ref={barA} className="bg-sakura absolute inset-y-0 left-0 w-0" />
+            <div ref={barB} className="bg-cyan absolute inset-y-0 left-0 w-0 mix-blend-screen" />
           </div>
-          <div className="font-display text-muted flex w-full justify-between text-sm">
-            <span>LOADING</span>
-            <span className="text-paper tabular-nums">{pct}%</span>
+          <div
+            aria-hidden="true"
+            className="font-display text-muted flex w-full justify-between text-sm"
+          >
+            <span>{t("loadingCaps")}</span>
+            <span ref={num} className="text-paper tabular-nums">
+              0%
+            </span>
           </div>
         </div>
       </div>

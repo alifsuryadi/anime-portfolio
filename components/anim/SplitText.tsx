@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import { bus } from "@/lib/scroll-state";
 
@@ -12,9 +13,12 @@ type Props = { text: string; className?: string; letterClassName?: string };
  */
 export function SplitText({ text, className, letterClassName = "" }: Props) {
   const ref = useRef<HTMLSpanElement>(null);
+  const motion = useMotion();
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         const letters = ref.current?.querySelectorAll("[data-letter]");
@@ -35,11 +39,11 @@ export function SplitText({ text, className, letterClassName = "" }: Props) {
       });
       return () => mm.revert();
     },
-    { scope: ref },
+    { scope: ref, dependencies: [motion], revertOnUpdate: true },
   );
 
   const hop = (e: React.PointerEvent<HTMLSpanElement>) => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!motion) return;
     gsap.fromTo(
       e.currentTarget,
       { y: 0 },

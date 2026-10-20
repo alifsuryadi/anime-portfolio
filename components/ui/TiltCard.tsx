@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { gsap } from "@/lib/gsap";
+import { useMotion } from "@/components/QualityProvider";
 
 /** 3D tilt that follows the pointer, with a moving holo glare. */
 export function TiltCard({
@@ -14,10 +15,10 @@ export function TiltCard({
   const ref = useRef<HTMLDivElement>(null);
   const glare = useRef<HTMLDivElement>(null);
 
-  const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const motion = useMotion();
 
   const onMove = (e: React.PointerEvent) => {
-    if (reduced() || e.pointerType !== "mouse") return;
+    if (!motion || e.pointerType !== "mouse") return;
     const r = ref.current!.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;

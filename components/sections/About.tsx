@@ -28,7 +28,9 @@ export function About({ lang }: { lang: Lang }) {
             className="border-paper bg-night relative overflow-hidden border-2 p-4 shadow-[10px_10px_0_var(--sakura)]"
           >
             <div className="flex items-center justify-between text-[0.7rem] font-bold tracking-widest">
-              <span className="bg-sakura text-ink px-2 py-0.5">SSR</span>
+              <span aria-hidden="true" className="bg-sakura text-ink px-2 py-0.5">
+                SSR
+              </span>
               <span lang="ja" aria-hidden="true" className="font-jp text-cyan">
                 キャラクター紹介
               </span>
@@ -56,7 +58,9 @@ export function About({ lang }: { lang: Lang }) {
             <div className="mt-4 flex items-end justify-between gap-3">
               <div>
                 <p className="font-display text-xl leading-none">{profile.name}</p>
-                <p className="text-cyan mt-1 text-sm">Class: {profile.characterClass}</p>
+                <p className="text-cyan mt-1 text-sm">
+                  {t("classLabel")}: {profile.characterClass}
+                </p>
               </div>
               <p className="text-muted text-right text-xs">
                 {t("activeSince")}

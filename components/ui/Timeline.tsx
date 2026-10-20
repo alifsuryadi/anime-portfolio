@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 import type { Station } from "@/content/experience";
 import { useLang, useT } from "@/components/LangProvider";
@@ -13,11 +14,14 @@ const LINE = ["var(--sakura)", "var(--neon-cyan)", "var(--sunset)", "#B48CFF", "
  */
 export function Timeline({ stations }: { stations: Station[] }) {
   const ref = useRef<HTMLOListElement>(null);
+  const motion = useMotion();
   const lang = useLang();
   const t = useT();
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         const list = ref.current!;
@@ -58,7 +62,7 @@ export function Timeline({ stations }: { stations: Station[] }) {
       });
       return () => mm.revert();
     },
-    { scope: ref },
+    { scope: ref, dependencies: [motion], revertOnUpdate: true },
   );
 
   return (
@@ -110,7 +114,12 @@ export function Timeline({ stations }: { stations: Station[] }) {
             </span>
             <div data-card className="max-w-2xl">
               <p className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span lang="ja" className="font-jp text-xl font-bold" style={{ color }}>
+                <span
+                  lang="ja"
+                  aria-hidden="true"
+                  className="font-jp text-xl font-bold"
+                  style={{ color }}
+                >
                   {s.stationJa}
                 </span>
                 <span className="text-muted text-xs tracking-[0.25em] uppercase">

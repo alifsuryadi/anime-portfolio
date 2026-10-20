@@ -129,7 +129,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
               {p.stack.length > 0 && (
                 <>
                   <h2 className="text-muted text-sm font-bold tracking-widest uppercase">
-                    Tech stack
+                    {t("techStack")}
                   </h2>
                   <ul className="mt-3 mb-8 flex flex-wrap gap-2">
                     {p.stack.map((s) => (

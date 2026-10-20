@@ -50,6 +50,7 @@ export const dict = {
   downloadCv: { en: "Download CV", id: "Unduh CV" },
   switchLang: { en: "Baca dalam Bahasa Indonesia", id: "Read in English" },
   loading: { en: "Loading page", id: "Memuat halaman" },
+  loadingCaps: { en: "LOADING", id: "MEMUAT" },
 
   heroRoleLabel: { en: "Role", id: "Peran" },
   heroLine: {
@@ -74,6 +75,9 @@ export const dict = {
     id: "skill yang sudah terbuka di perjalanan ini. Arahkan kursor ke node untuk menyalakan jalurnya (dan orb-nya di samping karakter), klik untuk membaca deskripsinya.",
   },
   skillAbout: { en: "About", id: "Tentang" },
+  skillsTitleA: { en: "Skill", id: "Pohon" },
+  skillsTitleB: { en: "tree", id: "skill" },
+  techStack: { en: "Tech stack", id: "Tech stack" },
 
   projectsTitle: { en: "Selected work", id: "Karya pilihan" },
   projectsIntro: {
@@ -107,6 +111,10 @@ export const dict = {
     en: "Thank you! Your message is on its way. ありがとう!",
     id: "Terima kasih! Pesanmu sudah terkirim. ありがとう!",
   },
+  formMailto: {
+    en: "Your email app should open with the message ready to send. Nothing opened? Email me directly at",
+    id: "Aplikasi email-mu seharusnya terbuka dengan pesan yang siap dikirim. Tidak terbuka? Email langsung ke",
+  },
   formError: {
     en: "Couldn't send it. Try again, or email me directly at",
     id: "Gagal mengirim. Coba lagi, atau email langsung ke",
@@ -126,6 +134,9 @@ export const dict = {
   backToTop: { en: "Back to top", id: "Kembali ke atas" },
   madeWith: { en: "Made with Next.js & Three.js.", id: "Dibuat dengan Next.js & Three.js." },
   chibiOn: { en: "ちびモード ON! Chibi mode activated", id: "ちびモード ON! Mode chibi aktif" },
+  chibiOff: { en: "ちびモード OFF · Chibi mode off", id: "ちびモード OFF · Mode chibi mati" },
+  konamiHint: { en: "Psst…", id: "Psst…" },
+  classLabel: { en: "Class", id: "Kelas" },
 
   breadcrumb: { en: "Breadcrumb", id: "Breadcrumb" },
   crumbHome: { en: "Home", id: "Beranda" },

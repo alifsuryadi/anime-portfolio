@@ -22,7 +22,7 @@ export function Skills({ lang }: { lang: Lang }) {
         <div className="lg:col-span-8">
           <div className="grid gap-6 md:grid-cols-[auto_1fr] md:items-end">
             <h2 id="skills-title" className="heading-section">
-              Skill <span className="text-cyan">tree</span>
+              {t("skillsTitleA")} <span className="text-cyan">{t("skillsTitleB")}</span>
             </h2>
             <p className="bg-ink/75 text-paper/90 max-w-md rounded-sm p-3 text-base leading-relaxed backdrop-blur-sm">
               {skills.length} {t("skillsIntro")}
