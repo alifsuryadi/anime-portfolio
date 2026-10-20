@@ -28,7 +28,7 @@ const ACCENT = {
  * Manga page: panels slide horizontally while the section is pinned (desktop,
  * motion allowed). Without motion it is a normal scroll-snapping row.
  */
-export function ProjectsTrack({ projects }: { projects: Project[] }) {
+export function ProjectsTrack({ projects, more }: { projects: Project[]; more: Project[] }) {
   const wrap = useRef<HTMLDivElement>(null);
   const motion = useMotion();
   const track = useRef<HTMLDivElement>(null);
@@ -192,6 +192,37 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
             </article>
           );
         })}
+
+        {more.length > 0 && (
+          <nav
+            data-panel
+            aria-labelledby="more-projects-title"
+            className="border-ink bg-paper text-ink relative flex h-[62svh] min-h-[22rem] w-[82vw] shrink-0 snap-center flex-col border-4 p-6 md:w-[30vw]"
+          >
+            <div aria-hidden="true" className="halftone text-ink/10 absolute inset-0" />
+            <h3 id="more-projects-title" className="font-display relative text-3xl leading-none">
+              {t("moreProjects")}
+            </h3>
+            <p className="relative mt-3 text-sm">{t("moreProjectsIntro")}</p>
+            <ul className="relative mt-6 flex flex-col gap-3">
+              {more.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={localePath(lang, `/projects/${p.slug}`)}
+                    data-cursor="project"
+                    className="group border-ink hover:bg-ink hover:text-paper flex items-center justify-between gap-3 border-2 px-4 py-3 transition-colors"
+                  >
+                    <span>
+                      <span className="font-display block text-lg leading-tight">{p.name}</span>
+                      <span className="block text-xs">{p.role}</span>
+                    </span>
+                    <span aria-hidden="true">↗</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <div aria-hidden="true" className="w-[4vw] shrink-0" />
       </div>

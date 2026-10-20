@@ -13,7 +13,10 @@ export function Projects() {
         aria-hidden="true"
         className="halftone text-ink/[0.06] pointer-events-none absolute inset-0"
       />
-      <ProjectsTrack projects={projects} />
+      <ProjectsTrack
+        projects={projects.filter((p) => p.featured !== false)}
+        more={projects.filter((p) => p.featured === false)}
+      />
     </section>
   );
 }

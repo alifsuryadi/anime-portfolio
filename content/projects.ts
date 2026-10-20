@@ -14,6 +14,8 @@ export type Project = {
   live?: string;
   image: string;
   imageAlt: L10n;
+  /** false = left out of the manga panels, listed under "More projects" (page still exists). */
+  featured?: boolean;
   /** "contain" for device mockups that must not be cropped (default "cover"). */
   imageFit?: "cover" | "contain";
   /** Accent colour token used by the manga panel. */
@@ -185,6 +187,7 @@ export const projects: Project[] = [
   },
   {
     slug: "note-kuliah",
+    featured: false,
     name: "Note Kuliah",
     jp: "講義ノート",
     role: "Full-Stack Developer",
@@ -213,6 +216,7 @@ export const projects: Project[] = [
   },
   {
     slug: "action-figure-marketplace",
+    featured: false,
     name: "Action Figure Marketplace",
     jp: "フィギュア市場",
     role: "Founder & Full-Stack Developer",
@@ -242,6 +246,7 @@ export const projects: Project[] = [
   },
   {
     slug: "maryam-dental-care",
+    featured: false,
     name: "Maryam Dental Care",
     jp: "歯科医院",
     role: "Web Developer",

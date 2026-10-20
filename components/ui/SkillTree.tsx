@@ -108,10 +108,18 @@ export function SkillTree() {
                         }}
                       />
                       <span
-                        className={`transition-colors ${lit || isOpen ? "text-paper" : "text-paper/80"}`}
+                        className={`transition-colors ${lit || isOpen || s.main ? "text-paper" : "text-paper/80"} ${s.main ? "font-bold" : ""}`}
                       >
                         {s.name}
                       </span>
+                      {s.main && (
+                        <span
+                          className="text-ink rounded-full px-1.5 py-px text-[0.6rem] font-bold tracking-wider uppercase"
+                          style={{ background: color }}
+                        >
+                          {t("mainSkill")}
+                        </span>
+                      )}
                     </button>
                     <div
                       id={id}

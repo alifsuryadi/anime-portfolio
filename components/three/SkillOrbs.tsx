@@ -75,14 +75,14 @@ export function SkillOrbs() {
       if (!m) return;
       const ang = time * 0.45 + (i / GROUPS.length) * Math.PI * 2;
       const tilt = 0.35;
-      const rad = 1.25 * s;
+      const rad = 1.55 * s;
       m.position.set(
         Math.cos(ang) * rad,
         Math.sin(ang * 1.3) * 0.25 + Math.sin(ang) * tilt * rad * 0.4,
         Math.sin(ang) * rad,
       );
       const hot = focus.current === g ? 1.7 : focus.current ? 0.7 : 1;
-      const sc = MathUtils.lerp(m.scale.x, 0.11 * hot * s, 0.15);
+      const sc = MathUtils.lerp(m.scale.x, 0.075 * hot * s, 0.15);
       m.scale.setScalar(sc);
       mats[i].opacity = s;
     });
@@ -99,16 +99,17 @@ export function SkillOrbs() {
         parent.position.y + Math.sin(ang * 0.8) * rr,
         parent.position.z + Math.sin(ang) * rr,
       );
-      m.scale.setScalar(0.025 * s * (focus.current === sk.group ? 1.6 : 1));
+      m.scale.setScalar(0.018 * s * (focus.current === sk.group ? 1.6 : 1));
     });
   });
 
   return (
     <group ref={root}>
       {GROUPS.map((g, i) => (
-        <mesh key={g} ref={(el) => void (orbs.current[i] = el)} material={mats[i]}>
+        // Start at scale 0: they grow in as the skills scene fades in, never pop in huge.
+        <mesh key={g} ref={(el) => void (orbs.current[i] = el)} material={mats[i]} scale={0}>
           <icosahedronGeometry args={[1, 2]} />
-          <mesh scale={1.6} material={halo[i]}>
+          <mesh scale={1.35} material={halo[i]}>
             <sphereGeometry args={[1, 16, 12]} />
           </mesh>
         </mesh>
@@ -118,6 +119,7 @@ export function SkillOrbs() {
           key={sk.name}
           ref={(el) => void (sats.current[i] = el)}
           material={mats[GROUPS.indexOf(sk.group)]}
+          scale={0}
         >
           <sphereGeometry args={[1, 8, 6]} />
         </mesh>

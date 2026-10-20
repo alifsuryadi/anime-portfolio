@@ -1,5 +1,5 @@
 import { backdropWords } from "@/content/japanese-phrases";
-import { skills } from "@/content/skills";
+import { otherSkills, skills } from "@/content/skills";
 import { translate, type Lang } from "@/lib/i18n";
 import { SectionTitle } from "@/components/anim/SectionTitle";
 import { Backdrop } from "@/components/anim/Backdrop";
@@ -30,6 +30,10 @@ export function Skills({ lang }: { lang: Lang }) {
           </div>
           <div className="bg-ink/75 ring-line mt-8 rounded-sm p-5 ring-1 backdrop-blur-sm md:p-8">
             <SkillTree />
+            <p className="border-line text-muted mt-10 border-t pt-5 text-sm">
+              <span className="text-paper font-semibold">{t("alsoUsed")}:</span>{" "}
+              {otherSkills.join(" · ")}
+            </p>
           </div>
         </div>
       </div>

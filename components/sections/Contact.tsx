@@ -21,7 +21,9 @@ export function Contact({ lang }: { lang: Lang }) {
           <h2 id="contact-title" className="heading-section">
             {t("contactTitleA")} <span className="text-sakura">{t("contactTitleB")}</span>
           </h2>
-          <p className="text-paper/90 mt-6 max-w-xl text-lg">{t("contactIntro")}</p>
+          <p className="text-paper/90 bg-ink/60 mt-6 max-w-xl rounded-sm p-1 text-lg backdrop-blur-[2px]">
+            {t("contactIntro")}
+          </p>
           <div className="border-paper bg-night/80 mt-10 border-2 p-5 shadow-[10px_10px_0_var(--neon-cyan)] backdrop-blur-sm md:p-8">
             <ContactForm />
           </div>
