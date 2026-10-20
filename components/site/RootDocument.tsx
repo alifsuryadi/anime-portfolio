@@ -24,7 +24,9 @@ export function RootDocument({ lang, children }: { lang: Lang; children: React.R
       className={`${dela.variable} ${zen.variable} ${jakarta.variable}`}
       suppressHydrationWarning
     >
-      <body>
+      {/* Browser extensions (e.g. ColorZilla's cz-shortcut-listen) add attributes to
+          <body> before hydration. This only ignores <body>'s own attributes. */}
+      <body suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdString(siteJsonLd(lang)) }}
