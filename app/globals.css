@@ -1,0 +1,338 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Tokens: Neo-Tokyo at Dusk ───────────────────────── */
+:root {
+  --ink: #0b0b14;
+  --night: #1a1033;
+  --sakura: #ff6fa5;
+  --neon-cyan: #3bf4fb;
+  --sunset: #ff8a3d;
+  --paper: #f5efe6;
+  --muted: #b9b1c9; /* 8.9:1 on --ink */
+  --line: rgb(245 239 230 / 0.14);
+  --header-h: 4rem;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-night: var(--night);
+  --color-sakura: var(--sakura);
+  --color-cyan: var(--neon-cyan);
+  --color-sunset: var(--sunset);
+  --color-paper: var(--paper);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --font-display: var(--font-dela), "Zen Kaku Gothic New", system-ui, sans-serif;
+  --font-jp: var(--font-zen), "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+html {
+  background: var(--ink);
+  color: var(--paper);
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
+  scroll-padding-top: var(--header-h);
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  /* Dusk sky for no-JS / static mode; the WebGL sky paints over it. */
+  background:
+    radial-gradient(120% 70% at 50% 110%, rgb(255 138 61 / 0.45), transparent 60%),
+    radial-gradient(90% 60% at 80% 0%, rgb(255 111 165 / 0.18), transparent 60%),
+    linear-gradient(180deg, var(--ink) 0%, var(--night) 55%, #3a1440 100%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--sakura);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--neon-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Custom cursor hides the native one only once JS confirms a fine pointer. */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* ───────────────────────── Texture ───────────────────────── */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3%, 2%);
+  }
+  40% {
+    transform: translate(2%, -4%);
+  }
+  60% {
+    transform: translate(-4%, -1%);
+  }
+  80% {
+    transform: translate(3%, 3%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.halftone {
+  background-image: radial-gradient(circle at center, currentColor 0.11rem, transparent 0.12rem);
+  background-size: 0.5rem 0.5rem;
+}
+
+.speedlines {
+  background: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg 2.2deg,
+    rgb(245 239 230 / 0.9) 2.2deg 2.6deg,
+    transparent 2.6deg 5.5deg
+  );
+  mask-image: radial-gradient(circle at center, transparent 22%, black 70%);
+}
+
+/* ───────────────────────── Type helpers ───────────────────────── */
+.vertical-jp {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  font-family: var(--font-jp);
+  letter-spacing: 0.25em;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--paper);
+  color: transparent;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 13vw, 12rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+
+.heading-section {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+/* ───────────────────────── Components ───────────────────────── */
+.btn-neon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.5rem;
+  border: 2px solid var(--paper);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--ink);
+  color: var(--paper);
+  clip-path: polygon(
+    0.8rem 0,
+    100% 0,
+    100% calc(100% - 0.8rem),
+    calc(100% - 0.8rem) 100%,
+    0 100%,
+    0 0.8rem
+  );
+  transition:
+    background 0.25s var(--ease-snap),
+    color 0.25s var(--ease-snap);
+}
+.btn-neon:hover {
+  background: var(--sakura);
+  color: var(--ink);
+}
+.btn-neon--cyan:hover {
+  background: var(--neon-cyan);
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--line);
+  font-size: 0.8rem;
+  border-radius: 999px;
+  background: rgb(11 11 20 / 0.6);
+}
+
+/* Glitch link: two offset copies flicker on hover. */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: var(--sakura);
+}
+.glitch::after {
+  color: var(--neon-cyan);
+}
+.glitch:hover::before,
+.glitch:focus-visible::before {
+  opacity: 1;
+  animation: glitch-a 0.35s steps(2) infinite;
+}
+.glitch:hover::after,
+.glitch:focus-visible::after {
+  opacity: 1;
+  animation: glitch-b 0.35s steps(2) infinite;
+}
+@keyframes glitch-a {
+  0% {
+    transform: translate(-3px, 1px);
+    clip-path: inset(0 0 55% 0);
+  }
+  50% {
+    transform: translate(2px, -1px);
+    clip-path: inset(40% 0 10% 0);
+  }
+  100% {
+    transform: translate(-1px, 2px);
+    clip-path: inset(70% 0 0 0);
+  }
+}
+@keyframes glitch-b {
+  0% {
+    transform: translate(3px, -1px);
+    clip-path: inset(50% 0 0 0);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+    clip-path: inset(0 0 60% 0);
+  }
+  100% {
+    transform: translate(1px, -2px);
+    clip-path: inset(20% 0 45% 0);
+  }
+}
+
+/* Manga panel image: halftone + grayscale until hover/focus, then full colour. */
+.manga-img {
+  filter: grayscale(1) contrast(1.35) brightness(1.05);
+  transition: filter 0.6s var(--ease-snap);
+}
+.manga-dots {
+  color: var(--ink);
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  transition:
+    opacity 0.6s var(--ease-snap),
+    background-size 0.6s var(--ease-snap);
+}
+.panel:hover .manga-img,
+.panel:focus-within .manga-img {
+  filter: grayscale(0) contrast(1.05) url(#ripple);
+}
+.panel:hover .manga-dots,
+.panel:focus-within .manga-dots {
+  opacity: 0;
+  background-size: 0.2rem 0.2rem;
+}
+
+/* Loader failsafe: if JS never runs, the loader goes away on its own. */
+.loader {
+  animation: loader-failsafe 0.4s 6s forwards;
+}
+@keyframes loader-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.scroll-kunai {
+  animation: kunai 1.8s var(--ease-snap) infinite;
+}
+@keyframes kunai {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Chibi mode (Konami code). */
+html.chibi .chibi-bounce {
+  animation: chibi 0.6s ease-in-out infinite alternate;
+}
+@keyframes chibi {
+  to {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+}
+
+/* ───────────────────────── Reduced motion / static ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain {
+    display: none;
+  }
+}
+html[data-quality="static"] .grain,
+html[data-quality="static"] .scroll-kunai {
+  animation: none;
+}
