@@ -119,26 +119,26 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
           </div>
 
           <div className="mt-12 grid gap-10 md:grid-cols-12">
-            <div className="bg-ink/70 text-paper/90 space-y-4 rounded-sm text-lg leading-relaxed backdrop-blur-sm md:col-span-8">
+            <div className="bg-ink/80 text-paper/90 border-line space-y-4 border-2 p-6 text-lg leading-relaxed backdrop-blur-sm md:col-span-8 md:p-8">
               <p className="text-paper font-semibold">{p.summary[lang]}</p>
               {p.description[lang].map((d) => (
                 <p key={d}>{d}</p>
               ))}
             </div>
-            <aside className="md:col-span-4">
+            <aside className="md:col-span-4 md:self-start">
               {p.stack.length > 0 && (
-                <>
+                <div className="bg-ink/80 border-line mb-6 border-2 p-5 backdrop-blur-sm">
                   <h2 className="text-muted text-sm font-bold tracking-widest uppercase">
                     {t("techStack")}
                   </h2>
-                  <ul className="mt-3 mb-8 flex flex-wrap gap-2">
+                  <ul className="mt-3 flex flex-wrap gap-2">
                     {p.stack.map((s) => (
                       <li key={s} className="chip">
                         {s}
                       </li>
                     ))}
                   </ul>
-                </>
+                </div>
               )}
               <div className="flex flex-col gap-3">
                 {p.live && (
