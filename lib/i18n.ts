@@ -70,6 +70,7 @@ export const dict = {
   languages: { en: "Languages", id: "Bahasa" },
   certifications: { en: "Certifications", id: "Sertifikasi" },
   activeSince: { en: "Active since", id: "Aktif sejak" },
+  elements: { en: "Elements", id: "Elemen" },
 
   skillsIntro: {
     en: "skills unlocked along the way. Hover a node to light up its path (and its orb next to the character), click to read about it.",
