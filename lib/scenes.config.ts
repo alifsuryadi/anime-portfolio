@@ -155,6 +155,14 @@ export const scenes: Record<SceneId, SceneKey> = {
     expression: { happy: 0.4 },
     night: 0.6,
   },
+  achievements: {
+    character: { position: [-2.8, -1, 0.4], rotationY: 0.4, scale: 1 },
+    mobile: { position: [0, -2.6, -1.5], scale: 0.7 },
+    camera: { position: [-0.6, 0.3, 6.4], target: [-0.6, 0, 0], fov: 33 },
+    pose: "cheer",
+    expression: { happy: 1 },
+    night: 0.7,
+  },
   contact: {
     character: { position: [2.6, -1, 0.6], rotationY: -0.25, scale: 1 },
     mobile: { position: [0, -2.6, -1.5], scale: 0.7 },

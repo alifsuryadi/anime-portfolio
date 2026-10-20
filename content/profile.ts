@@ -7,13 +7,30 @@ export const profile = {
   shortRole: "Full-Stack Engineer",
   location: "Indonesia",
   bio: {
-    en: "A results-driven Software Engineer with 3+ years of experience architecting, leading and developing full-stack applications and machine learning solutions. I build serverless backends (Node.js, Go), responsive frontends (React, Next.js) and AI/ML systems, on GCP and AWS with Docker and CI/CD. Today I'm a Fullstack Developer at PT Fox Global Intertech (Foxion), building systems for Biro Klasifikasi Indonesia, and the founder & CEO of Livales.",
-    id: "Software Engineer berorientasi hasil dengan pengalaman 3+ tahun merancang, memimpin, dan mengembangkan aplikasi full-stack serta solusi machine learning. Saya membangun backend serverless (Node.js, Go), frontend responsif (React, Next.js), dan sistem AI/ML, di GCP dan AWS dengan Docker dan CI/CD. Kini saya Fullstack Developer di PT Fox Global Intertech (Foxion), membangun sistem untuk Biro Klasifikasi Indonesia, sekaligus founder & CEO Livales.",
+    en: "Software engineer with 3+ years building full-stack apps and AI/ML systems: React and Next.js on the front, Laravel, Node.js and Go on the back, shipped on GCP and AWS. I like owning a project end to end, from the first sketch to production.",
+    id: "Software engineer dengan pengalaman 3+ tahun membangun aplikasi full-stack dan sistem AI/ML: React dan Next.js di depan, Laravel, Node.js, dan Go di belakang, dirilis di GCP dan AWS. Saya suka memegang proyek dari ujung ke ujung, dari sketsa pertama sampai produksi.",
   } satisfies L10n,
-  bioExtra: {
-    en: "Proven at leading projects and mentoring team members. Known for end-to-end project ownership, clean architecture and data-driven optimizations.",
-    id: "Terbiasa memimpin proyek dan membimbing anggota tim. Dikenal dengan kepemilikan proyek end-to-end, arsitektur yang rapi, dan optimasi berbasis data.",
-  } satisfies L10n,
+  /** Three quick facts under the bio. */
+  facts: [
+    {
+      label: { en: "Now", id: "Sekarang" },
+      value: {
+        en: "Fullstack Developer at Foxion, building BKI's systems",
+        id: "Fullstack Developer di Foxion, membangun sistem BKI",
+      },
+    },
+    {
+      label: { en: "Building", id: "Membangun" },
+      value: { en: "Livales, as founder & CEO", id: "Livales, sebagai founder & CEO" },
+    },
+    {
+      label: { en: "Known for", id: "Dikenal" },
+      value: {
+        en: "Leading small teams and mentoring juniors",
+        id: "Memimpin tim kecil dan membimbing junior",
+      },
+    },
+  ] satisfies { label: L10n; value: L10n }[],
   email: "alifsuryadi037@gmail.com",
   github: "https://github.com/alifsuryadi",
   linkedin: "https://www.linkedin.com/in/alifsuryadi/",

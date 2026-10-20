@@ -15,6 +15,7 @@ const links = [
   { id: "skills", label: "navSkills" },
   { id: "projects", label: "navProjects" },
   { id: "experience", label: "navExperience" },
+  { id: "achievements", label: "navAchievements" },
   { id: "contact", label: "navContact" },
 ] as const satisfies readonly { id: keyof typeof sectionTitles; label: DictKey }[];
 

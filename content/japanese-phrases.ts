@@ -26,6 +26,7 @@ export const sectionTitles = {
   skills: { ja: "技術", translation: { en: "Skills", id: "Keahlian" } },
   projects: { ja: "作品", translation: { en: "Work", id: "Karya" } },
   experience: { ja: "経験", translation: { en: "Journey", id: "Pengalaman" } },
+  achievements: { ja: "実績", translation: { en: "Achievements", id: "Pencapaian" } },
   contact: { ja: "連絡", translation: { en: "Contact", id: "Kontak" } },
   footer: { ja: "終わり", translation: { en: "The end", id: "Akhir" } },
 } as const;
@@ -39,6 +40,7 @@ export const backdropWords: Record<SectionId, string> = {
   skills: "魔法",
   projects: "漫画",
   experience: "旅路",
+  achievements: "勲章",
   contact: "手紙",
   footer: "感謝",
 };

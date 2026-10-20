@@ -38,6 +38,7 @@ export const dict = {
   navSkills: { en: "Skills", id: "Keahlian" },
   navProjects: { en: "Work", id: "Karya" },
   navExperience: { en: "Journey", id: "Pengalaman" },
+  navAchievements: { en: "Badges", id: "Lencana" },
   navContact: { en: "Contact", id: "Kontak" },
   motionOn: { en: "Motion", id: "Animasi" },
   motionOff: { en: "Motion off", id: "Animasi mati" },
@@ -93,6 +94,17 @@ export const dict = {
     id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak, dari peran saat ini sampai pekerjaan pertama di 2022. Gulir untuk menjalankan keretanya.",
   },
   station: { en: "station", id: "stasiun" },
+
+  achTitleA: { en: "Achievement", id: "Pencapaian" },
+  achTitleB: { en: "unlocked", id: "terbuka" },
+  achIntro: {
+    en: "The loot from the journey: a degree, an honor, three languages and ten certifications.",
+    id: "Hasil dari perjalanan ini: satu gelar, satu penghargaan, tiga bahasa, dan sepuluh sertifikasi.",
+  },
+  aboutMore: {
+    en: "Education, certifications & languages",
+    id: "Pendidikan, sertifikasi & bahasa",
+  },
 
   contactTitleA: { en: "Let's make the", id: "Ayo bikin" },
   contactTitleB: { en: "next episode", id: "episode berikutnya" },

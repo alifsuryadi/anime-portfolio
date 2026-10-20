@@ -77,56 +77,31 @@ export function About({ lang }: { lang: Lang }) {
           <h2 id="about-title" className="heading-section">
             {t("aboutTitleA")} <span className="text-sakura">{t("aboutTitleB")}</span>
           </h2>
-          <div className="bg-ink/60 text-paper/90 mt-6 space-y-4 rounded-sm p-1 text-lg leading-relaxed backdrop-blur-[2px]">
-            <p>{profile.bio[lang]}</p>
-            <p className="text-muted text-base">{profile.bioExtra[lang]}</p>
-          </div>
-          <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
-            <div className="border-sakura bg-ink/70 border-l-2 p-3 backdrop-blur-sm">
-              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
-                {t("education")}
-              </dt>
-              <dd className="mt-1">
-                <span className="block font-semibold">{profile.education.degree[lang]}</span>
-                <span className="text-paper/80 block">{profile.education.school}</span>
-                <span className="text-muted block text-xs">
-                  {profile.education.period} · {profile.education.gpa}
-                </span>
-              </dd>
-            </div>
-            <div className="border-sunset bg-ink/70 border-l-2 p-3 backdrop-blur-sm">
-              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
-                {t("honors")}
-              </dt>
-              {profile.honors.map((h) => (
-                <dd key={h.en} className="mt-1 font-semibold">
-                  {h[lang]}
-                </dd>
-              ))}
-              <dt className="text-muted mt-3 text-xs font-bold tracking-widest uppercase">
-                {t("languages")}
-              </dt>
-              {profile.languages.map((l) => (
-                <dd key={l.en} className="mt-1">
-                  {l[lang]}
-                </dd>
-              ))}
-            </div>
-            <div className="border-cyan bg-ink/70 border-l-2 p-3 backdrop-blur-sm sm:col-span-2">
-              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
-                {t("certifications")}
-              </dt>
-              <dd className="mt-2">
-                <ul className="flex flex-wrap gap-2">
-                  {profile.certifications.map((c) => (
-                    <li key={c.name} className="chip" title={`${c.issuer}, ${c.date}`}>
-                      {c.name} <span className="text-muted">· {c.issuer}</span>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
+          <p className="bg-ink/60 mt-6 rounded-sm p-1 text-lg leading-relaxed backdrop-blur-[2px]">
+            {profile.bio[lang]}
+          </p>
+          <dl className="mt-8 grid gap-3">
+            {profile.facts.map((f, i) => (
+              <div
+                key={f.label.en}
+                className="bg-ink/75 grid grid-cols-[6.5rem_1fr] items-baseline gap-3 border-l-2 p-3 backdrop-blur-sm"
+                style={{
+                  borderColor: ["var(--sakura)", "var(--neon-cyan)", "var(--sunset)"][i % 3],
+                }}
+              >
+                <dt className="text-muted text-xs font-bold tracking-widest uppercase">
+                  {f.label[lang]}
+                </dt>
+                <dd className="font-semibold">{f.value[lang]}</dd>
+              </div>
+            ))}
           </dl>
+          <a
+            href="#achievements"
+            className="hover:text-cyan mt-6 inline-flex items-center gap-2 text-sm font-semibold underline-offset-4 hover:underline"
+          >
+            {t("aboutMore")} <span aria-hidden="true">↓</span>
+          </a>
         </div>
       </div>
     </section>
