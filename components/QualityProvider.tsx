@@ -30,13 +30,18 @@ export function QualityProvider({ children }: { children: React.ReactNode }) {
       stored = localStorage.getItem(STORAGE_KEY);
     } catch {}
     setMotionOffState(stored === "off");
-    // `?quality=high|low|static` forces a mode (handy for testing on any device).
+    // `?quality=high|low|static` forces a mode (handy for testing on any device),
+    // but never overrides prefers-reduced-motion.
     const forced = new URLSearchParams(window.location.search).get("quality");
-    const pick = () =>
-      forced === "high" || forced === "low" || forced === "static" ? forced : detectQuality();
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pick = (): Quality =>
+      mq.matches
+        ? "static"
+        : forced === "high" || forced === "low" || forced === "static"
+          ? forced
+          : detectQuality();
     setDetected(pick());
 
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => setDetected(pick());
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);

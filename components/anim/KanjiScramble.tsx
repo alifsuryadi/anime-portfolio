@@ -53,8 +53,9 @@ export function KanjiScramble({
         if (!alive) return;
         if (!visible.current || document.hidden) return loop(i);
         const next = (i + 1) % phrases.length;
-        setIndex(next);
         await run(phrases[next].ja);
+        // Swap the translation once the glyphs lock, so the pair always matches.
+        if (alive) setIndex(next);
         if (alive) loop(next);
       }, hold);
     };

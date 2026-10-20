@@ -11,6 +11,8 @@ export type Station = {
   place: L10n;
   period: L10n;
   points: L10n<string[]>;
+  /** false = shown in the compact "Earlier stations" list instead of the rail. */
+  featured?: boolean;
 };
 
 const p = (en: string, id: string): L10n => ({ en, id });
@@ -94,6 +96,7 @@ export const experience: Station[] = [
   },
   {
     id: "hacktiv8",
+    featured: false,
     station: "Kanjō",
     stationJa: "感情駅",
     title: "Generative AI & Machine Learning",
@@ -151,6 +154,7 @@ export const experience: Station[] = [
   },
   {
     id: "inajunior",
+    featured: false,
     station: "Sensei",
     stationJa: "先生駅",
     title: "Course Instructor",
@@ -170,6 +174,7 @@ export const experience: Station[] = [
   },
   {
     id: "inatechno",
+    featured: false,
     station: "Shika",
     stationJa: "歯科駅",
     title: "Software Engineer",
@@ -189,6 +194,7 @@ export const experience: Station[] = [
   },
   {
     id: "gaotek",
+    featured: false,
     station: "Nyūyōku",
     stationJa: "紐育駅",
     title: "Software Developer",
@@ -208,6 +214,7 @@ export const experience: Station[] = [
   },
   {
     id: "sdn-03-pauh-barat",
+    featured: false,
     station: "Gakkō",
     stationJa: "学校駅",
     title: "Administrative",

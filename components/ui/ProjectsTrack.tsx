@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenis";
 import type { Project } from "@/content/projects";
@@ -27,8 +28,9 @@ const ACCENT = {
  * Manga page: panels slide horizontally while the section is pinned (desktop,
  * motion allowed). Without motion it is a normal scroll-snapping row.
  */
-export function ProjectsTrack({ projects }: { projects: Project[] }) {
+export function ProjectsTrack({ projects, more }: { projects: Project[]; more: Project[] }) {
   const wrap = useRef<HTMLDivElement>(null);
+  const motion = useMotion();
   const track = useRef<HTMLDivElement>(null);
   const st = useRef<ScrollTrigger | null>(null);
   const lang = useLang();
@@ -36,9 +38,10 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-        if (document.documentElement.dataset.quality === "static") return;
         const el = track.current!;
         const distance = () => el.scrollWidth - window.innerWidth;
         const tween = gsap.to(el, {
@@ -79,7 +82,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
       });
       return () => mm.revert();
     },
-    { scope: wrap },
+    { scope: wrap, dependencies: [motion], revertOnUpdate: true },
   );
 
   // Keyboard users: focusing an off-screen panel scrolls the pinned track to it.
@@ -89,6 +92,8 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
     const panel = (e.target as HTMLElement).closest<HTMLElement>("[data-panel]");
     if (!panel) return;
     const max = track.current.scrollWidth - window.innerWidth;
+    // Track fits the viewport (or layout not settled): nothing to scroll to.
+    if (!(max > 0)) return;
     const x = Math.min(max, Math.max(0, panel.offsetLeft - window.innerWidth * 0.2));
     scrollToTarget(trigger.start + (x / max) * (trigger.end - trigger.start), { immediate: true });
   };
@@ -187,6 +192,37 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
             </article>
           );
         })}
+
+        {more.length > 0 && (
+          <nav
+            data-panel
+            aria-labelledby="more-projects-title"
+            className="border-ink bg-paper text-ink relative flex h-[62svh] min-h-[22rem] w-[82vw] shrink-0 snap-center flex-col border-4 p-6 md:w-[30vw]"
+          >
+            <div aria-hidden="true" className="halftone text-ink/10 absolute inset-0" />
+            <h3 id="more-projects-title" className="font-display relative text-3xl leading-none">
+              {t("moreProjects")}
+            </h3>
+            <p className="relative mt-3 text-sm">{t("moreProjectsIntro")}</p>
+            <ul className="relative mt-6 flex flex-col gap-3">
+              {more.map((p) => (
+                <li key={p.slug}>
+                  <Link
+                    href={localePath(lang, `/projects/${p.slug}`)}
+                    data-cursor="project"
+                    className="group border-ink hover:bg-ink hover:text-paper flex items-center justify-between gap-3 border-2 px-4 py-3 transition-colors"
+                  >
+                    <span>
+                      <span className="font-display block text-lg leading-tight">{p.name}</span>
+                      <span className="block text-xs">{p.role}</span>
+                    </span>
+                    <span aria-hidden="true">↗</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <div aria-hidden="true" className="w-[4vw] shrink-0" />
       </div>

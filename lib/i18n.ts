@@ -38,6 +38,7 @@ export const dict = {
   navSkills: { en: "Skills", id: "Keahlian" },
   navProjects: { en: "Work", id: "Karya" },
   navExperience: { en: "Journey", id: "Pengalaman" },
+  navAchievements: { en: "Badges", id: "Lencana" },
   navContact: { en: "Contact", id: "Kontak" },
   motionOn: { en: "Motion", id: "Animasi" },
   motionOff: { en: "Motion off", id: "Animasi mati" },
@@ -50,11 +51,12 @@ export const dict = {
   downloadCv: { en: "Download CV", id: "Unduh CV" },
   switchLang: { en: "Baca dalam Bahasa Indonesia", id: "Read in English" },
   loading: { en: "Loading page", id: "Memuat halaman" },
+  loadingCaps: { en: "LOADING", id: "MEMUAT" },
 
   heroRoleLabel: { en: "Role", id: "Peran" },
   heroLine: {
-    en: "Building fast, accessible and slightly magical web experiences, from Indonesia.",
-    id: "Membangun web yang cepat, aksesibel, dan sedikit ajaib, dari Indonesia.",
+    en: "I build fast, accessible and slightly magical products, from full-stack apps to AI features. Currently at Foxion, and building my own startup, Livales.",
+    id: "Saya membangun produk yang cepat, aksesibel, dan sedikit ajaib, dari aplikasi full-stack sampai fitur AI. Sekarang di Foxion, sambil membangun startup sendiri, Livales.",
   },
   heroCta: { en: "See my work", id: "Lihat karya" },
   heroScroll: { en: "Scroll to About", id: "Gulir ke bagian Tentang" },
@@ -74,6 +76,17 @@ export const dict = {
     id: "skill yang sudah terbuka di perjalanan ini. Arahkan kursor ke node untuk menyalakan jalurnya (dan orb-nya di samping karakter), klik untuk membaca deskripsinya.",
   },
   skillAbout: { en: "About", id: "Tentang" },
+  mainSkill: { en: "main", id: "utama" },
+  alsoUsed: { en: "Also in the toolbox", id: "Juga dipakai" },
+  moreProjects: { en: "More projects", id: "Proyek lain" },
+  moreProjectsIntro: {
+    en: "Earlier side quests, each with its own page.",
+    id: "Side quest sebelumnya, masing-masing punya halaman sendiri.",
+  },
+  earlierStops: { en: "Earlier stations", id: "Stasiun sebelumnya" },
+  skillsTitleA: { en: "Skill", id: "Pohon" },
+  skillsTitleB: { en: "tree", id: "skill" },
+  techStack: { en: "Tech stack", id: "Tech stack" },
 
   projectsTitle: { en: "Selected work", id: "Karya pilihan" },
   projectsIntro: {
@@ -89,6 +102,17 @@ export const dict = {
     id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak, dari peran saat ini sampai pekerjaan pertama di 2022. Gulir untuk menjalankan keretanya.",
   },
   station: { en: "station", id: "stasiun" },
+
+  achTitleA: { en: "Achievement", id: "Pencapaian" },
+  achTitleB: { en: "unlocked", id: "terbuka" },
+  achIntro: {
+    en: "The loot from the journey: a degree, an honor, three languages and ten certifications.",
+    id: "Hasil dari perjalanan ini: satu gelar, satu penghargaan, tiga bahasa, dan sepuluh sertifikasi.",
+  },
+  aboutMore: {
+    en: "Education, certifications & languages",
+    id: "Pendidikan, sertifikasi & bahasa",
+  },
 
   contactTitleA: { en: "Let's make the", id: "Ayo bikin" },
   contactTitleB: { en: "next episode", id: "episode berikutnya" },
@@ -106,6 +130,10 @@ export const dict = {
   formSent: {
     en: "Thank you! Your message is on its way. ありがとう!",
     id: "Terima kasih! Pesanmu sudah terkirim. ありがとう!",
+  },
+  formMailto: {
+    en: "Your email app should open with the message ready to send. Nothing opened? Email me directly at",
+    id: "Aplikasi email-mu seharusnya terbuka dengan pesan yang siap dikirim. Tidak terbuka? Email langsung ke",
   },
   formError: {
     en: "Couldn't send it. Try again, or email me directly at",
@@ -126,6 +154,9 @@ export const dict = {
   backToTop: { en: "Back to top", id: "Kembali ke atas" },
   madeWith: { en: "Made with Next.js & Three.js.", id: "Dibuat dengan Next.js & Three.js." },
   chibiOn: { en: "ちびモード ON! Chibi mode activated", id: "ちびモード ON! Mode chibi aktif" },
+  chibiOff: { en: "ちびモード OFF · Chibi mode off", id: "ちびモード OFF · Mode chibi mati" },
+  konamiHint: { en: "Psst…", id: "Psst…" },
+  classLabel: { en: "Class", id: "Kelas" },
 
   breadcrumb: { en: "Breadcrumb", id: "Breadcrumb" },
   crumbHome: { en: "Home", id: "Beranda" },

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerformanceMonitor } from "@react-three/drei";
 import { ScrollTrigger } from "@/lib/gsap";
@@ -21,30 +22,36 @@ import { ShootingStars } from "./ShootingStars";
 import { Effects } from "./Effects";
 
 /** Pauses rendering when the tab is hidden or the paper (projects) page fully covers the canvas. */
-function FrameGate() {
+function FrameGate({ pathname }: { pathname: string }) {
   const setFrameloop = useThree((s) => s.setFrameloop);
+  // The canvas outlives client navigations, so re-bind to the current page's
+  // #projects on every route change (and start rendering again meanwhile).
   useEffect(() => {
     let covered = false;
+    let st: ScrollTrigger | null = null;
     const apply = () => setFrameloop(document.hidden || covered ? "never" : "always");
-    const el = document.getElementById("projects");
-    const st = el
-      ? ScrollTrigger.create({
-          trigger: el,
-          start: "top top",
-          end: "bottom bottom",
-          onToggle: (self) => {
-            covered = self.isActive;
-            apply();
-          },
-        })
-      : null;
+    apply();
+    const raf = requestAnimationFrame(() => {
+      const el = document.getElementById("projects");
+      if (!el) return;
+      st = ScrollTrigger.create({
+        trigger: el,
+        start: "top top",
+        end: "bottom bottom",
+        onToggle: (self) => {
+          covered = self.isActive;
+          apply();
+        },
+      });
+    });
     document.addEventListener("visibilitychange", apply);
     return () => {
+      cancelAnimationFrame(raf);
       st?.kill();
       document.removeEventListener("visibilitychange", apply);
       setFrameloop("always");
     };
-  }, [setFrameloop]);
+  }, [setFrameloop, pathname]);
   return null;
 }
 
@@ -60,6 +67,7 @@ function ReadySignal() {
 
 export default function Scene({ quality }: { quality: Exclude<Quality, "static"> }) {
   const { downgrade, chibi } = useQuality();
+  const pathname = usePathname();
   const s = qualitySettings[quality];
   useEffect(() => {
     world.chibi = chibi;
@@ -80,7 +88,7 @@ export default function Scene({ quality }: { quality: Exclude<Quality, "static">
       >
         <color attach="background" args={["#0B0B14"]} />
         <PerformanceMonitor onDecline={downgrade} flipflops={2} />
-        <FrameGate />
+        <FrameGate pathname={pathname} />
         <ReadySignal />
         <CameraRig />
         <Lights />

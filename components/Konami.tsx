@@ -24,14 +24,16 @@ export function Konami() {
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
-    let i = 0;
+    // Compare the last N keys, so extra presses before the code (↑ ↑ ↑ …) still work.
+    const recent: string[] = [];
     const onKey = (e: KeyboardEvent) => {
       const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      i = key === CODE[i] ? i + 1 : key === CODE[0] ? 1 : 0;
-      if (i === CODE.length) {
-        i = 0;
+      recent.push(key);
+      if (recent.length > CODE.length) recent.shift();
+      if (recent.length === CODE.length && recent.every((k, j) => k === CODE[j])) {
+        recent.length = 0;
         setChibi(!chibi);
-        setToast(!chibi ? t("chibiOn") : "ちびモード OFF");
+        setToast(!chibi ? t("chibiOn") : t("chibiOff"));
       }
     };
     window.addEventListener("keydown", onKey);

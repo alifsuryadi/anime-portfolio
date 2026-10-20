@@ -141,7 +141,7 @@ export function Footer() {
               © <span suppressHydrationWarning>{new Date().getFullYear()}</span> {profile.name}.
               {t("madeWith")}
               <br />
-              <span className="opacity-70">Psst… ↑ ↑ ↓ ↓ ← → ← → B A</span>
+              <span className="opacity-70">{t("konamiHint")} ↑ ↑ ↓ ↓ ← → ← → B A</span>
             </p>
           </div>
         </div>

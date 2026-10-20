@@ -1,14 +1,18 @@
 "use client";
 
 import { useRef } from "react";
+import { useMotion } from "@/components/QualityProvider";
 import { gsap, useGSAP, MOTION_OK } from "@/lib/gsap";
 
 /** Giant Japanese word behind a section that drifts with scroll (parallax). */
 export function Backdrop({ word, className = "" }: { word: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const motion = useMotion();
 
   useGSAP(
     () => {
+      // Off in Static mode: navbar toggle, reduced motion or no GPU.
+      if (!motion) return;
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
         gsap.fromTo(
@@ -29,7 +33,7 @@ export function Backdrop({ word, className = "" }: { word: string; className?: s
       });
       return () => mm.revert();
     },
-    { scope: ref },
+    { scope: ref, dependencies: [motion], revertOnUpdate: true },
   );
 
   return (
