@@ -38,7 +38,15 @@ export function personJsonLd() {
     url: siteUrl,
     image: `${siteUrl}${profile.photo}`,
     nationality: { "@type": "Country", name: "Indonesia" },
-    knowsAbout: ["Full-Stack Development", "Machine Learning", "React", "Next.js", "Go", "Flutter", "TensorFlow"],
+    knowsAbout: [
+      "Full-Stack Development",
+      "Machine Learning",
+      "React",
+      "Next.js",
+      "Go",
+      "Flutter",
+      "TensorFlow",
+    ],
     sameAs: [profile.github, profile.linkedin],
   };
 }

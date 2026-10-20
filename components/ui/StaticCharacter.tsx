@@ -25,9 +25,10 @@ export function StaticCharacter() {
   useEffect(() => bus.on("section", (d) => setScene((d as { to: SceneId }).to)), []);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const url = character.sequenceManifest;
+    if (!url || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let alive = true;
-    fetch(character.sequenceManifest)
+    fetch(url)
       .then((r) => (r.ok ? r.json() : null))
       .then((m: Manifest | null) => alive && m?.frames && setManifest(m))
       .catch(() => {});
@@ -63,7 +64,8 @@ export function StaticCharacter() {
 
   const hidden = scene === "projects";
   const side = posFor(scene);
-  const pose = scenes[scene].pose === "wave" ? "wave" : scenes[scene].pose === "cheer" ? "cheer" : "idle";
+  const pose =
+    scenes[scene].pose === "wave" ? "wave" : scenes[scene].pose === "cheer" ? "cheer" : "idle";
 
   return (
     <div
@@ -73,9 +75,18 @@ export function StaticCharacter() {
       } ${side === "right" ? "right-[4vw]" : side === "left" ? "left-[4vw]" : "left-1/2 -translate-x-1/2"}`}
     >
       {manifest ? (
-        <canvas ref={canvas} width={manifest.width} height={manifest.height} className="h-full w-auto" />
+        <canvas
+          ref={canvas}
+          width={manifest.width}
+          height={manifest.height}
+          className="h-full w-auto"
+        />
       ) : (
-        <ChibiArt pose={pose} happy={(scenes[scene].expression.happy ?? 0) > 0.5} className="h-full w-auto" />
+        <ChibiArt
+          pose={pose}
+          happy={(scenes[scene].expression.happy ?? 0) > 0.5}
+          className="h-full w-auto"
+        />
       )}
     </div>
   );

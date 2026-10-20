@@ -1,18 +1,26 @@
 export type Quality = "high" | "low" | "static";
 
-export function hasWebGL() {
+/** "none" = no WebGL, "software" = CPU rasteriser (SwiftShader, llvmpipe...), "gpu" = real GPU. */
+export function webglSupport(): "none" | "software" | "gpu" {
   try {
     const canvas = document.createElement("canvas");
-    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+    const gl = (canvas.getContext("webgl2") ||
+      canvas.getContext("webgl")) as WebGLRenderingContext | null;
+    if (!gl) return "none";
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return /swiftshader|llvmpipe|software|basic render/i.test(renderer) ? "software" : "gpu";
   } catch {
-    return false;
+    return "none";
   }
 }
 
 /** Best guess at first load. Runs only in the browser (call from useEffect). */
 export function detectQuality(): Quality {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "static";
-  if (!hasWebGL()) return "static";
+  // Without a real GPU every WebGL frame is a long CPU task: use the 2D fallback.
+  if (webglSupport() !== "gpu") return "static";
   const nav = navigator as Navigator & { deviceMemory?: number };
   const coarse = window.matchMedia("(pointer: coarse)").matches;
   const small = window.innerWidth < 768;

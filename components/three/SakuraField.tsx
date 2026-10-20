@@ -2,7 +2,16 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Color, DoubleSide, InstancedMesh, MeshBasicMaterial, Object3D, Shape, ShapeGeometry, Vector3 } from "three";
+import {
+  Color,
+  DoubleSide,
+  InstancedMesh,
+  MeshBasicMaterial,
+  Object3D,
+  Shape,
+  ShapeGeometry,
+  Vector3,
+} from "three";
 import { pointerState, scrollState } from "@/lib/scroll-state";
 
 const BOX = new Vector3(14, 8, 12);
@@ -25,15 +34,32 @@ export function SakuraField({ count = 500 }: { count?: number }) {
     g.scale(0.045, 0.045, 0.045);
     return g;
   }, []);
-  const material = useMemo(() => new MeshBasicMaterial({ side: DoubleSide, transparent: true, opacity: 0.92, depthWrite: false }), []);
+  const material = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        side: DoubleSide,
+        transparent: true,
+        opacity: 0.92,
+        depthWrite: false,
+      }),
+    [],
+  );
 
   const petals = useMemo(
     () =>
       Array.from({ length: count }, () => ({
-        p: new Vector3((Math.random() - 0.5) * BOX.x, (Math.random() - 0.5) * BOX.y, (Math.random() - 0.5) * BOX.z),
+        p: new Vector3(
+          (Math.random() - 0.5) * BOX.x,
+          (Math.random() - 0.5) * BOX.y,
+          (Math.random() - 0.5) * BOX.z,
+        ),
         v: new Vector3(),
         rot: new Vector3(Math.random() * 6, Math.random() * 6, Math.random() * 6),
-        spin: new Vector3((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3),
+        spin: new Vector3(
+          (Math.random() - 0.5) * 3,
+          (Math.random() - 0.5) * 3,
+          (Math.random() - 0.5) * 3,
+        ),
         fall: 0.25 + Math.random() * 0.35,
         phase: Math.random() * 100,
         scale: 0.6 + Math.random() * 0.8,

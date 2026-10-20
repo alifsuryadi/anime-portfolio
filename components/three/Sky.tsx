@@ -59,7 +59,7 @@ export function Sky() {
             float star = step(0.9965, hash12(sg)) * smoothstep(0.08, 0.35, h);
             float tw = 0.6 + 0.4 * sin(uTime * 3.0 + hash12(sg + 7.0) * 30.0);
             col += vec3(0.9, 0.95, 1.0) * star * tw * smoothstep(0.25, 0.9, uNight) * (1.0 - cloud);
-            vec3 moonDir = normalize(vec3(-0.55, 0.42, -1.0));
+            vec3 moonDir = normalize(vec3(-0.32, 0.3, -1.0));
             float md = dot(d, moonDir);
             col += vec3(0.85, 0.97, 1.0) * smoothstep(0.9988, 0.9992, md) * smoothstep(0.3, 0.8, uNight);
             col += vec3(0.25, 0.9, 1.0) * pow(max(md, 0.0), 120.0) * 0.35 * uNight;

@@ -19,15 +19,36 @@ export function SkillOrbs() {
   const strength = useRef(0);
 
   const mats = useMemo(
-    () => COLORS.map((c) => new MeshBasicMaterial({ color: new Color(c).multiplyScalar(1.8), toneMapped: false, transparent: true })),
+    () =>
+      COLORS.map(
+        (c) =>
+          new MeshBasicMaterial({
+            color: new Color(c).multiplyScalar(1.8),
+            toneMapped: false,
+            transparent: true,
+          }),
+      ),
     [],
   );
   const halo = useMemo(
-    () => COLORS.map((c) => new MeshBasicMaterial({ color: c, transparent: true, opacity: 0.2, blending: AdditiveBlending, depthWrite: false })),
+    () =>
+      COLORS.map(
+        (c) =>
+          new MeshBasicMaterial({
+            color: c,
+            transparent: true,
+            opacity: 0.12,
+            blending: AdditiveBlending,
+            depthWrite: false,
+          }),
+      ),
     [],
   );
 
-  useEffect(() => bus.on("skill-hover", (g) => (focus.current = (g as SkillGroup | null) ?? null)), []);
+  useEffect(
+    () => bus.on("skill-hover", (g) => (focus.current = (g as SkillGroup | null) ?? null)),
+    [],
+  );
   useEffect(
     () => () => {
       [...mats, ...halo].forEach((m) => m.dispose());
@@ -55,7 +76,11 @@ export function SkillOrbs() {
       const ang = time * 0.45 + (i / GROUPS.length) * Math.PI * 2;
       const tilt = 0.35;
       const rad = 1.25 * s;
-      m.position.set(Math.cos(ang) * rad, Math.sin(ang * 1.3) * 0.25 + Math.sin(ang) * tilt * rad * 0.4, Math.sin(ang) * rad);
+      m.position.set(
+        Math.cos(ang) * rad,
+        Math.sin(ang * 1.3) * 0.25 + Math.sin(ang) * tilt * rad * 0.4,
+        Math.sin(ang) * rad,
+      );
       const hot = focus.current === g ? 1.7 : focus.current ? 0.7 : 1;
       const sc = MathUtils.lerp(m.scale.x, 0.11 * hot * s, 0.15);
       m.scale.setScalar(sc);
@@ -69,7 +94,11 @@ export function SkillOrbs() {
       if (!parent) return;
       const ang = time * 1.4 + i * 2.1;
       const rr = 0.22 + (i % 3) * 0.05;
-      m.position.set(parent.position.x + Math.cos(ang) * rr, parent.position.y + Math.sin(ang * 0.8) * rr, parent.position.z + Math.sin(ang) * rr);
+      m.position.set(
+        parent.position.x + Math.cos(ang) * rr,
+        parent.position.y + Math.sin(ang * 0.8) * rr,
+        parent.position.z + Math.sin(ang) * rr,
+      );
       m.scale.setScalar(0.025 * s * (focus.current === sk.group ? 1.6 : 1));
     });
   });
@@ -79,13 +108,17 @@ export function SkillOrbs() {
       {GROUPS.map((g, i) => (
         <mesh key={g} ref={(el) => void (orbs.current[i] = el)} material={mats[i]}>
           <icosahedronGeometry args={[1, 2]} />
-          <mesh scale={2.2} material={halo[i]}>
+          <mesh scale={1.6} material={halo[i]}>
             <sphereGeometry args={[1, 16, 12]} />
           </mesh>
         </mesh>
       ))}
       {skills.map((sk, i) => (
-        <mesh key={sk.name} ref={(el) => void (sats.current[i] = el)} material={mats[GROUPS.indexOf(sk.group)]}>
+        <mesh
+          key={sk.name}
+          ref={(el) => void (sats.current[i] = el)}
+          material={mats[GROUPS.indexOf(sk.group)]}
+        >
           <sphereGeometry args={[1, 8, 6]} />
         </mesh>
       ))}

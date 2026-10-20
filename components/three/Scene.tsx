@@ -69,7 +69,12 @@ export default function Scene({ quality }: { quality: Exclude<Quality, "static">
     <div aria-hidden="true" className="fixed inset-0 z-0">
       <Canvas
         dpr={s.dpr}
-        gl={{ antialias: quality === "high", powerPreference: "high-performance", alpha: false, stencil: false }}
+        gl={{
+          antialias: quality === "high",
+          powerPreference: "high-performance",
+          alpha: false,
+          stencil: false,
+        }}
         camera={{ fov: 32, near: 0.1, far: 200, position: [0, 0.15, 5.4] }}
         flat={false}
       >

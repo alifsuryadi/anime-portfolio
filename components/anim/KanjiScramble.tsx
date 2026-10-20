@@ -20,7 +20,13 @@ type Props = {
  * translation underneath. Screen readers get one static list of every phrase
  * instead of a stream of random glyphs.
  */
-export function KanjiScramble({ phrases, hold = 2600, className, translationClassName, label }: Props) {
+export function KanjiScramble({
+  phrases,
+  hold = 2600,
+  className,
+  translationClassName,
+  label,
+}: Props) {
   const { quality } = useQuality();
   const [index, setIndex] = useState(0);
   const { text, run } = useScramble(phrases[0].ja);
@@ -36,7 +42,8 @@ export function KanjiScramble({ phrases, hold = 2600, className, translationClas
   }, []);
 
   useEffect(() => {
-    if (quality === null) return;
+    // Static / reduced motion: keep the first phrase; the full list is in the sr-only text.
+    if (quality === null || quality === "static") return;
     let alive = true;
     let timer: ReturnType<typeof setTimeout>;
     const loop = (i: number) => {
@@ -45,7 +52,7 @@ export function KanjiScramble({ phrases, hold = 2600, className, translationClas
         if (!visible.current || document.hidden) return loop(i);
         const next = (i + 1) % phrases.length;
         setIndex(next);
-        await run(phrases[next].ja, quality === "static");
+        await run(phrases[next].ja);
         if (alive) loop(next);
       }, hold);
     };

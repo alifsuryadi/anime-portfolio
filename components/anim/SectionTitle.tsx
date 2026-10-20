@@ -11,9 +11,16 @@ export function SectionTitle({ id, side = "left" }: { id: SectionId; side?: "lef
         side === "left" ? "left-4 lg:left-8" : "right-4 lg:right-8"
       }`}
     >
-      <span className="h-16 w-px bg-sakura" />
-      <DecodeText text={t.ja} hover className="vertical-jp text-2xl font-bold text-paper lg:text-3xl" />
-      <span className="vertical-jp text-[0.7rem] tracking-[0.3em] text-muted" style={{ textOrientation: "mixed" }}>
+      <span className="bg-sakura h-16 w-px" />
+      <DecodeText
+        text={t.ja}
+        hover
+        className="vertical-jp text-paper text-2xl font-bold lg:text-3xl"
+      />
+      <span
+        className="vertical-jp text-muted text-[0.7rem] tracking-[0.3em]"
+        style={{ textOrientation: "mixed" }}
+      >
         {t.translation.toUpperCase()}
       </span>
     </div>

@@ -13,22 +13,49 @@ export function Rooftop() {
   const g = toonGradient();
   const rails = useRef<InstancedMesh>(null);
   const bulbs = useRef<InstancedMesh>(null);
-  const vendGlow = useMemo(() => new MeshBasicMaterial({ color: new Color(palette.sakura).multiplyScalar(1.6), toneMapped: false }), []);
-  const neon = useMemo(() => new MeshBasicMaterial({ color: new Color(palette.cyan).multiplyScalar(1.5), toneMapped: false }), []);
-  const bulbMat = useMemo(() => new MeshBasicMaterial({ color: new Color("#FFD9A0").multiplyScalar(2.2), toneMapped: false }), []);
+  const vendGlow = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        color: new Color(palette.sakura).multiplyScalar(1.6),
+        toneMapped: false,
+      }),
+    [],
+  );
+  const neon = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        color: new Color(palette.cyan).multiplyScalar(1.5),
+        toneMapped: false,
+      }),
+    [],
+  );
+  const bulbMat = useMemo(
+    () =>
+      new MeshBasicMaterial({ color: new Color("#FFC98A").multiplyScalar(1.5), toneMapped: false }),
+    [],
+  );
 
   const bulbPoints = useMemo(() => {
     // Catenary from the vending machine to the water tank, then to the torii.
     const pts: [number, number, number][] = [];
-    const seg = (a: [number, number, number], b: [number, number, number], n: number, sag: number) => {
+    const seg = (
+      a: [number, number, number],
+      b: [number, number, number],
+      n: number,
+      sag: number,
+    ) => {
       for (let i = 0; i < n; i++) {
         const t = i / (n - 1);
-        pts.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t - Math.sin(Math.PI * t) * sag, a[2] + (b[2] - a[2]) * t]);
+        pts.push([
+          a[0] + (b[0] - a[0]) * t,
+          a[1] + (b[1] - a[1]) * t - Math.sin(Math.PI * t) * sag,
+          a[2] + (b[2] - a[2]) * t,
+        ]);
       }
     };
-    seg([-4.8, 1.4, -2.5], [4.6, 1.8, -6.5], 22, 0.7);
+    seg([-4.4, 1.4, -9.5], [4.6, 1.8, -6.5], 20, 0.6);
     seg([4.6, 1.8, -6.5], [1.3, 1.9, -10], 10, 0.4);
-    seg([-1.3, 1.9, -10], [-4.8, 1.4, -2.5], 14, 0.6);
+    seg([-1.3, 1.9, -10], [-4.4, 1.4, -9.5], 6, 0.2);
     return pts;
   }, []);
 
@@ -77,7 +104,11 @@ export function Rooftop() {
         <meshToonMaterial color="#2a2140" gradientMap={g} />
       </mesh>
       {/* tiles */}
-      <gridHelper args={[12, 24, "#3b2e5c", "#3b2e5c"]} position={[0, TOP + 0.005, -5]} scale={[1, 1, 1.78]} />
+      <gridHelper
+        args={[12, 24, "#3b2e5c", "#3b2e5c"]}
+        position={[0, TOP + 0.005, -5]}
+        scale={[1, 1, 1.78]}
+      />
       {/* neon edge */}
       <mesh position={[0, TOP - 0.02, 5.72]} material={neon}>
         <boxGeometry args={[12.4, 0.04, 0.04]} />
@@ -94,7 +125,7 @@ export function Rooftop() {
         <meshToonMaterial color="#5b4d82" gradientMap={g} />
       </instancedMesh>
       {/* vending machine */}
-      <group position={[-4.8, TOP, -2.5]} rotation={[0, 0.5, 0]}>
+      <group position={[-4.4, TOP, -9.5]} rotation={[0, 0.6, 0]}>
         <mesh position={[0, 0.95, 0]}>
           <boxGeometry args={[0.95, 1.9, 0.7]} />
           <meshToonMaterial color="#e8e2f5" gradientMap={g} />
@@ -143,8 +174,12 @@ export function Rooftop() {
         </mesh>
       ))}
       {/* string lights */}
-      <instancedMesh ref={bulbs} args={[undefined, undefined, bulbPoints.length]} material={bulbMat}>
-        <sphereGeometry args={[0.045, 8, 6]} />
+      <instancedMesh
+        ref={bulbs}
+        args={[undefined, undefined, bulbPoints.length]}
+        material={bulbMat}
+      >
+        <sphereGeometry args={[0.028, 8, 6]} />
       </instancedMesh>
     </group>
   );

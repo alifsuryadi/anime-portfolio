@@ -34,6 +34,7 @@ html {
   color: var(--paper);
   color-scheme: dark;
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
   scroll-padding-top: var(--header-h);
 }
 html.lenis,
@@ -87,12 +88,24 @@ html.has-cursor * {
   animation: grain 1.2s steps(6) infinite;
 }
 @keyframes grain {
-  0% { transform: translate(0, 0); }
-  20% { transform: translate(-3%, 2%); }
-  40% { transform: translate(2%, -4%); }
-  60% { transform: translate(-4%, -1%); }
-  80% { transform: translate(3%, 3%); }
-  100% { transform: translate(0, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-3%, 2%);
+  }
+  40% {
+    transform: translate(2%, -4%);
+  }
+  60% {
+    transform: translate(-4%, -1%);
+  }
+  80% {
+    transform: translate(3%, 3%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
 
 .halftone {
@@ -149,7 +162,14 @@ html.has-cursor * {
   letter-spacing: 0.04em;
   background: var(--ink);
   color: var(--paper);
-  clip-path: polygon(0.8rem 0, 100% 0, 100% calc(100% - 0.8rem), calc(100% - 0.8rem) 100%, 0 100%, 0 0.8rem);
+  clip-path: polygon(
+    0.8rem 0,
+    100% 0,
+    100% calc(100% - 0.8rem),
+    calc(100% - 0.8rem) 100%,
+    0 100%,
+    0 0.8rem
+  );
   transition:
     background 0.25s var(--ease-snap),
     color 0.25s var(--ease-snap);
@@ -201,14 +221,32 @@ html.has-cursor * {
   animation: glitch-b 0.35s steps(2) infinite;
 }
 @keyframes glitch-a {
-  0% { transform: translate(-3px, 1px); clip-path: inset(0 0 55% 0); }
-  50% { transform: translate(2px, -1px); clip-path: inset(40% 0 10% 0); }
-  100% { transform: translate(-1px, 2px); clip-path: inset(70% 0 0 0); }
+  0% {
+    transform: translate(-3px, 1px);
+    clip-path: inset(0 0 55% 0);
+  }
+  50% {
+    transform: translate(2px, -1px);
+    clip-path: inset(40% 0 10% 0);
+  }
+  100% {
+    transform: translate(-1px, 2px);
+    clip-path: inset(70% 0 0 0);
+  }
 }
 @keyframes glitch-b {
-  0% { transform: translate(3px, -1px); clip-path: inset(50% 0 0 0); }
-  50% { transform: translate(-2px, 2px); clip-path: inset(0 0 60% 0); }
-  100% { transform: translate(1px, -2px); clip-path: inset(20% 0 45% 0); }
+  0% {
+    transform: translate(3px, -1px);
+    clip-path: inset(50% 0 0 0);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+    clip-path: inset(0 0 60% 0);
+  }
+  100% {
+    transform: translate(1px, -2px);
+    clip-path: inset(20% 0 45% 0);
+  }
 }
 
 /* Manga panel image: halftone + grayscale until hover/focus, then full colour. */
@@ -220,7 +258,9 @@ html.has-cursor * {
   color: var(--ink);
   opacity: 0.55;
   mix-blend-mode: multiply;
-  transition: opacity 0.6s var(--ease-snap), background-size 0.6s var(--ease-snap);
+  transition:
+    opacity 0.6s var(--ease-snap),
+    background-size 0.6s var(--ease-snap);
 }
 .panel:hover .manga-img,
 .panel:focus-within .manga-img {
@@ -237,15 +277,23 @@ html.has-cursor * {
   animation: loader-failsafe 0.4s 6s forwards;
 }
 @keyframes loader-failsafe {
-  to { opacity: 0; visibility: hidden; }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .scroll-kunai {
   animation: kunai 1.8s var(--ease-snap) infinite;
 }
 @keyframes kunai {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(14px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
 }
 
 .sr-only {
@@ -265,7 +313,9 @@ html.chibi .chibi-bounce {
   animation: chibi 0.6s ease-in-out infinite alternate;
 }
 @keyframes chibi {
-  to { transform: translateY(-6px) rotate(-2deg); }
+  to {
+    transform: translateY(-6px) rotate(-2deg);
+  }
 }
 
 /* ───────────────────────── Reduced motion / static ───────────────────────── */
@@ -278,7 +328,9 @@ html.chibi .chibi-bounce {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .grain { display: none; }
+  .grain {
+    display: none;
+  }
 }
 html[data-quality="static"] .grain,
 html[data-quality="static"] .scroll-kunai {

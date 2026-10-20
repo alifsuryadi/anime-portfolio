@@ -30,7 +30,11 @@ export function Timeline({ stations }: { stations: Station[] }) {
         gsap.fromTo(
           "[data-rail-fill]",
           { scaleY: 0 },
-          { scaleY: 1, ease: "none", scrollTrigger: { trigger: list, start: "top 60%", end: "bottom 60%", scrub: 0.4 } },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: { trigger: list, start: "top 60%", end: "bottom 60%", scrub: 0.4 },
+          },
         );
         gsap.utils.toArray<HTMLElement>("[data-station]").forEach((st) => {
           gsap.from(st.querySelector("[data-card]"), {
@@ -65,11 +69,24 @@ export function Timeline({ stations }: { stations: Station[] }) {
             "linear-gradient(90deg, var(--muted) 0 2px, transparent 2px calc(100% - 2px), var(--muted) calc(100% - 2px)), repeating-linear-gradient(180deg, rgb(185 177 201 / 0.35) 0 4px, transparent 4px 18px)",
         }}
       />
-      <span aria-hidden="true" data-rail-fill className="absolute top-0 bottom-0 -left-[2px] w-1 origin-top bg-sakura shadow-[0_0_12px_var(--sakura)]" />
+      <span
+        aria-hidden="true"
+        data-rail-fill
+        className="bg-sakura absolute top-0 bottom-0 -left-[2px] w-1 origin-top shadow-[0_0_12px_var(--sakura)]"
+      />
       {/* the train */}
       <span aria-hidden="true" data-train className="absolute -left-[17px] z-10 -translate-y-1/2">
         <svg viewBox="0 0 34 46" className="h-11 w-8">
-          <rect x="3" y="2" width="28" height="38" rx="9" fill="var(--paper)" stroke="var(--ink)" strokeWidth="2" />
+          <rect
+            x="3"
+            y="2"
+            width="28"
+            height="38"
+            rx="9"
+            fill="var(--paper)"
+            stroke="var(--ink)"
+            strokeWidth="2"
+          />
           <rect x="7" y="7" width="20" height="11" rx="3" fill="var(--night)" />
           <rect x="3" y="24" width="28" height="4" fill="var(--sakura)" />
           <circle cx="10" cy="34" r="2.5" fill="var(--neon-cyan)" />
@@ -83,7 +100,7 @@ export function Timeline({ stations }: { stations: Station[] }) {
           <li key={s.id} data-station className="group relative pb-16 pl-10 last:pb-0 md:pl-16">
             <span
               aria-hidden="true"
-              className="absolute top-1 -left-[15px] grid size-[30px] place-items-center rounded-full border-4 bg-ink font-display text-[0.6rem] transition-all duration-500 group-[.is-reached]:scale-110"
+              className="bg-ink font-display absolute top-1 -left-[15px] grid size-[30px] place-items-center rounded-full border-4 text-[0.6rem] transition-all duration-500 group-[.is-reached]:scale-110"
               style={{ borderColor: color, boxShadow: `0 0 0 0 ${color}` }}
             >
               {String(i + 1).padStart(2, "0")}
@@ -93,17 +110,25 @@ export function Timeline({ stations }: { stations: Station[] }) {
                 <span lang="ja" className="font-jp text-xl font-bold" style={{ color }}>
                   {s.stationJa}
                 </span>
-                <span className="text-xs tracking-[0.25em] text-muted uppercase">{s.station} station</span>
+                <span className="text-muted text-xs tracking-[0.25em] uppercase">
+                  {s.station} station
+                </span>
               </p>
-              <div className="mt-3 border-l-4 bg-ink/75 p-5 backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-1" style={{ borderColor: color }}>
+              <div
+                className="bg-ink/75 mt-3 border-l-4 p-5 backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-1"
+                style={{ borderColor: color }}
+              >
                 <h3 className="font-display text-xl md:text-2xl">{s.title}</h3>
-                <p className="mt-1 text-sm text-cyan">
+                <p className="text-cyan mt-1 text-sm">
                   {s.org}
                   {s.period ? <span className="text-muted"> · {s.period}</span> : null}
                 </p>
-                <ul className="mt-3 list-none space-y-1.5 text-paper/90">
+                <ul className="text-paper/90 mt-3 list-none space-y-1.5">
                   {s.points.map((pt) => (
-                    <li key={pt} className="relative pl-5 before:absolute before:top-[0.6em] before:left-0 before:size-2 before:rotate-45 before:bg-sakura">
+                    <li
+                      key={pt}
+                      className="before:bg-sakura relative pl-5 before:absolute before:top-[0.6em] before:left-0 before:size-2 before:rotate-45"
+                    >
                       {pt}
                     </li>
                   ))}

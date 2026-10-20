@@ -13,7 +13,9 @@ export function SceneMount() {
   const [idle, setIdle] = useState(false);
 
   useEffect(() => {
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    };
     if (w.requestIdleCallback) {
       const id = w.requestIdleCallback(() => setIdle(true), { timeout: 900 });
       return () => window.cancelIdleCallback?.(id);

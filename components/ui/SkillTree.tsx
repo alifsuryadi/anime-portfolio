@@ -40,18 +40,31 @@ export function SkillTree() {
   }, []);
 
   return (
-    <div ref={root} className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 xl:grid-cols-5" onPointerLeave={() => setHover(null)}>
+    <div
+      ref={root}
+      className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 xl:grid-cols-5"
+      onPointerLeave={() => setHover(null)}
+    >
       {GROUPS.map((g) => {
         const list = skills.filter((s) => s.group === g);
         const color = ACCENT[g];
         return (
-          <section key={g} aria-label={skillGroups[g].label} className="relative flex flex-col items-start" style={{ ["--c" as string]: color }}>
+          <section
+            key={g}
+            aria-label={skillGroups[g].label}
+            className="relative flex flex-col items-start"
+            style={{ ["--c" as string]: color }}
+          >
             <div className="flex items-center gap-2">
               <span
                 lang="ja"
                 aria-hidden="true"
-                className="grid size-12 place-items-center rounded-full border-2 font-jp text-sm font-bold transition-shadow"
-                style={{ borderColor: color, color, boxShadow: hover?.g === g ? `0 0 18px ${color}` : "none" }}
+                className="font-jp grid size-12 place-items-center rounded-full border-2 text-sm font-bold transition-shadow"
+                style={{
+                  borderColor: color,
+                  color,
+                  boxShadow: hover?.g === g ? `0 0 18px ${color}` : "none",
+                }}
               >
                 {skillGroups[g].jp}
               </span>
@@ -67,7 +80,10 @@ export function SkillTree() {
                     <span
                       aria-hidden="true"
                       className="absolute top-0 -left-px h-full w-0.5 transition-colors duration-300"
-                      style={{ background: lit ? color : "var(--line)", boxShadow: lit ? `0 0 8px ${color}` : "none" }}
+                      style={{
+                        background: lit ? color : "var(--line)",
+                        boxShadow: lit ? `0 0 8px ${color}` : "none",
+                      }}
                     />
                     <button
                       type="button"
@@ -88,14 +104,18 @@ export function SkillTree() {
                           boxShadow: lit ? `0 0 12px ${color}` : "none",
                         }}
                       />
-                      <span className={`transition-colors ${lit || isOpen ? "text-paper" : "text-paper/80"}`}>{s.name}</span>
+                      <span
+                        className={`transition-colors ${lit || isOpen ? "text-paper" : "text-paper/80"}`}
+                      >
+                        {s.name}
+                      </span>
                     </button>
                     <div
                       id={id}
                       role="region"
                       aria-label={`Tentang ${s.name}`}
                       hidden={!isOpen}
-                      className="absolute top-full left-2 z-20 mt-1 w-56 border-2 bg-ink p-3 text-xs leading-relaxed text-paper shadow-[6px_6px_0_var(--c)]"
+                      className="bg-ink text-paper absolute top-full left-2 z-20 mt-1 w-56 border-2 p-3 text-xs leading-relaxed shadow-[6px_6px_0_var(--c)]"
                       style={{ borderColor: color }}
                     >
                       <p className="mb-1 font-bold" style={{ color }}>

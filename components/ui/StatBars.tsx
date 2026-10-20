@@ -39,14 +39,14 @@ export function StatBars({ stats }: { stats: readonly Stat[] }) {
             </span>
           </dt>
           <dd className="mt-1 flex items-center gap-2">
-            <span className="relative h-2.5 flex-1 -skew-x-12 overflow-hidden bg-ink/80 ring-1 ring-line">
+            <span className="bg-ink/80 ring-line relative h-2.5 flex-1 -skew-x-12 overflow-hidden ring-1">
               <span
                 data-bar
                 className="absolute inset-y-0 left-0 origin-left bg-[linear-gradient(90deg,var(--sakura),var(--sunset))]"
                 style={{ width: `${s.value}%` }}
               />
             </span>
-            <span className="w-8 text-right font-display text-xs tabular-nums">{s.value}</span>
+            <span className="font-display w-8 text-right text-xs tabular-nums">{s.value}</span>
           </dd>
         </div>
       ))}

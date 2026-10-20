@@ -3,7 +3,10 @@ import type Lenis from "lenis";
 /** The single Lenis instance (null in static / reduced-motion mode). */
 export const lenisRef: { current: Lenis | null } = { current: null };
 
-export function scrollToTarget(target: string | number | HTMLElement, opts?: { immediate?: boolean }) {
+export function scrollToTarget(
+  target: string | number | HTMLElement,
+  opts?: { immediate?: boolean },
+) {
   const lenis = lenisRef.current;
   if (lenis) {
     lenis.scrollTo(target, { offset: 0, immediate: opts?.immediate, duration: 1.4 });

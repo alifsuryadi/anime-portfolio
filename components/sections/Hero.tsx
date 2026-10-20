@@ -19,15 +19,21 @@ export function Hero() {
       <div className="mx-auto w-full max-w-7xl">
         <div className="mb-6 flex flex-wrap items-center gap-3 text-sm">
           <span className="chip border-sakura/60 text-paper">
-            <span aria-hidden="true" className="mr-1 text-sakura">●</span>
+            <span aria-hidden="true" className="text-sakura mr-1">
+              ●
+            </span>
             Terbuka untuk proyek & kolaborasi
           </span>
           <span className="chip text-muted">{profile.location}</span>
         </div>
 
         <h1 id="hero-title" className="display-xl">
-          <SplitText text="ALIF" className="block text-paper" />
-          <SplitText text="SURYADI" className="block text-outline" letterClassName="hover:text-sakura" />
+          <SplitText text="ALIF" className="text-paper block" />
+          <SplitText
+            text="SURYADI"
+            className="text-outline block"
+            letterClassName="hover:text-sakura"
+          />
           <span className="sr-only"> · {profile.role}</span>
         </h1>
 
@@ -36,11 +42,12 @@ export function Hero() {
             <KanjiScramble
               phrases={heroPhrases}
               label="Peran"
-              className="text-2xl text-cyan md:text-4xl"
+              className="text-cyan text-2xl md:text-4xl"
               translationClassName="mt-1 text-sm tracking-[0.2em] text-muted uppercase"
             />
-            <p className="mt-5 text-base leading-relaxed text-paper/90 md:text-lg">
-              {profile.role}. Membangun web yang cepat, aksesibel, dan sedikit ajaib, dari Indonesia.
+            <p className="text-paper/90 mt-5 text-base leading-relaxed md:text-lg">
+              {profile.role}. Membangun web yang cepat, aksesibel, dan sedikit ajaib, dari
+              Indonesia.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -57,7 +64,7 @@ export function Hero() {
       {/* Scroll indicator: a kunai that keeps diving */}
       <a
         href="#about"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs text-muted md:flex"
+        className="text-muted absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs md:flex"
       >
         <span lang="ja" aria-hidden="true" className="vertical-jp text-[0.7rem]">
           スクロール

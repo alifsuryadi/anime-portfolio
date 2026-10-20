@@ -33,12 +33,16 @@ export type PoseSpec = Partial<Record<BoneName, Vec3>>;
 export type PoseName = "idle" | "wave" | "cast" | "think" | "walk" | "greet" | "cheer";
 
 /** VRM 1.0 preset expression names. */
-export type ExpressionSpec = Partial<Record<"happy" | "surprised" | "relaxed" | "angry" | "sad", number>>;
+export type ExpressionSpec = Partial<
+  Record<"happy" | "surprised" | "relaxed" | "angry" | "sad", number>
+>;
 
 export type SceneKey = {
   character: { position: Vec3; rotationY: number; scale: number };
   /** Overrides for narrow screens (< 768px), so the character never sits behind text. */
   mobile?: { position?: Vec3; rotationY?: number; scale?: number };
+  /** Camera override for narrow screens. Default: pulled back and centered. */
+  mobileCamera?: { position: Vec3; target: Vec3; fov: number };
   camera: { position: Vec3; target: Vec3; fov: number };
   pose: PoseName;
   expression: ExpressionSpec;
@@ -93,19 +97,27 @@ export const poses: Record<PoseName, PoseSpec> = {
 };
 
 export const character = {
-  /** Path to a VRM (0.x or 1.0). If the file is missing, a procedural chibi is used. */
-  vrmUrl: "/models/character.vrm",
+  /**
+   * Path to a VRM (0.x or 1.0), e.g. "/models/character.vrm". While this is
+   * null (or the file is missing) the procedural chibi is used instead.
+   */
+  vrmUrl: null as string | null,
   /** Uniform scale applied to VRM models (VRoid exports are ~1.6m tall). */
   vrmScale: 1,
-  /** Optional 2D fallback: image sequence manifest for weak devices. */
-  sequenceManifest: "/sequences/character/manifest.json",
+  /**
+   * Optional 2D fallback for devices without a GPU: an image sequence scrubbed
+   * by scroll, e.g. "/sequences/character/manifest.json". null = still SVG.
+   */
+  sequenceManifest: null as string | null,
 };
 
 /** The world: a Neo-Tokyo rooftop. Character stands at y = -1, a torii shrine sits at z = -10. */
 export const scenes: Record<SceneId, SceneKey> = {
   hero: {
     character: { position: [0, -1, 0], rotationY: 0, scale: 1 },
-    mobile: { position: [0, -1.25, 0], scale: 0.85 },
+    mobile: { position: [0, -1, 0], scale: 0.8 },
+    // Frame the character in the empty sky above the hero copy.
+    mobileCamera: { position: [0, -0.3, 5.3], target: [0, -1.45, 0], fov: 44 },
     camera: { position: [0, 0.15, 5.4], target: [0, -0.05, 0], fov: 32 },
     pose: "idle",
     expression: { relaxed: 0.35 },
@@ -120,7 +132,7 @@ export const scenes: Record<SceneId, SceneKey> = {
     night: 0.15,
   },
   skills: {
-    character: { position: [-2.5, -1, 0], rotationY: 0.35, scale: 1 },
+    character: { position: [-3.3, -1, 0], rotationY: 0.45, scale: 1 },
     mobile: { position: [0, -2.4, -1.5], scale: 0.7 },
     camera: { position: [-0.6, 0.8, 7.2], target: [-0.6, -0.1, 0], fov: 34 },
     pose: "cast",
@@ -144,7 +156,7 @@ export const scenes: Record<SceneId, SceneKey> = {
     night: 0.6,
   },
   contact: {
-    character: { position: [2.2, -1, 0.6], rotationY: -0.2, scale: 1 },
+    character: { position: [2.6, -1, 0.6], rotationY: -0.25, scale: 1 },
     mobile: { position: [0, -2.6, -1.5], scale: 0.7 },
     camera: { position: [0.6, 0.2, 5.8], target: [0.6, 0, 0], fov: 32 },
     pose: "greet",

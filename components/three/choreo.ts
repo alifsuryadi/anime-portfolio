@@ -42,7 +42,13 @@ export function currentKeys() {
   const sf = MathUtils.clamp(scrollState.sectionFloat, 0, order.length - 1);
   const i = Math.floor(sf);
   const j = Math.min(order.length - 1, i + 1);
-  return { a: scenes[order[i]], b: scenes[order[j]], t: smooth(sf - i), idA: order[i], idB: order[j] };
+  return {
+    a: scenes[order[i]],
+    b: scenes[order[j]],
+    t: smooth(sf - i),
+    idA: order[i],
+    idB: order[j],
+  };
 }
 
 /** Shared world values that several components read each frame. */
@@ -55,9 +61,16 @@ export const world = {
 };
 
 const lerp3 = (out: Vector3, a: Vec3, b: Vec3, t: number) =>
-  out.set(MathUtils.lerp(a[0], b[0], t), MathUtils.lerp(a[1], b[1], t), MathUtils.lerp(a[2], b[2], t));
+  out.set(
+    MathUtils.lerp(a[0], b[0], t),
+    MathUtils.lerp(a[1], b[1], t),
+    MathUtils.lerp(a[2], b[2], t),
+  );
 
-type Additive = (bones: Record<BoneName, Vec3>, ctx: { time: number; w: number; out: { lift: number } }) => void;
+type Additive = (
+  bones: Record<BoneName, Vec3>,
+  ctx: { time: number; w: number; out: { lift: number } },
+) => void;
 
 const add = (b: Record<BoneName, Vec3>, name: BoneName, x: number, y: number, z: number) => {
   b[name][0] += x;
@@ -120,7 +133,14 @@ export class CharacterDriver {
   rotationY = 0;
   scale = 1;
   bones = zero();
-  expressions: Record<ExpressionName, number> = { happy: 0, surprised: 0, relaxed: 0, angry: 0, sad: 0, blink: 0 };
+  expressions: Record<ExpressionName, number> = {
+    happy: 0,
+    surprised: 0,
+    relaxed: 0,
+    angry: 0,
+    sad: 0,
+    blink: 0,
+  };
   head = { x: 0, y: 0 };
   /** Angular velocity of the head, for spring hair on the procedural model. */
   headVel = { x: 0, y: 0 };
@@ -141,7 +161,11 @@ export class CharacterDriver {
     for (const n of BONES) {
       const va = pa[n] ?? [0, 0, 0];
       const vb = pb[n] ?? [0, 0, 0];
-      target[n] = [MathUtils.lerp(va[0], vb[0], t), MathUtils.lerp(va[1], vb[1], t), MathUtils.lerp(va[2], vb[2], t)];
+      target[n] = [
+        MathUtils.lerp(va[0], vb[0], t),
+        MathUtils.lerp(va[1], vb[1], t),
+        MathUtils.lerp(va[2], vb[2], t),
+      ];
     }
     const out = { lift: 0 };
     additive[a.pose](target, { time, w: 1 - t, out });

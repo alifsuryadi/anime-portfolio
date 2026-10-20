@@ -10,12 +10,16 @@ import { world } from "./choreo";
 export function Torii({ position = [0, -1, -10] as [number, number, number] }) {
   const g = toonGradient();
   const lanterns = useRef<Group>(null);
-  const glow = useMemo(() => new MeshBasicMaterial({ color: new Color("#FFB36B"), toneMapped: false }), []);
+  const glow = useMemo(
+    () => new MeshBasicMaterial({ color: new Color("#FFB36B"), toneMapped: false }),
+    [],
+  );
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime;
     glow.color.set("#FFB36B").multiplyScalar(1 + world.night * 1.4 + Math.sin(t * 6) * 0.05);
-    if (lanterns.current) lanterns.current.children.forEach((c, i) => (c.rotation.z = Math.sin(t * 1.3 + i) * 0.05));
+    if (lanterns.current)
+      lanterns.current.children.forEach((c, i) => (c.rotation.z = Math.sin(t * 1.3 + i) * 0.05));
   });
 
   const red = <meshToonMaterial color={palette.vermilion} gradientMap={g} />;

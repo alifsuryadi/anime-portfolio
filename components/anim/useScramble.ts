@@ -53,5 +53,7 @@ export function useScramble(initial: string, { step = 55, flicker = 4 } = {}) {
 }
 
 export function prefersReducedMotion() {
-  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return (
+    typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 }

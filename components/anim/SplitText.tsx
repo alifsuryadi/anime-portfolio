@@ -40,7 +40,18 @@ export function SplitText({ text, className, letterClassName = "" }: Props) {
 
   const hop = (e: React.PointerEvent<HTMLSpanElement>) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(e.currentTarget, { y: 0 }, { y: -18, rotate: gsap.utils.random(-8, 8), duration: 0.18, yoyo: true, repeat: 1, ease: "power2.out" });
+    gsap.fromTo(
+      e.currentTarget,
+      { y: 0 },
+      {
+        y: -18,
+        rotate: gsap.utils.random(-8, 8),
+        duration: 0.18,
+        yoyo: true,
+        repeat: 1,
+        ease: "power2.out",
+      },
+    );
   };
 
   return (
@@ -52,7 +63,11 @@ export function SplitText({ text, className, letterClassName = "" }: Props) {
             {" "}
           </span>
         ) : (
-          <span key={i} aria-hidden="true" className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+          <span
+            key={i}
+            aria-hidden="true"
+            className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+          >
             <span data-letter className={`inline-block ${letterClassName}`} onPointerEnter={hop}>
               {ch}
             </span>

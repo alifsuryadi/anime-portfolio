@@ -3,7 +3,18 @@
 import { useEffect, useState } from "react";
 import { useQuality } from "./QualityProvider";
 
-const CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+const CODE = [
+  "ArrowUp",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight",
+  "b",
+  "a",
+];
 
 /** Easter egg: the Konami code toggles chibi mode. */
 export function Konami() {
@@ -32,9 +43,13 @@ export function Konami() {
   }, [toast]);
 
   return (
-    <div role="status" aria-live="polite" className="pointer-events-none fixed bottom-6 left-1/2 z-[96] -translate-x-1/2">
+    <div
+      role="status"
+      aria-live="polite"
+      className="pointer-events-none fixed bottom-6 left-1/2 z-[96] -translate-x-1/2"
+    >
       {toast && (
-        <p className="chibi-bounce -rotate-2 border-2 border-ink bg-sakura px-5 py-3 font-jp font-bold text-ink shadow-[6px_6px_0_var(--ink)]">
+        <p className="chibi-bounce border-ink bg-sakura font-jp text-ink -rotate-2 border-2 px-5 py-3 font-bold shadow-[6px_6px_0_var(--ink)]">
           {toast}
         </p>
       )}

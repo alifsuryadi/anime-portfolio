@@ -10,31 +10,37 @@ import { currentKeys, world } from "./choreo";
 export function CameraRig() {
   const pos = useMemo(() => new Vector3(), []);
   const look = useMemo(() => new Vector3(), []);
-  const cur = useMemo(() => ({ pos: new Vector3(), look: new Vector3(), fov: 32, init: false }), []);
+  const cur = useMemo(
+    () => ({ pos: new Vector3(), look: new Vector3(), fov: 32, init: false }),
+    [],
+  );
 
   useFrame(({ camera, size, clock }, dt) => {
     const { a, b, t } = currentKeys();
-    world.mobile = size.width < 768;
     world.night = MathUtils.lerp(a.night, b.night, t);
 
+    world.mobile = size.width < 768;
+    const ca = (world.mobile && a.mobileCamera) || a.camera;
+    const cb = (world.mobile && b.mobileCamera) || b.camera;
     pos.set(
-      MathUtils.lerp(a.camera.position[0], b.camera.position[0], t),
-      MathUtils.lerp(a.camera.position[1], b.camera.position[1], t),
-      MathUtils.lerp(a.camera.position[2], b.camera.position[2], t),
+      MathUtils.lerp(ca.position[0], cb.position[0], t),
+      MathUtils.lerp(ca.position[1], cb.position[1], t),
+      MathUtils.lerp(ca.position[2], cb.position[2], t),
     );
     look.set(
-      MathUtils.lerp(a.camera.target[0], b.camera.target[0], t),
-      MathUtils.lerp(a.camera.target[1], b.camera.target[1], t),
-      MathUtils.lerp(a.camera.target[2], b.camera.target[2], t),
+      MathUtils.lerp(ca.target[0], cb.target[0], t),
+      MathUtils.lerp(ca.target[1], cb.target[1], t),
+      MathUtils.lerp(ca.target[2], cb.target[2], t),
     );
-    let fov = MathUtils.lerp(a.camera.fov, b.camera.fov, t);
+    let fov = MathUtils.lerp(ca.fov, cb.fov, t);
 
-    // Narrow screens: pull back so the character fits, and center the shot.
+    // Narrow screens without an explicit camera: pull back and center the shot.
     if (world.mobile) {
-      pos.z += 1.6;
-      pos.x *= 0.3;
-      look.x *= 0.3;
-      fov += 6;
+      const w = (a.mobileCamera ? 0 : 1 - t) + (b.mobileCamera ? 0 : t);
+      pos.z += 1.6 * w;
+      pos.x *= 1 - 0.7 * w;
+      look.x *= 1 - 0.7 * w;
+      fov += 6 * w;
     }
 
     // Pointer parallax + fast-scroll shake.

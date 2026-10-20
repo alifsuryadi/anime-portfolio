@@ -15,7 +15,11 @@ const CLIPS = [
   "polygon(2% 0, 100% 4%, 98% 96%, 0 100%)",
   "polygon(0 0, 98% 2%, 100% 98%, 3% 100%)",
 ];
-const ACCENT = { sakura: "var(--sakura)", cyan: "var(--neon-cyan)", sunset: "var(--sunset)" } as const;
+const ACCENT = {
+  sakura: "var(--sakura)",
+  cyan: "var(--neon-cyan)",
+  sunset: "var(--sunset)",
+} as const;
 
 /**
  * Manga page: panels slide horizontally while the section is pinned (desktop,
@@ -55,7 +59,13 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
               rotate: -1,
               y: 0,
               ease: "none",
-              scrollTrigger: { trigger: p, containerAnimation: tween, start: "left right", end: "center center", scrub: true },
+              scrollTrigger: {
+                trigger: p,
+                containerAnimation: tween,
+                start: "left right",
+                end: "center center",
+                scrub: true,
+              },
             },
           );
         });
@@ -87,19 +97,26 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
         className="flex h-full snap-x snap-mandatory items-center gap-6 overflow-x-auto px-4 py-24 md:snap-none md:gap-10 md:overflow-visible md:px-[8vw] md:py-0"
       >
         {/* Title panel */}
-        <div data-panel className="relative flex h-[62svh] min-h-[22rem] w-[82vw] shrink-0 snap-center flex-col justify-between border-4 border-ink bg-paper p-6 text-ink md:w-[34vw]">
-          <div aria-hidden="true" className="halftone absolute inset-0 text-ink/10" />
-          <span lang="ja" aria-hidden="true" className="vertical-jp absolute top-6 right-6 text-5xl font-bold">
+        <div
+          data-panel
+          className="border-ink bg-paper text-ink relative flex h-[62svh] min-h-[22rem] w-[82vw] shrink-0 snap-center flex-col justify-between border-4 p-6 md:w-[34vw]"
+        >
+          <div aria-hidden="true" className="halftone text-ink/10 absolute inset-0" />
+          <span
+            lang="ja"
+            aria-hidden="true"
+            className="vertical-jp absolute top-6 right-6 text-5xl font-bold"
+          >
             作品集
           </span>
           <h2 id="projects-title" className="heading-section relative max-w-[10ch]">
             Karya pilihan
           </h2>
           <p className="relative max-w-xs text-base font-medium">
-            {projects.length} chapter, dari AI finansial sampai marketplace. Arahkan kursor ke panel untuk mewarnainya,
-            klik untuk membaca ceritanya.
+            {projects.length} chapter, dari AI finansial sampai marketplace. Arahkan kursor ke panel
+            untuk mewarnainya, klik untuk membaca ceritanya.
           </p>
-          <span aria-hidden="true" className="relative hidden font-display text-sm md:block">
+          <span aria-hidden="true" className="font-display relative hidden text-sm md:block">
             GULIR →
           </span>
         </div>
@@ -115,10 +132,10 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
               <Link
                 href={`/projects/${p.slug}`}
                 data-cursor="project"
-                className="flex h-full flex-col bg-ink p-1.5 outline-offset-8"
+                className="bg-ink flex h-full flex-col p-1.5 outline-offset-8"
                 style={{ clipPath: CLIPS[i % CLIPS.length] }}
               >
-                <div className="relative flex-1 overflow-hidden bg-paper">
+                <div className="bg-paper relative flex-1 overflow-hidden">
                   <Image
                     src={p.image}
                     alt={p.imageAlt}
@@ -130,7 +147,7 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
                   <span
                     lang="ja"
                     aria-hidden="true"
-                    className="absolute top-3 left-3 -rotate-12 font-jp text-4xl font-bold text-paper [-webkit-text-stroke:2px_var(--ink)] transition-transform duration-500 group-hover:scale-125 group-hover:-rotate-6"
+                    className="font-jp text-paper absolute top-3 left-3 -rotate-12 text-4xl font-bold transition-transform duration-500 [-webkit-text-stroke:2px_var(--ink)] group-hover:scale-125 group-hover:-rotate-6"
                     style={{ color: accent }}
                   >
                     {SFX[i % SFX.length]}
@@ -138,22 +155,27 @@ export function ProjectsTrack({ projects }: { projects: Project[] }) {
                   <span
                     lang="ja"
                     aria-hidden="true"
-                    className="vertical-jp absolute top-3 right-3 bg-ink px-1 py-2 text-base font-bold text-paper"
+                    className="vertical-jp bg-ink text-paper absolute top-3 right-3 px-1 py-2 text-base font-bold"
                   >
                     {p.jp}
                   </span>
                 </div>
-                <div className="relative flex items-end justify-between gap-4 bg-paper p-4 text-ink">
+                <div className="bg-paper text-ink relative flex items-end justify-between gap-4 p-4">
                   <div>
-                    <p className="text-xs font-bold tracking-widest" style={{ color: "var(--night)" }}>
+                    <p
+                      className="text-xs font-bold tracking-widest"
+                      style={{ color: "var(--night)" }}
+                    >
                       {p.role}
                     </p>
-                    <h3 className="mt-1 font-display text-2xl leading-none md:text-3xl">{p.name}</h3>
+                    <h3 className="font-display mt-1 text-2xl leading-none md:text-3xl">
+                      {p.name}
+                    </h3>
                     <p className="mt-2 line-clamp-2 max-w-md text-sm">{p.summary}</p>
                   </div>
                   <span
                     aria-hidden="true"
-                    className="grid size-12 shrink-0 place-items-center rounded-full border-2 border-ink transition-colors group-hover:bg-ink group-hover:text-paper"
+                    className="border-ink group-hover:bg-ink group-hover:text-paper grid size-12 shrink-0 place-items-center rounded-full border-2 transition-colors"
                   >
                     ↗
                   </span>

@@ -11,7 +11,11 @@ export const skillGroups: Record<SkillGroup, { label: string; jp: string }> = {
 };
 
 export const skills: Skill[] = [
-  { name: "TypeScript", group: "lang", note: "Bahasa utama untuk web: tipe yang ketat, refactor tanpa takut." },
+  {
+    name: "TypeScript",
+    group: "lang",
+    note: "Bahasa utama untuk web: tipe yang ketat, refactor tanpa takut.",
+  },
   { name: "Go (Golang)", group: "lang", note: "Service backend yang cepat dan ringan." },
   { name: "Python", group: "lang", note: "Bahasa utama untuk eksperimen dan training model ML." },
   { name: "PHP", group: "lang", note: "Website dan aplikasi web berbasis Laravel." },
@@ -26,7 +30,11 @@ export const skills: Skill[] = [
   { name: "PostgreSQL", group: "data", note: "Database relasional untuk data yang serius." },
   { name: "MySQL", group: "data", note: "Database relasional untuk banyak proyek klien." },
   { name: "Firebase", group: "data", note: "Auth, Firestore, dan hosting untuk iterasi cepat." },
-  { name: "System Design", group: "data", note: "Merancang arsitektur yang skalabel dan mudah dirawat." },
+  {
+    name: "System Design",
+    group: "data",
+    note: "Merancang arsitektur yang skalabel dan mudah dirawat.",
+  },
   { name: "Docker", group: "ops", note: "Lingkungan yang konsisten dari laptop sampai server." },
   { name: "GCP", group: "ops", note: "Deploy model dan API, seperti di FinBoost." },
   { name: "AWS", group: "ops", note: "Layanan cloud untuk hosting dan storage." },

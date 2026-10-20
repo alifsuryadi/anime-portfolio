@@ -70,7 +70,11 @@ export function VrmModel({ url, driver }: { url: string; driver: CharacterDriver
 
     const h = vrm.humanoid;
     for (const n of BONES) {
-      h.getNormalizedBoneNode(n as VRMHumanBoneName)?.rotation.set(driver.bones[n][0], driver.bones[n][1], driver.bones[n][2]);
+      h.getNormalizedBoneNode(n as VRMHumanBoneName)?.rotation.set(
+        driver.bones[n][0],
+        driver.bones[n][1],
+        driver.bones[n][2],
+      );
     }
     h.getNormalizedBoneNode("head")?.rotation.set(driver.head.x * 0.7, driver.head.y * 0.7, 0);
     h.getRawBoneNode("head")?.scale.setScalar(world.chibi ? 1.3 : 1);

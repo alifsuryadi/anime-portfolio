@@ -39,7 +39,8 @@ export const projects: Project[] = [
     name: "Pasal Pintar",
     jp: "賢い法律",
     role: "Full-Stack & ML Developer",
-    summary: "Aplikasi informasi hukum Indonesia berbasis AI yang menjelaskan pasal dengan cepat dan mudah dipahami.",
+    summary:
+      "Aplikasi informasi hukum Indonesia berbasis AI yang menjelaskan pasal dengan cepat dan mudah dipahami.",
     description: [
       "Pasal Pintar adalah aplikasi informasi hukum berbasis AI yang membantu pengguna menemukan solusi cepat dan akurat untuk kebutuhan hukumnya.",
       "Tujuannya menyederhanakan akses ke pengetahuan hukum dengan penjelasan undang-undang dan peraturan Indonesia yang lengkap dan mudah dipahami.",

@@ -7,7 +7,17 @@ import { useQuality } from "@/components/QualityProvider";
 
 type Mode = "default" | "link" | "project" | "magnetic";
 
-type Petal = { x: number; y: number; vx: number; vy: number; r: number; vr: number; life: number; size: number; hue: number };
+type Petal = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  r: number;
+  vr: number;
+  life: number;
+  size: number;
+  hue: number;
+};
 
 /**
  * Custom cursor: a precise dot plus a chibi hitodama (spirit flame) that lags
@@ -51,11 +61,16 @@ export function CursorFollower() {
       if (e.pointerType === "mouse") return;
       const el = document.createElement("span");
       el.setAttribute("aria-hidden", "true");
-      el.className = "pointer-events-none fixed z-[90] size-16 -translate-1/2 rounded-full border-2 border-sakura";
+      el.className =
+        "pointer-events-none fixed z-[90] size-16 -translate-1/2 rounded-full border-2 border-sakura";
       el.style.left = `${e.clientX}px`;
       el.style.top = `${e.clientY}px`;
       document.body.appendChild(el);
-      gsap.fromTo(el, { scale: 0.2, opacity: 1 }, { scale: 2.4, opacity: 0, duration: 0.7, ease: "expo.out", onComplete: () => el.remove() });
+      gsap.fromTo(
+        el,
+        { scale: 0.2, opacity: 1 },
+        { scale: 2.4, opacity: 0, duration: 0.7, ease: "expo.out", onComplete: () => el.remove() },
+      );
     };
     window.addEventListener("pointerdown", onDown, { passive: true });
     return () => window.removeEventListener("pointerdown", onDown);
@@ -102,7 +117,12 @@ export function CursorFollower() {
         const r = magnet.getBoundingClientRect();
         const cx = r.left + r.width / 2;
         const cy = r.top + r.height / 2;
-        gsap.to(magnet, { x: (pos.x - cx) * 0.35, y: (pos.y - cy) * 0.35, duration: 0.4, ease: "power3.out" });
+        gsap.to(magnet, {
+          x: (pos.x - cx) * 0.35,
+          y: (pos.y - cy) * 0.35,
+          duration: 0.4,
+          ease: "power3.out",
+        });
       }
     };
 
@@ -164,7 +184,8 @@ export function CursorFollower() {
 
       if (dot.current) dot.current.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
       const tilt = Math.max(-40, Math.min(40, sp.vx * 0.03));
-      if (spirit.current) spirit.current.style.transform = `translate3d(${sp.x}px, ${sp.y}px, 0) rotate(${tilt}deg)`;
+      if (spirit.current)
+        spirit.current.style.transform = `translate3d(${sp.x}px, ${sp.y}px, 0) rotate(${tilt}deg)`;
       if (eyes.current) {
         const ex = Math.max(-3, Math.min(3, (tx - sp.x) * 0.08));
         const ey = Math.max(-2, Math.min(2, (ty - sp.y) * 0.08));
@@ -173,7 +194,12 @@ export function CursorFollower() {
 
       // Petal trail.
       const speed = Math.hypot(sp.vx, sp.vy);
-      if (visible && speed > 120 && petals.length < 120 && Math.random() < Math.min(0.9, speed / 1600)) {
+      if (
+        visible &&
+        speed > 120 &&
+        petals.length < 120 &&
+        Math.random() < Math.min(0.9, speed / 1600)
+      ) {
         petals.push({
           x: sp.x + (Math.random() - 0.5) * 10,
           y: sp.y + (Math.random() - 0.5) * 10,
@@ -225,7 +251,7 @@ export function CursorFollower() {
       <canvas ref={canvas} className="absolute inset-0 h-full w-full" />
       <div ref={dot} className="absolute top-0 left-0 opacity-0">
         <span
-          className={`block size-1.5 -translate-1/2 rounded-full bg-paper transition-transform duration-200 ${
+          className={`bg-paper block size-1.5 -translate-1/2 rounded-full transition-transform duration-200 ${
             mode === "default" ? "" : "scale-0"
           }`}
         />
@@ -239,19 +265,28 @@ export function CursorFollower() {
           <div
             className={`absolute top-1/2 left-1/2 grid -translate-1/2 place-items-center rounded-full border-2 transition-all duration-300 ease-[var(--ease-snap)] ${
               mode === "link"
-                ? "size-16 border-cyan bg-cyan/10"
+                ? "border-cyan bg-cyan/10 size-16"
                 : mode === "project"
-                  ? "size-24 border-sakura bg-sakura text-ink"
+                  ? "border-sakura bg-sakura text-ink size-24"
                   : mode === "magnetic"
-                    ? "size-20 border-sunset/80"
+                    ? "border-sunset/80 size-20"
                     : "size-0 border-transparent"
             }`}
           >
-            <span ref={label} className={`font-jp text-sm font-bold text-cyan ${mode === "link" ? "opacity-100" : "opacity-0"}`}>
+            <span
+              ref={label}
+              className={`font-jp text-cyan text-sm font-bold ${mode === "link" ? "opacity-100" : "opacity-0"}`}
+            >
               見る
             </span>
             {mode === "project" && (
-              <svg viewBox="0 0 24 24" className="absolute size-8" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <svg
+                viewBox="0 0 24 24"
+                className="absolute size-8"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
                 <path d="M6 18 18 6M9 6h9v9" />
               </svg>
             )}
@@ -262,10 +297,21 @@ export function CursorFollower() {
             className={`absolute top-1/2 left-1/2 -translate-1/2 transition-all duration-300 ${
               mode === "project" || mode === "link" ? "translate-x-6 -translate-y-10 scale-75" : ""
             }`}
-            style={{ width: 40 * size, height: 45 * size, filter: "drop-shadow(0 0 8px rgb(59 244 251 / 0.8))" }}
+            style={{
+              width: 40 * size,
+              height: 45 * size,
+              filter: "drop-shadow(0 0 8px rgb(59 244 251 / 0.8))",
+            }}
           >
-            <path d="M0 -28 C 6 -16, 18 -10, 16 4 C 15 14, 8 20, 0 20 C -8 20, -15 14, -16 4 C -17 -8, -4 -12, 0 -28 Z" fill="#3BF4FB" opacity="0.35" />
-            <path d="M0 -18 C 4 -10, 12 -6, 11 4 C 10 11, 6 15, 0 15 C -6 15, -11 11, -11 4 C -11 -4, -3 -8, 0 -18 Z" fill="#E9FEFF" />
+            <path
+              d="M0 -28 C 6 -16, 18 -10, 16 4 C 15 14, 8 20, 0 20 C -8 20, -15 14, -16 4 C -17 -8, -4 -12, 0 -28 Z"
+              fill="#3BF4FB"
+              opacity="0.35"
+            />
+            <path
+              d="M0 -18 C 4 -10, 12 -6, 11 4 C 10 11, 6 15, 0 15 C -6 15, -11 11, -11 4 C -11 -4, -3 -8, 0 -18 Z"
+              fill="#E9FEFF"
+            />
             <g ref={eyes}>
               <ellipse cx="-4" cy="4" rx="1.8" ry="2.6" fill="#1A1033" />
               <ellipse cx="4" cy="4" rx="1.8" ry="2.6" fill="#1A1033" />

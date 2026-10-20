@@ -2,7 +2,13 @@
 
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Bloom, ChromaticAberration, EffectComposer, Noise, Vignette } from "@react-three/postprocessing";
+import {
+  Bloom,
+  ChromaticAberration,
+  EffectComposer,
+  Noise,
+  Vignette,
+} from "@react-three/postprocessing";
 import { BlendFunction, type ChromaticAberrationEffect } from "postprocessing";
 import { Vector2 } from "three";
 import { scrollState } from "@/lib/scroll-state";
@@ -20,7 +26,13 @@ export function Effects() {
 
   return (
     <EffectComposer multisampling={0}>
-      <Bloom mipmapBlur intensity={0.85} luminanceThreshold={0.62} luminanceSmoothing={0.25} radius={0.7} />
+      <Bloom
+        mipmapBlur
+        intensity={0.85}
+        luminanceThreshold={0.62}
+        luminanceSmoothing={0.25}
+        radius={0.7}
+      />
       <ChromaticAberration ref={ca} offset={offset} radialModulation={false} modulationOffset={0} />
       <Vignette offset={0.32} darkness={0.62} />
       <Noise premultiply blendFunction={BlendFunction.SCREEN} opacity={0.06} />

@@ -23,18 +23,46 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
   const eyeArcs = useRef<Mesh[]>([]);
   const smile = useRef<Mesh>(null);
   const mouthO = useRef<Mesh>(null);
-  const springs = useRef<{ g: Group | null; axis: "x" | "z"; k: number; a: number; v: number; rest: number }[]>([]);
+  const springs = useRef<
+    { g: Group | null; axis: "x" | "z"; k: number; a: number; v: number; rest: number }[]
+  >([]);
 
-  const trim = useMemo(() => new MeshBasicMaterial({ color: new Color(palette.cyan).multiplyScalar(1.6), toneMapped: false }), []);
-  const blush = useMemo(() => new MeshBasicMaterial({ color: palette.sakura, transparent: true, opacity: 0.3, depthWrite: false }), []);
-  const phones = useMemo(() => new MeshBasicMaterial({ color: new Color(palette.sakura).multiplyScalar(1.2), toneMapped: false }), []);
+  const trim = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        color: new Color(palette.cyan).multiplyScalar(1.6),
+        toneMapped: false,
+      }),
+    [],
+  );
+  const blush = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        color: palette.sakura,
+        transparent: true,
+        opacity: 0.3,
+        depthWrite: false,
+      }),
+    [],
+  );
+  const phones = useMemo(
+    () =>
+      new MeshBasicMaterial({
+        color: new Color(palette.sakura).multiplyScalar(1.2),
+        toneMapped: false,
+      }),
+    [],
+  );
 
   const bind = (name: BoneName | "head" | "body") => (el: Group | null) => {
     bones.current[name] = el;
   };
-  const spring = (axis: "x" | "z", k: number, rest = 0) => (el: Group | null) => {
-    if (el && !springs.current.some((s) => s.g === el)) springs.current.push({ g: el, axis, k, a: rest, v: 0, rest });
-  };
+  const spring =
+    (axis: "x" | "z", k: number, rest = 0) =>
+    (el: Group | null) => {
+      if (el && !springs.current.some((s) => s.g === el))
+        springs.current.push({ g: el, axis, k, a: rest, v: 0, rest });
+    };
 
   useFrame((state, dt) => {
     const d = Math.min(dt, 1 / 20);
@@ -65,14 +93,17 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
     const e = driver.expressions;
     const closed = Math.max(e.blink, e.happy * 0.95);
     const open = (1 - closed) * (1 + e.surprised * 0.25) * (1 - e.relaxed * 0.35);
-    eyes.current.forEach((eye) => eye && eye.scale.set(1 + e.surprised * 0.15, Math.max(0.02, open), 1));
+    eyes.current.forEach(
+      (eye) => eye && eye.scale.set(1 + e.surprised * 0.15, Math.max(0.02, open), 1),
+    );
     eyeArcs.current.forEach((arc) => {
       if (!arc) return;
       const w = Math.max(e.happy, e.blink * 0.8);
       arc.visible = w > 0.4;
       arc.rotation.z = e.happy > e.blink ? 0 : Math.PI;
     });
-    if (smile.current) smile.current.scale.setScalar(Math.max(0.001, 1 - e.surprised) * (0.7 + e.happy * 0.5));
+    if (smile.current)
+      smile.current.scale.setScalar(Math.max(0.001, 1 - e.surprised) * (0.7 + e.happy * 0.5));
     if (mouthO.current) mouthO.current.scale.setScalar(Math.max(0.001, e.surprised));
     blush.opacity = 0.15 + e.happy * 0.5;
 
@@ -172,7 +203,11 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
             {([-1, 1] as const).map((side) => {
               const L = side > 0 ? "left" : "right";
               return (
-                <group key={side} ref={bind(`${L}UpperArm` as BoneName)} position={[side * 0.2, 0.1, 0]}>
+                <group
+                  key={side}
+                  ref={bind(`${L}UpperArm` as BoneName)}
+                  position={[side * 0.2, 0.1, 0]}
+                >
                   <mesh position={[side * 0.1, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
                     <capsuleGeometry args={[0.062, 0.12, 4, 10]} />
                     {toon(palette.hoodie)}
@@ -184,7 +219,11 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
                       {toon(palette.hoodieShade)}
                       {outline}
                     </mesh>
-                    <mesh position={[side * 0.17, 0, 0]} rotation={[0, 0, Math.PI / 2]} material={trim}>
+                    <mesh
+                      position={[side * 0.17, 0, 0]}
+                      rotation={[0, 0, Math.PI / 2]}
+                      material={trim}
+                    >
                       <torusGeometry args={[0.058, 0.01, 6, 16]} />
                     </mesh>
                     <group ref={bind(`${L}Hand` as BoneName)} position={[side * 0.2, 0, 0]}>
@@ -255,14 +294,21 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
                       </mesh>
                       <mesh position={[0, -0.022, 0.012]} scale={[0.04, 0.045, 0.02]}>
                         <sphereGeometry args={[1, 12, 10]} />
-                        <meshBasicMaterial color={new Color(palette.cyan).multiplyScalar(1.1)} toneMapped={false} />
+                        <meshBasicMaterial
+                          color={new Color(palette.cyan).multiplyScalar(1.1)}
+                          toneMapped={false}
+                        />
                       </mesh>
                       <mesh position={[0.018, 0.03, 0.022]} scale={[0.018, 0.018, 0.01]}>
                         <sphereGeometry args={[1, 8, 6]} />
                         <meshBasicMaterial color="#ffffff" toneMapped={false} />
                       </mesh>
                     </group>
-                    <mesh ref={(el) => void (el && (eyeArcs.current[i] = el))} position={[0, -0.01, 0.02]} visible={false}>
+                    <mesh
+                      ref={(el) => void (el && (eyeArcs.current[i] = el))}
+                      position={[0, -0.01, 0.02]}
+                      visible={false}
+                    >
                       <torusGeometry args={[0.05, 0.012, 6, 14, Math.PI]} />
                       <meshBasicMaterial color={palette.night} />
                     </mesh>
@@ -270,14 +316,23 @@ export function ChibiModel({ driver }: { driver: CharacterDriver }) {
                 ))}
                 {/* brows */}
                 {[-1, 1].map((s) => (
-                  <mesh key={`b${s}`} position={[s * 0.14, 0.46, 0.355]} rotation={[0, s * 0.36, s * -0.12]}>
+                  <mesh
+                    key={`b${s}`}
+                    position={[s * 0.14, 0.46, 0.355]}
+                    rotation={[0, s * 0.36, s * -0.12]}
+                  >
                     <boxGeometry args={[0.08, 0.014, 0.01]} />
                     <meshBasicMaterial color={palette.hair} />
                   </mesh>
                 ))}
                 {/* blush */}
                 {[-1, 1].map((s) => (
-                  <mesh key={`c${s}`} position={[s * 0.25, 0.24, 0.3]} rotation={[0, s * 0.7, 0]} material={blush}>
+                  <mesh
+                    key={`c${s}`}
+                    position={[s * 0.25, 0.24, 0.3]}
+                    rotation={[0, s * 0.7, 0]}
+                    material={blush}
+                  >
                     <circleGeometry args={[0.055, 16]} />
                   </mesh>
                 ))}

@@ -30,7 +30,12 @@ export function ChibiArt({ pose = "idle", happy = false, className, title }: Pro
   const rHand = pose === "wave" || pose === "cheer" ? [158, 108] : [142, 216];
 
   return (
-    <svg viewBox="0 0 200 270" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true}>
+    <svg
+      viewBox="0 0 200 270"
+      className={className}
+      role={title ? "img" : undefined}
+      aria-hidden={title ? undefined : true}
+    >
       {title ? <title>{title}</title> : null}
       {/* shadow */}
       <ellipse cx="100" cy="262" rx="46" ry="6" fill="#000" opacity="0.3" />
@@ -49,17 +54,29 @@ export function ChibiArt({ pose = "idle", happy = false, className, title }: Pro
       <circle cx={lHand[0]} cy={lHand[1]} r="8" fill={SKIN} />
       <circle cx={rHand[0]} cy={rHand[1]} r="8" fill={SKIN} />
       {/* hoodie body */}
-      <path d="M66 160 C 70 146, 130 146, 134 160 L 138 206 C 120 214, 80 214, 62 206 Z" fill={HOODIE} />
+      <path
+        d="M66 160 C 70 146, 130 146, 134 160 L 138 206 C 120 214, 80 214, 62 206 Z"
+        fill={HOODIE}
+      />
       <path d="M62 204 C 80 212, 120 212, 138 204" stroke={CYAN} strokeWidth="4" fill="none" />
       <path d="M100 160 v42" stroke={HOODIE_SHADE} strokeWidth="2" />
       <rect x="84" y="182" width="32" height="14" rx="5" fill={HOODIE_SHADE} />
       {/* headphones around neck */}
-      <path d="M72 156 C 80 170, 120 170, 128 156" stroke={SAKURA} strokeWidth="6" fill="none" strokeLinecap="round" />
+      <path
+        d="M72 156 C 80 170, 120 170, 128 156"
+        stroke={SAKURA}
+        strokeWidth="6"
+        fill="none"
+        strokeLinecap="round"
+      />
       <rect x="64" y="148" width="14" height="18" rx="6" fill={SAKURA} />
       <rect x="122" y="148" width="14" height="18" rx="6" fill={SAKURA} />
       {/* head */}
       <g>
-        <path d="M40 92 C 38 40, 162 40, 160 92 C 162 120, 150 146, 100 150 C 50 146, 38 120, 40 92Z" fill={HAIR} />
+        <path
+          d="M40 92 C 38 40, 162 40, 160 92 C 162 120, 150 146, 100 150 C 50 146, 38 120, 40 92Z"
+          fill={HAIR}
+        />
         <ellipse cx="100" cy="100" rx="54" ry="50" fill={SKIN} />
         {/* bangs */}
         <path
@@ -67,7 +84,13 @@ export function ChibiArt({ pose = "idle", happy = false, className, title }: Pro
           fill={HAIR}
         />
         <path d="M120 54 C 136 58, 148 70, 152 86 C 144 76, 134 70, 126 68Z" fill={SAKURA} />
-        <path d="M70 58 C 80 52, 92 50, 100 50" stroke={HAIR_HI} strokeWidth="4" strokeLinecap="round" fill="none" />
+        <path
+          d="M70 58 C 80 52, 92 50, 100 50"
+          stroke={HAIR_HI}
+          strokeWidth="4"
+          strokeLinecap="round"
+          fill="none"
+        />
         {/* side locks */}
         <path d="M44 92 C 40 116, 44 136, 54 146 C 52 126, 54 108, 58 96Z" fill={HAIR} />
         <path d="M156 92 C 160 116, 156 136, 146 146 C 148 126, 146 108, 142 96Z" fill={HAIR} />
@@ -76,8 +99,20 @@ export function ChibiArt({ pose = "idle", happy = false, className, title }: Pro
         {/* eyes */}
         {happy ? (
           <>
-            <path d="M68 108 q 10 -12 20 0" stroke={INK} strokeWidth="4" strokeLinecap="round" fill="none" />
-            <path d="M112 108 q 10 -12 20 0" stroke={INK} strokeWidth="4" strokeLinecap="round" fill="none" />
+            <path
+              d="M68 108 q 10 -12 20 0"
+              stroke={INK}
+              strokeWidth="4"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M112 108 q 10 -12 20 0"
+              stroke={INK}
+              strokeWidth="4"
+              strokeLinecap="round"
+              fill="none"
+            />
           </>
         ) : (
           <>
@@ -93,7 +128,13 @@ export function ChibiArt({ pose = "idle", happy = false, className, title }: Pro
         <ellipse cx="64" cy="124" rx="9" ry="5" fill={SAKURA} opacity="0.45" />
         <ellipse cx="136" cy="124" rx="9" ry="5" fill={SAKURA} opacity="0.45" />
         {/* mouth */}
-        <path d={happy ? "M92 126 q 8 10 16 0 z" : "M94 128 q 6 5 12 0"} stroke={INK} strokeWidth="3" strokeLinecap="round" fill={happy ? "#C2335E" : "none"} />
+        <path
+          d={happy ? "M92 126 q 8 10 16 0 z" : "M94 128 q 6 5 12 0"}
+          stroke={INK}
+          strokeWidth="3"
+          strokeLinecap="round"
+          fill={happy ? "#C2335E" : "none"}
+        />
       </g>
     </svg>
   );

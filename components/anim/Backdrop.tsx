@@ -18,7 +18,12 @@ export function Backdrop({ word, className = "" }: { word: string; className?: s
             yPercent: -25,
             xPercent: 6,
             ease: "none",
-            scrollTrigger: { trigger: ref.current?.parentElement, start: "top bottom", end: "bottom top", scrub: true },
+            scrollTrigger: {
+              trigger: ref.current?.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
           },
         );
       });
@@ -32,9 +37,9 @@ export function Backdrop({ word, className = "" }: { word: string; className?: s
       ref={ref}
       aria-hidden="true"
       lang="ja"
-      className={`pointer-events-none absolute inset-x-0 top-1/4 -z-10 text-center font-jp text-[34vw] leading-none font-bold whitespace-nowrap text-paper/[0.035] select-none ${className}`}
-    >
-      {word}
-    </div>
+      data-word={word}
+      // Rendered via ::before so the decorative glyphs never become the LCP element.
+      className={`font-jp text-paper/[0.035] pointer-events-none absolute inset-x-0 top-1/4 -z-10 text-center text-[34vw] leading-none font-bold whitespace-nowrap select-none before:content-[attr(data-word)] ${className}`}
+    />
   );
 }

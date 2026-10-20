@@ -13,7 +13,13 @@ export function ShootingStars() {
   const meshes = useRef<(Mesh | null)[]>([]);
   const queue = useRef<{ x: number; y: number }[]>([]);
   const stars = useMemo(
-    () => Array.from({ length: POOL }, () => ({ life: 0, pos: new Vector3(), dir: new Vector3(), speed: 0 })),
+    () =>
+      Array.from({ length: POOL }, () => ({
+        life: 0,
+        pos: new Vector3(),
+        dir: new Vector3(),
+        speed: 0,
+      })),
     [],
   );
   const geometry = useMemo(() => {
@@ -36,7 +42,10 @@ export function ShootingStars() {
     [],
   );
 
-  useEffect(() => bus.on("shooting-star", (d) => queue.current.push(d as { x: number; y: number })), []);
+  useEffect(
+    () => bus.on("shooting-star", (d) => queue.current.push(d as { x: number; y: number })),
+    [],
+  );
   useEffect(
     () => () => {
       geometry.dispose();
@@ -48,7 +57,8 @@ export function ShootingStars() {
   const tmp = useMemo(() => new Vector3(), []);
   useFrame(({ camera }, dt) => {
     // Random ones at night.
-    if (world.night > 0.6 && Math.random() < dt * 0.25 * world.night) queue.current.push({ x: Math.random() * 1.6 - 0.8, y: 0.3 + Math.random() * 0.6 });
+    if (world.night > 0.6 && Math.random() < dt * 0.25 * world.night)
+      queue.current.push({ x: Math.random() * 1.6 - 0.8, y: 0.3 + Math.random() * 0.6 });
 
     while (queue.current.length) {
       const q = queue.current.shift()!;
@@ -81,7 +91,14 @@ export function ShootingStars() {
   return (
     <group>
       {stars.map((_, i) => (
-        <mesh key={i} ref={(el) => void (meshes.current[i] = el)} geometry={geometry} material={material} visible={false} renderOrder={-5} />
+        <mesh
+          key={i}
+          ref={(el) => void (meshes.current[i] = el)}
+          geometry={geometry}
+          material={material}
+          visible={false}
+          renderOrder={-5}
+        />
       ))}
     </group>
   );

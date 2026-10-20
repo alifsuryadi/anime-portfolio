@@ -21,7 +21,11 @@ export function LoadingScreen() {
 
   useEffect(() => {
     if (quality === null) return;
-    const flags = { fonts: false, load: document.readyState === "complete", scene: quality === "static" };
+    const flags = {
+      fonts: false,
+      load: document.readyState === "complete",
+      scene: quality === "static",
+    };
     let shown = 0;
     let raf = 0;
     let finished = false;
@@ -44,18 +48,32 @@ export function LoadingScreen() {
       }
       gsap
         .timeline({ onComplete: () => setGone(true) })
-        .fromTo(chibi.current, { xPercent: -260, rotate: -20, opacity: 1 }, { xPercent: 0, rotate: 0, duration: 0.55, ease: "back.out(2.2)" })
+        .fromTo(
+          chibi.current,
+          { xPercent: -260, rotate: -20, opacity: 1 },
+          { xPercent: 0, rotate: 0, duration: 0.55, ease: "back.out(2.2)" },
+        )
         .to(chibi.current, { y: -24, duration: 0.16, yoyo: true, repeat: 1, ease: "power2.out" })
         .add(() => bus.emit("loader-done"))
-        .to("[data-loader-panel='top']", { yPercent: -100, duration: 0.7, ease: "power4.inOut" }, "+=0.1")
-        .to("[data-loader-panel='bottom']", { yPercent: 100, duration: 0.7, ease: "power4.inOut" }, "<")
+        .to(
+          "[data-loader-panel='top']",
+          { yPercent: -100, duration: 0.7, ease: "power4.inOut" },
+          "+=0.1",
+        )
+        .to(
+          "[data-loader-panel='bottom']",
+          { yPercent: 100, duration: 0.7, ease: "power4.inOut" },
+          "<",
+        )
         .to("[data-loader-content]", { opacity: 0, duration: 0.25 }, "<");
     };
 
     const tick = () => {
       const elapsed = performance.now() - started;
       const target =
-        elapsed > MAX_WAIT ? 100 : (flags.fonts ? 35 : 10) + (flags.load ? 30 : 0) + (flags.scene ? 35 : 0);
+        elapsed > MAX_WAIT
+          ? 100
+          : (flags.fonts ? 35 : 10) + (flags.load ? 30 : 0) + (flags.scene ? 35 : 0);
       shown += (target - shown) * 0.12 + 0.15;
       shown = Math.min(shown, target, 100);
       setPct(Math.round(shown));
@@ -80,14 +98,14 @@ export function LoadingScreen() {
   return (
     <div
       ref={root}
-      className="loader fixed inset-0 z-[100] text-paper"
+      className="loader text-paper fixed inset-0 z-[100]"
       role="status"
       aria-live="polite"
       aria-label={`Memuat halaman, ${pct}%`}
     >
-      <div data-loader-panel="top" className="absolute inset-x-0 top-0 h-1/2 bg-ink" />
-      <div data-loader-panel="bottom" className="absolute inset-x-0 bottom-0 h-1/2 bg-ink">
-        <div className="halftone absolute inset-0 text-night" />
+      <div data-loader-panel="top" className="bg-ink absolute inset-x-0 top-0 h-1/2" />
+      <div data-loader-panel="bottom" className="bg-ink absolute inset-x-0 bottom-0 h-1/2">
+        <div className="halftone text-night absolute inset-0" />
       </div>
       <div data-loader-content className="absolute inset-0 grid place-items-center">
         <div className="flex w-[min(80vw,26rem)] flex-col items-start gap-4">
@@ -97,13 +115,16 @@ export function LoadingScreen() {
           <p lang="ja" className="font-jp text-xl font-bold tracking-widest">
             読み込み中…
           </p>
-          <div className="relative h-3 w-full -skew-x-12 border-2 border-paper">
-            <div className="absolute inset-y-0 left-0 bg-sakura" style={{ width: `${pct}%` }} />
-            <div className="absolute inset-y-0 left-0 bg-cyan mix-blend-screen" style={{ width: `${Math.max(0, pct - 12)}%` }} />
+          <div className="border-paper relative h-3 w-full -skew-x-12 border-2">
+            <div className="bg-sakura absolute inset-y-0 left-0" style={{ width: `${pct}%` }} />
+            <div
+              className="bg-cyan absolute inset-y-0 left-0 mix-blend-screen"
+              style={{ width: `${Math.max(0, pct - 12)}%` }}
+            />
           </div>
-          <div className="flex w-full justify-between font-display text-sm text-muted">
+          <div className="font-display text-muted flex w-full justify-between text-sm">
             <span>LOADING</span>
-            <span className="tabular-nums text-paper">{pct}%</span>
+            <span className="text-paper tabular-nums">{pct}%</span>
           </div>
         </div>
       </div>
