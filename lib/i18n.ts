@@ -85,8 +85,8 @@ export const dict = {
   expTitleA: { en: "The", id: "Jalur" },
   expTitleB: { en: "journey", id: "perjalanan" },
   expIntro: {
-    en: "Like riding a train in Tokyo: every station is a new chapter, from my first job in 2022 to today. Scroll to move the train.",
-    id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak, dari pekerjaan pertama di 2022 sampai hari ini. Gulir untuk menjalankan keretanya.",
+    en: "Like riding a train in Tokyo: every station is a chapter, from my current roles back to my first job in 2022. Scroll to move the train.",
+    id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak, dari peran saat ini sampai pekerjaan pertama di 2022. Gulir untuk menjalankan keretanya.",
   },
   station: { en: "station", id: "stasiun" },
 
