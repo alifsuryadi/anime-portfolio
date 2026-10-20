@@ -55,8 +55,8 @@ export const dict = {
 
   heroRoleLabel: { en: "Role", id: "Peran" },
   heroLine: {
-    en: "Building fast, accessible and slightly magical web experiences, from Indonesia.",
-    id: "Membangun web yang cepat, aksesibel, dan sedikit ajaib, dari Indonesia.",
+    en: "I build fast, accessible and slightly magical products, from full-stack apps to AI features. Currently at Foxion, and building my own startup, Livales.",
+    id: "Saya membangun produk yang cepat, aksesibel, dan sedikit ajaib, dari aplikasi full-stack sampai fitur AI. Sekarang di Foxion, sambil membangun startup sendiri, Livales.",
   },
   heroCta: { en: "See my work", id: "Lihat karya" },
   heroScroll: { en: "Scroll to About", id: "Gulir ke bagian Tentang" },

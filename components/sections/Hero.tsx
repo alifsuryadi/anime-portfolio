@@ -38,7 +38,7 @@ export function Hero({ lang }: { lang: Lang }) {
               translationClassName="mt-1 text-sm tracking-[0.2em] text-muted uppercase"
             />
             <p className="text-paper/90 mt-5 text-base leading-relaxed md:text-lg">
-              {profile.role}. {t("heroLine")}
+              {t("heroLine")}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">

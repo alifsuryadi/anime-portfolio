@@ -82,16 +82,22 @@ export function LoadingScreen() {
       if (num.current) num.current.textContent = `${v}%`;
     };
 
+    let last = started;
     const tick = () => {
-      const elapsed = performance.now() - started;
+      const now = performance.now();
+      const elapsed = now - started;
+      // Time-based easing, so slow devices (few fps) don't stretch the loader.
+      const dt = Math.min(0.25, (now - last) / 1000);
+      last = now;
       const target =
         elapsed > MAX_WAIT
           ? 100
           : (flags.fonts ? 35 : 10) + (flags.load ? 30 : 0) + (flags.scene ? 35 : 0);
-      shown += (target - shown) * 0.12 + 0.15;
+      shown += (target - shown) * (1 - Math.exp(-dt * 8)) + dt * 9;
       shown = Math.min(shown, target, 100);
       paint(Math.round(shown));
-      if (shown >= 99.5 && !finished) {
+      // Hard cap: never hold the page longer than MAX_WAIT + a short ramp.
+      if ((shown >= 99.5 || elapsed > MAX_WAIT + 700) && !finished) {
         paint(100);
         finish();
         return;

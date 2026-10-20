@@ -164,9 +164,11 @@ export const scenes: Record<SceneId, SceneKey> = {
     night: 0.7,
   },
   contact: {
-    character: { position: [2.6, -1, 0.6], rotationY: -0.25, scale: 1 },
+    character: { position: [2.6, -1, 0.6], rotationY: 0, scale: 1 },
     mobile: { position: [0, -2.6, -1.5], scale: 0.7 },
-    camera: { position: [0.6, 0.2, 5.8], target: [0.6, 0, 0], fov: 32 },
+    // Looking slightly left from the right keeps the torii behind the character,
+    // not behind the heading.
+    camera: { position: [2.5, 0.25, 5.8], target: [0.5, 0, 0], fov: 32 },
     pose: "greet",
     expression: { happy: 1 },
     night: 0.8,
