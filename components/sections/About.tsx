@@ -75,14 +75,52 @@ export function About({ lang }: { lang: Lang }) {
           </h2>
           <div className="bg-ink/60 text-paper/90 mt-6 space-y-4 rounded-sm p-1 text-lg leading-relaxed backdrop-blur-[2px]">
             <p>{profile.bio[lang]}</p>
-            <p className="text-muted text-base">{t("aboutExtra")}</p>
+            <p className="text-muted text-base">{profile.bioExtra[lang]}</p>
           </div>
-          <ul className="mt-6 flex flex-wrap gap-2 text-sm">
-            <li className="chip">{t("tagSelfTaught")}</li>
-            <li className="chip">Full-Stack</li>
-            <li className="chip">Machine Learning</li>
-            <li className="chip">Indonesia</li>
-          </ul>
+          <dl className="mt-6 grid gap-3 text-sm sm:grid-cols-2">
+            <div className="border-sakura bg-ink/70 border-l-2 p-3 backdrop-blur-sm">
+              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
+                {t("education")}
+              </dt>
+              <dd className="mt-1">
+                <span className="block font-semibold">{profile.education.degree[lang]}</span>
+                <span className="text-paper/80 block">{profile.education.school}</span>
+                <span className="text-muted block text-xs">{profile.education.period}</span>
+              </dd>
+            </div>
+            <div className="border-sunset bg-ink/70 border-l-2 p-3 backdrop-blur-sm">
+              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
+                {t("honors")}
+              </dt>
+              {profile.honors.map((h) => (
+                <dd key={h.en} className="mt-1 font-semibold">
+                  {h[lang]}
+                </dd>
+              ))}
+              <dt className="text-muted mt-3 text-xs font-bold tracking-widest uppercase">
+                {t("languages")}
+              </dt>
+              {profile.languages.map((l) => (
+                <dd key={l.en} className="mt-1">
+                  {l[lang]}
+                </dd>
+              ))}
+            </div>
+            <div className="border-cyan bg-ink/70 border-l-2 p-3 backdrop-blur-sm sm:col-span-2">
+              <dt className="text-muted text-xs font-bold tracking-widest uppercase">
+                {t("certifications")}
+              </dt>
+              <dd className="mt-2">
+                <ul className="flex flex-wrap gap-2">
+                  {profile.certifications.map((c) => (
+                    <li key={c} className="chip">
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </section>

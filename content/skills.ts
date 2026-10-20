@@ -28,8 +28,8 @@ export const skills: Skill[] = [
   s(
     "Go (Golang)",
     "lang",
-    "Fast, lightweight backend services.",
-    "Service backend yang cepat dan ringan.",
+    "Fast backends, like Naima's ESG SaaS on AWS.",
+    "Backend yang cepat, seperti SaaS ESG Naima di AWS.",
   ),
   s(
     "Python",
@@ -64,8 +64,8 @@ export const skills: Skill[] = [
   s(
     "Laravel",
     "web",
-    "PHP framework for marketplaces and dashboards.",
-    "Framework PHP untuk marketplace dan dashboard.",
+    "BKI's ship register, Sekalipay's affiliate system and a BUMN document system.",
+    "Register kapal BKI, sistem affiliate Sekalipay, dan sistem dokumen BUMN.",
   ),
   s("Node.js", "data", "JavaScript on the server.", "Runtime JavaScript di sisi server."),
   s(
@@ -89,8 +89,8 @@ export const skills: Skill[] = [
   s(
     "PostgreSQL",
     "data",
-    "Relational database for serious data.",
-    "Database relasional untuk data yang serius.",
+    "Relational database, e.g. Sekalipay's affiliate system.",
+    "Database relasional, misalnya sistem affiliate Sekalipay.",
   ),
   s(
     "MySQL",
@@ -99,10 +99,16 @@ export const skills: Skill[] = [
     "Database relasional untuk banyak proyek klien.",
   ),
   s(
+    "SQL Server",
+    "data",
+    "Enterprise database for BKI and a BUMN document system, with tuned queries.",
+    "Database enterprise untuk BKI dan sistem dokumen BUMN, dengan query yang dioptimalkan.",
+  ),
+  s(
     "Firebase",
     "data",
-    "Auth, Firestore and hosting for fast iteration.",
-    "Auth, Firestore, dan hosting untuk iterasi cepat.",
+    "Firestore, Cloud Messaging and hosting, from Studyo.io to Livales.",
+    "Firestore, Cloud Messaging, dan hosting, dari Studyo.io sampai Livales.",
   ),
   s(
     "System Design",
@@ -119,14 +125,14 @@ export const skills: Skill[] = [
   s(
     "GCP",
     "ops",
-    "Deploying models and APIs, as in FinBoost.",
-    "Deploy model dan API, seperti di FinBoost.",
+    "Serverless Cloud Functions and Cloud Storage (Studyo.io), ML deployment (FinBoost).",
+    "Cloud Functions serverless dan Cloud Storage (Studyo.io), deploy ML (FinBoost).",
   ),
   s(
     "AWS",
     "ops",
-    "Cloud services for hosting and storage.",
-    "Layanan cloud untuk hosting dan storage.",
+    "Serverless architectures and Go back-ends.",
+    "Arsitektur serverless dan back-end Go.",
   ),
   s("Git", "ops", "Version control and team collaboration.", "Version control dan kolaborasi tim."),
   s("CI/CD", "ops", "Automated build, test and deploy.", "Build, test, dan deploy otomatis."),
@@ -145,7 +151,7 @@ export const skills: Skill[] = [
   s(
     "LLM (GenAI)",
     "ml",
-    "Fine-tuning and integrating large language models.",
-    "Fine-tuning dan integrasi model bahasa besar.",
+    "GPT, LLaMA and BERT: fine-tuning, sentiment analysis (93% accuracy) and chatbots.",
+    "GPT, LLaMA, dan BERT: fine-tuning, analisis sentimen (akurasi 93%), dan chatbot.",
   ),
 ];

@@ -18,15 +18,18 @@ export const siteTitle: L10n = {
   id: `${profile.name} | Full-Stack Developer Indonesia`,
 };
 export const siteDescription: L10n = {
-  en: "Portfolio of Alif Suryadi, a Full-Stack Developer & Machine Learning Enthusiast from Indonesia. Fast, accessible, AI-powered websites and apps built with React, Next.js, Go, Flutter and TensorFlow.",
-  id: "Portfolio Alif Suryadi, Full-Stack Developer & Machine Learning Enthusiast dari Indonesia. Membangun website dan aplikasi yang cepat, aksesibel, dan berbasis AI dengan React, Next.js, Go, Flutter, dan TensorFlow.",
+  en: "Alif Suryadi is a Full-Stack & Machine Learning Engineer from Indonesia, Full Stack Engineer at Foxion Technologies and founder & CEO of Livales. Serverless apps on AWS and GCP, React/Next.js interfaces, Laravel and Go back-ends, and NLP features with GPT, LLaMA and BERT.",
+  id: "Alif Suryadi adalah Full-Stack & Machine Learning Engineer dari Indonesia, Full Stack Engineer di Foxion Technologies serta founder & CEO Livales. Aplikasi serverless di AWS dan GCP, antarmuka React/Next.js, back-end Laravel dan Go, serta fitur NLP dengan GPT, LLaMA, dan BERT.",
 };
 
 export const keywords = [
   "Alif Suryadi",
   "Full-Stack Developer Indonesia",
   "Full-Stack Developer",
+  "Full Stack Engineer Jakarta",
   "Machine Learning Engineer Indonesia",
+  "Software Engineer AI/ML",
+  "Laravel Developer",
   "Web Developer Indonesia",
   "React Developer",
   "Next.js Developer",

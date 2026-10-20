@@ -185,11 +185,10 @@ Jalankan Lighthouse sekali lagi di perangkat nyata setelah deploy.
 
 ## Hal yang perlu kamu lengkapi
 
-- `content/experience.ts`: periode untuk stasiun yang belum punya `period` (termasuk Livales,
-  BKI, dan Sekalipay).
-- `content/projects.ts`: deskripsi, cakupan kerja, dan stack untuk **BKI** dan **Sekalipay**
-  (ditandai `TODO`), plus screenshot asli untuk `public/projects/bki.webp` dan
-  `public/projects/sekalipay.webp` (sekarang sampul sementara).
+- Profil, pengalaman, pendidikan, dan sertifikasi diambil dari PDF profil LinkedIn (Oktober
+  2026). Perbarui `content/profile.ts` dan `content/experience.ts` kalau ada yang berubah.
+  Alamat dan nomor HP sengaja tidak dimasukkan ke situs.
+- `public/AlifSuryadi-Resume.pdf` masih CV lama dari portfolio sebelumnya; ganti dengan versi terbaru.
 - `content/profile.ts`: angka stat bar adalah placeholder penilaian diri, sesuaikan.
 - Model VRM (opsional), lihat di atas.
 - `NEXT_PUBLIC_SITE_URL` dan `NEXT_PUBLIC_FORMSPREE_ID` di Vercel.

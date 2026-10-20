@@ -61,14 +61,13 @@ export const dict = {
 
   aboutTitleA: { en: "About", id: "Tentang" },
   aboutTitleB: { en: "me", id: "saya" },
-  aboutExtra: {
-    en: "I treat every project like a new episode: a problem worth solving, characters (users) worth helping, and an ending that feels good.",
-    id: "Tiap proyek saya perlakukan seperti episode baru: ada masalah yang perlu dipecahkan, karakter (pengguna) yang perlu dibantu, dan akhir yang bikin puas.",
-  },
   cardLabel: { en: "Character profile card", id: "Kartu profil karakter" },
   photoAlt: { en: "Photo of Alif Suryadi", id: "Foto Alif Suryadi" },
+  education: { en: "Education", id: "Pendidikan" },
+  honors: { en: "Honors", id: "Penghargaan" },
+  languages: { en: "Languages", id: "Bahasa" },
+  certifications: { en: "Certifications", id: "Sertifikasi" },
   activeSince: { en: "Active since", id: "Aktif sejak" },
-  tagSelfTaught: { en: "Self-taught", id: "Otodidak" },
 
   skillsIntro: {
     en: "skills unlocked along the way. Hover a node to light up its path (and its orb next to the character), click to read about it.",
@@ -78,16 +77,16 @@ export const dict = {
 
   projectsTitle: { en: "Selected work", id: "Karya pilihan" },
   projectsIntro: {
-    en: "chapters, from my own startup and a state-owned company's website to AI finance. Hover a panel to colour it in, click to read the story.",
-    id: "chapter, dari startup saya sendiri dan website BUMN sampai AI finansial. Arahkan kursor ke panel untuk mewarnainya, klik untuk membaca ceritanya.",
+    en: "chapters, from my own startup and a state-owned ship register to digital commerce and AI finance. Hover a panel to colour it in, click to read the story.",
+    id: "chapter, dari startup saya sendiri dan sistem register kapal BUMN sampai toko digital dan AI finansial. Arahkan kursor ke panel untuk mewarnainya, klik untuk membaca ceritanya.",
   },
   projectsScroll: { en: "SCROLL →", id: "GULIR →" },
 
   expTitleA: { en: "The", id: "Jalur" },
   expTitleB: { en: "journey", id: "perjalanan" },
   expIntro: {
-    en: "Like riding a train in Tokyo: every station is a new chapter. Scroll to move the train.",
-    id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak. Gulir untuk menjalankan keretanya.",
+    en: "Like riding a train in Tokyo: every station is a new chapter, from my first job in 2022 to today. Scroll to move the train.",
+    id: "Seperti naik kereta di Tokyo: tiap stasiun adalah satu babak, dari pekerjaan pertama di 2022 sampai hari ini. Gulir untuk menjalankan keretanya.",
   },
   station: { en: "station", id: "stasiun" },
 

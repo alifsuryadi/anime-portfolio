@@ -55,25 +55,29 @@ export const projects: Project[] = [
     name: "BKI",
     jp: "船級協会",
     role: "Full-Stack Developer",
-    // TODO(Alif): add the stack, your scope and a real screenshot (public/projects/bki.webp).
     summary: {
-      en: "The new website of Biro Klasifikasi Indonesia (BKI), Indonesia's state-owned ship classification society.",
-      id: "Website baru Biro Klasifikasi Indonesia (BKI), BUMN biro klasifikasi kapal Indonesia.",
+      en: "The new ship register system of Biro Klasifikasi Indonesia (BKI): ship lists, status changes, certificates and email delivery, built with Laravel and SQL Server.",
+      id: "Sistem register kapal baru Biro Klasifikasi Indonesia (BKI): daftar kapal, perubahan status, sertifikat, dan pengiriman email, dibangun dengan Laravel dan SQL Server.",
     },
     description: {
       en: [
-        "Biro Klasifikasi Indonesia (BKI) is Indonesia's national classification society, a state-owned enterprise that provides classification, certification and consultancy for the maritime, offshore and industrial sectors.",
-        "I worked on its new website as a Full-Stack Developer.",
+        "Biro Klasifikasi Indonesia (BKI) is Indonesia's national classification society, a state-owned enterprise that keeps ships and marine structures safe to internationally recognized standards.",
+        "For the new BKI system I built the ship register and vessel lists, the ship status change workflow, certificate generation, and automatic email delivery, with scheduled cron jobs for the background work.",
+        "Built with Laravel on SQL Server.",
       ],
       id: [
-        "Biro Klasifikasi Indonesia (BKI) adalah biro klasifikasi nasional Indonesia, BUMN yang menyediakan layanan klasifikasi, sertifikasi, dan konsultasi untuk sektor maritim, lepas pantai, dan industri.",
-        "Saya mengerjakan website barunya sebagai Full-Stack Developer.",
+        "Biro Klasifikasi Indonesia (BKI) adalah biro klasifikasi nasional Indonesia, BUMN yang menjaga keselamatan kapal dan struktur laut sesuai standar internasional.",
+        "Untuk sistem BKI yang baru, saya membangun register dan daftar kapal, alur perubahan status kapal, pembuatan sertifikat, dan pengiriman email otomatis, dengan cron job terjadwal untuk proses di belakang layar.",
+        "Dibangun dengan Laravel dan SQL Server.",
       ],
     },
-    stack: [],
+    stack: ["Laravel", "PHP", "SQL Server", "Cron jobs", "Email automation"],
     live: "https://new.bki.co.id/",
     image: "/projects/bki.webp",
-    imageAlt: { en: "BKI website project cover", id: "Sampul proyek website BKI" },
+    imageAlt: {
+      en: "BKI ship monitoring dashboard with ship register totals and vessel status",
+      id: "Dashboard monitoring kapal BKI dengan total register kapal dan status kapal",
+    },
     accent: "cyan",
   },
   {
@@ -81,19 +85,27 @@ export const projects: Project[] = [
     name: "Sekalipay",
     jp: "セカリペイ",
     role: "Full-Stack Developer",
-    // TODO(Alif): describe the product, your scope and stack, and add a real screenshot.
     summary: {
-      en: "Sekalipay, where I worked as a Full-Stack Developer.",
-      id: "Sekalipay, tempat saya bekerja sebagai Full-Stack Developer.",
+      en: "A digital store for premium apps, game top-ups, mobile credit, vouchers and SMM services. I built its affiliate system with Laravel and PostgreSQL.",
+      id: "Toko digital untuk aplikasi premium, top up game, pulsa, voucher, dan layanan SMM. Saya membangun sistem affiliate-nya dengan Laravel dan PostgreSQL.",
     },
     description: {
-      en: ["I worked on Sekalipay as a Full-Stack Developer."],
-      id: ["Saya mengerjakan Sekalipay sebagai Full-Stack Developer."],
+      en: [
+        "SekaliPay offers premium apps, game top-ups, mobile credit, digital vouchers and SMM services at affordable prices, with fast processing and secure payments.",
+        "I built its affiliate system with Laravel and PostgreSQL.",
+      ],
+      id: [
+        "SekaliPay menyediakan aplikasi premium, top up game, pulsa, voucher digital, dan layanan SMM dengan harga terjangkau, proses cepat, dan pembayaran aman.",
+        "Saya membangun sistem affiliate-nya dengan Laravel dan PostgreSQL.",
+      ],
     },
-    stack: [],
+    stack: ["Laravel", "PHP", "PostgreSQL"],
     live: "https://sekalipay.com/",
     image: "/projects/sekalipay.webp",
-    imageAlt: { en: "Sekalipay project cover", id: "Sampul proyek Sekalipay" },
+    imageAlt: {
+      en: "Sekalipay home page with a reseller banner and flash sale",
+      id: "Beranda Sekalipay dengan banner reseller dan flash sale",
+    },
     accent: "sunset",
   },
   {

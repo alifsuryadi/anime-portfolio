@@ -122,9 +122,9 @@ export function Timeline({ stations }: { stations: Station[] }) {
                 style={{ borderColor: color }}
               >
                 <h3 className="font-display text-xl md:text-2xl">{s.title}</h3>
-                <p className="text-cyan mt-1 text-sm">
-                  {s.org[lang]}
-                  {s.period ? <span className="text-muted"> · {s.period[lang]}</span> : null}
+                <p className="text-cyan mt-1 text-sm">{s.org}</p>
+                <p className="text-muted mt-0.5 text-xs">
+                  <time>{s.period[lang]}</time> · {s.place[lang]}
                 </p>
                 <ul className="text-paper/90 mt-3 list-none space-y-1.5">
                   {s.points[lang].map((pt) => (

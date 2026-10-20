@@ -173,7 +173,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
           >
             <Link
               href={href(`/projects/${prev.slug}`)}
-              className="group border-line hover:border-sakura border-2 p-5"
+              className="group border-line hover:border-sakura bg-ink/85 border-2 p-5 backdrop-blur-sm"
             >
               <span className="text-muted text-xs">{t("prev")}</span>
               <span className="font-display group-hover:text-sakura mt-1 block text-2xl">
@@ -182,7 +182,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
             </Link>
             <Link
               href={href(`/projects/${next.slug}`)}
-              className="group border-line hover:border-cyan border-2 p-5 text-right"
+              className="group border-line hover:border-cyan bg-ink/85 border-2 p-5 text-right backdrop-blur-sm"
             >
               <span className="text-muted text-xs">{t("next")}</span>
               <span className="font-display group-hover:text-cyan mt-1 block text-2xl">
