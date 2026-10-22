@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useMotion } from "@/components/QualityProvider";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenis";
@@ -33,6 +33,8 @@ export function ProjectsTrack({ projects, more }: { projects: Project[]; more: P
   const motion = useMotion();
   const track = useRef<HTMLDivElement>(null);
   const st = useRef<ScrollTrigger | null>(null);
+  // True only while the GSAP pin drives the track; otherwise it scrolls natively.
+  const [pinned, setPinned] = useState(false);
   const lang = useLang();
   const t = useT();
 
@@ -57,6 +59,7 @@ export function ProjectsTrack({ projects, more }: { projects: Project[]; more: P
           },
         });
         st.current = tween.scrollTrigger ?? null;
+        setPinned(true);
         // Panels tilt in as they cross the viewport (manga page turn feel).
         gsap.utils.toArray<HTMLElement>("[data-panel]").forEach((p) => {
           gsap.fromTo(
@@ -78,6 +81,7 @@ export function ProjectsTrack({ projects, more }: { projects: Project[]; more: P
         });
         return () => {
           st.current = null;
+          setPinned(false);
         };
       });
       return () => mm.revert();
@@ -103,7 +107,9 @@ export function ProjectsTrack({ projects, more }: { projects: Project[]; more: P
       <div
         ref={track}
         onFocus={onFocus}
-        className="flex h-full snap-x snap-mandatory items-center gap-6 overflow-x-auto px-4 py-24 md:snap-none md:gap-10 md:overflow-visible md:px-[8vw] md:py-0"
+        className={`flex h-full items-center gap-6 px-4 py-24 md:gap-10 md:px-[8vw] md:py-0 ${
+          pinned ? "overflow-visible" : "snap-x snap-mandatory overflow-x-auto md:scroll-px-[8vw]"
+        }`}
       >
         {/* Title panel */}
         <div
