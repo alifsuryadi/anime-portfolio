@@ -59,6 +59,16 @@ const ARMS_DOWN: PoseSpec = {
   rightLowerArm: [0, 0.12, -0.04],
 };
 
+/**
+ * Hand twist (around the forearm) that turns a raised right hand's palm to face
+ * forward. Hands rest palm-down in the T-pose, so a raised arm alone leaves the
+ * palm facing sideways. Also used by the wave touch reaction (three/choreo.ts).
+ */
+export const WAVE_TWIST = -Math.PI / 2;
+/** Right arm for a wave, shared with the wave touch reaction. */
+export const WAVE_UPPER: Vec3 = [0, 0.1, -0.75];
+export const WAVE_LOWER: Vec3 = [0, 0, -0.9];
+
 export const poses: Record<PoseName, PoseSpec> = {
   idle: { ...ARMS_DOWN, spine: [0.02, 0, 0] },
   // Key-visual pose: one hand on her headphones, weight on one leg.
@@ -76,8 +86,11 @@ export const poses: Record<PoseName, PoseSpec> = {
   },
   wave: {
     ...ARMS_DOWN,
-    rightUpperArm: [0, 0.1, -1.05],
-    rightLowerArm: [0, 0, -1.25],
+    // Forearm upright beside the head (not bent behind it), palm toward the viewer.
+    rightUpperArm: WAVE_UPPER,
+    rightLowerArm: WAVE_LOWER,
+    // Twist around the forearm so the palm faces forward, not sideways.
+    rightHand: [WAVE_TWIST, 0, 0],
     spine: [0, 0, 0.06],
   },
   cast: {

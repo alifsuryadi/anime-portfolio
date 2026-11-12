@@ -6,6 +6,9 @@ import {
   poses,
   scenes,
   touches,
+  WAVE_LOWER,
+  WAVE_TWIST,
+  WAVE_UPPER,
   type BoneName,
   type ExpressionSpec,
   type HandShape,
@@ -99,7 +102,9 @@ const additive: Record<PoseName, Additive> = {
   },
   wave: (b, { time, w }) => {
     add(b, "rightLowerArm", 0, 0, Math.sin(time * 9) * 0.45 * w);
-    add(b, "rightHand", 0, 0, Math.sin(time * 9 + 0.7) * 0.25 * w);
+    // With the hand twisted palm-forward its y axis is her front-back axis,
+    // so this rocks the hand side to side in the plane of the wave.
+    add(b, "rightHand", 0, Math.sin(time * 9 + 0.7) * 0.25 * w, 0);
   },
   cast: (b, { time, w, out }) => {
     add(b, "leftUpperArm", 0, Math.sin(time * 2) * 0.08 * w, 0);
@@ -188,9 +193,9 @@ const reactions: Record<TouchZone, Reaction> = {
   },
   // Anywhere else: a wave hello.
   body: (b, { t, w }) => {
-    toward(b, "rightUpperArm", [0, 0.1, -1.05], w);
-    toward(b, "rightLowerArm", [0, 0, -1.25 + Math.sin(t * 9) * 0.45], w);
-    toward(b, "rightHand", [0, 0, Math.sin(t * 9 + 0.7) * 0.25], w);
+    toward(b, "rightUpperArm", WAVE_UPPER, w);
+    toward(b, "rightLowerArm", [0, 0, WAVE_LOWER[2] + Math.sin(t * 9) * 0.45], w);
+    toward(b, "rightHand", [WAVE_TWIST, Math.sin(t * 9 + 0.7) * 0.25, 0], w);
     add(b, "spine", 0, 0, 0.05 * w);
   },
 };
