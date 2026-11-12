@@ -20,9 +20,12 @@ import { BONES, world, type CharacterDriver } from "./choreo";
 import { celMaterial, setCelMood } from "./cel";
 import { HEAD_R, faceGeo, headGeo, lathe, pleatedSkirt, strand } from "./animeGeometry";
 import { palette } from "./toon";
+import { AnimeHand } from "./AnimeHand";
 import * as face from "./faceTextures";
 
 const INK = "#1c1026";
+/** Front-to-back squash of the skirt at rest. */
+const SKIRT_DEPTH = 0.84;
 /** Clicks on these never reach the character. */
 const NOT_HER =
   "a, button, input, textarea, select, label, summary, [role='button'], [data-cursor], [data-covers-canvas]";
@@ -87,6 +90,7 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
   const springs = useRef<Spring[]>([]);
   const hits = useRef<Mesh[]>([]);
   const hovered = useRef<TouchZone | null>(null);
+  const skirt = useRef<Mesh>(null);
 
   const tex = useMemo(
     () => ({
@@ -195,7 +199,9 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
         [0.021, 0.19],
         [0, 0.205],
       ]),
-      skirt: pleatedSkirt(0.084, 0.158, 0.25),
+      // Wide enough at every height that the thighs (hip offset 0.058 + radius 0.068)
+      // stay inside, even in the pleat valleys and with the legs posed.
+      skirt: pleatedSkirt(0.1, 0.18, 0.25),
       bangs: BANGS.map(([, w, len, , bend]) => strand(w, len, 0.03, bend, 0.06)),
       sideLock: [-1, 1].map((s) => strand(0.042, 0.23, 0.026, s * -0.1, 0.05)),
       hem: HEM.map((a, i) =>
@@ -301,6 +307,16 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
     }
     const body = bones.current.body;
     if (body) body.scale.set(1, 1 + Math.sin(time * 1.8) * 0.012, 1);
+
+    // The skirt flares with the stride so a swinging thigh never pokes through.
+    const sk = skirt.current;
+    if (sk) {
+      const stride = Math.max(
+        Math.abs(driver.bones.leftUpperLeg[0]),
+        Math.abs(driver.bones.rightUpperLeg[0]),
+      );
+      sk.scale.set(1 + stride * 0.12, 1, SKIRT_DEPTH * (1 + stride * 0.95));
+    }
 
     // Face: pick the drawn frame that matches the expression.
     const e = driver.expressions;
@@ -415,9 +431,10 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
           <sphereGeometry args={[1, 16, 12]} />
         </mesh>
         <mesh
+          ref={skirt}
           geometry={geo.skirt}
           position={[0, -0.045, 0]}
-          scale={[1, 1, 0.84]}
+          scale={[1, 1, SKIRT_DEPTH]}
           material={mats.navy}
         >
           {ink}
@@ -515,23 +532,12 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
                       {ink}
                     </mesh>
                     <group ref={bind(`${L}Hand` as BoneName)} position={[side * 0.2, 0, 0]}>
-                      <mesh
-                        position={[side * 0.042, 0, 0]}
-                        scale={[0.046, 0.014, 0.03]}
+                      <AnimeHand
+                        side={side}
+                        shape={driver.hands[L]}
                         material={mats.skin}
-                      >
-                        <sphereGeometry args={[1, 14, 10]} />
-                        {ink}
-                      </mesh>
-                      <mesh
-                        position={[side * 0.03, -0.002, 0.03]}
-                        rotation={[0, side * -0.6, 0]}
-                        scale={[0.021, 0.01, 0.011]}
-                        material={mats.skin}
-                      >
-                        <sphereGeometry args={[1, 10, 8]} />
-                        {fine}
-                      </mesh>
+                        outline={fine}
+                      />
                       <mesh position={[side * 0.04, 0, 0]} {...zone("hand", side)}>
                         <sphereGeometry args={[0.085, 8, 6]} />
                       </mesh>

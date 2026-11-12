@@ -97,7 +97,7 @@ export function pleatedSkirt(top: number, hem: number, height: number, pleats = 
     if (pos.getY(i) > 0) continue;
     const a = Math.atan2(pos.getZ(i), pos.getX(i));
     const k = Math.round(((a + Math.PI) / (Math.PI * 2)) * pleats * 2);
-    if (k % 2) pos.setXYZ(i, pos.getX(i) * 0.9, pos.getY(i) + 0.006, pos.getZ(i) * 0.9);
+    if (k % 2) pos.setXYZ(i, pos.getX(i) * 0.93, pos.getY(i) + 0.006, pos.getZ(i) * 0.93);
   }
   const flat = geo.toNonIndexed();
   flat.computeVertexNormals();

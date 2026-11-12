@@ -74,7 +74,11 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
       />
       <main id="main" data-scene="detail" className="relative z-10 px-4 pt-28 pb-24 md:px-8">
         <article className="mx-auto max-w-5xl">
-          <nav aria-label={t("breadcrumb")} className="text-muted text-sm">
+          {/* Solid backing, like the hero: the sky and city behind are busy and bright. */}
+          <nav
+            aria-label={t("breadcrumb")}
+            className="bg-ink/90 text-muted inline-block px-3 py-1.5 text-sm"
+          >
             <ol className="flex flex-wrap gap-2">
               <li>
                 <Link href={href("/")} className="hover:text-cyan">
@@ -95,7 +99,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
           </nav>
 
           <header className="mt-8 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
-            <div>
+            <div className="bg-ink border-paper justify-self-start border-2 px-5 py-4 shadow-[6px_6px_0_var(--sakura)]">
               <p className="text-sakura text-sm font-bold tracking-widest">{p.role}</p>
               <h1 className="font-display mt-2 text-5xl leading-[0.9] md:text-7xl">{p.name}</h1>
             </div>

@@ -90,7 +90,7 @@ mode tertentu di perangkat apa pun, tambahkan `?quality=high`, `?quality=low`, a
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Hero 始まり     | Key visual: karakter besar di sisi kanan (terpotong di paha, tangan di headphone), nama melintang di depannya, langit senja shader (matahari bergaris, awan fbm). Huruf nama "melompat" saat disentuh kursor, `KanjiScramble` men-decode peran, scroll indicator berbentuk kunai. |
 | About 自己紹介  | Satu halaman manga berwarna (`.manga-page`): panel potret, bio dalam dua balon ucapan, tiga panel fakta miring berwarna, dan strip penutup berisi elemen. Karakter melambai di sisi kanan.                                                                                        |
-| Skills 技術     | Pose "cast", orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi.                                                                                                                                 |
+| Skills 技術     | Pose "think" (menunjuk), orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi.                                                                                                                     |
 | Projects 作品   | Halaman manga kertas, panel horizontal yang di-pin. Hover: halftone hitam-putih jadi berwarna + distorsi (SVG displacement). Masuk/keluar dengan panel wipe. Canvas di-pause selama halaman kertas menutupi layar.                                                                |
 | Experience 経験 | Timeline jalur kereta Tokyo: kereta mini berjalan ikut scroll dan menyalakan stasiun. Karakter berjalan menyamping, langkahnya mengikuti kecepatan scroll.                                                                                                                        |
 | Contact 連絡    | Karakter menghadap kamera dan tersenyum dengan balon "お待ちしています!". Form tervalidasi Zod, tombol magnetic, link sosial efek glitch.                                                                                                                                         |
@@ -126,6 +126,10 @@ poni runcing, headphone telinga kucing, seragam sailor, rok lipit, dan stocking.
 - **Wajah digambar** (`components/three/faceTextures.ts`): mata, alis, hidung, mulut, dan blush
   adalah gambar canvas yang dibungkus ke lengkung wajah (`faceGeo` di `animeGeometry.ts`).
   Ganti warna iris, bentuk mulut, atau blush di sana.
+- **Tangan** (`components/three/AnimeHand.tsx`): telapak, empat jari dua ruas dengan kuku, dan
+  jempol. Bentuknya ikut pose: `handShapes` (santai, terbuka, lembut, kepal, menunjuk) dan
+  `hands` per pose ada di `lib/scenes.config.ts`, berpindah halus saat scroll. Saat disentuh,
+  tangan yang ditos membuka, dan lambaian memakai tangan terbuka (`touches[...].hand`).
 
 Rig-nya sama seperti VRM. Ilustrasi 2D-nya (`components/ui/ChibiArt.tsx`, dipakai loader,
 eyecatch, dan mode Static) adalah versi SD dari karakter yang sama: kalau pakaian atau rambut

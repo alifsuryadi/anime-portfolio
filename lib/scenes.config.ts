@@ -59,6 +59,16 @@ const ARMS_DOWN: PoseSpec = {
   rightLowerArm: [0, 0.12, -0.04],
 };
 
+/**
+ * Hand twist (around the forearm) that turns a raised right hand's palm to face
+ * forward. Hands rest palm-down in the T-pose, so a raised arm alone leaves the
+ * palm facing sideways. Also used by the wave touch reaction (three/choreo.ts).
+ */
+export const WAVE_TWIST = -Math.PI / 2;
+/** Right arm for a wave, shared with the wave touch reaction. */
+export const WAVE_UPPER: Vec3 = [0, 0.1, -0.75];
+export const WAVE_LOWER: Vec3 = [0, 0, -0.9];
+
 export const poses: Record<PoseName, PoseSpec> = {
   idle: { ...ARMS_DOWN, spine: [0.02, 0, 0] },
   // Key-visual pose: one hand on her headphones, weight on one leg.
@@ -76,8 +86,11 @@ export const poses: Record<PoseName, PoseSpec> = {
   },
   wave: {
     ...ARMS_DOWN,
-    rightUpperArm: [0, 0.1, -1.05],
-    rightLowerArm: [0, 0, -1.25],
+    // Forearm upright beside the head (not bent behind it), palm toward the viewer.
+    rightUpperArm: WAVE_UPPER,
+    rightLowerArm: WAVE_LOWER,
+    // Twist around the forearm so the palm faces forward, not sideways.
+    rightHand: [WAVE_TWIST, 0, 0],
     spine: [0, 0, 0.06],
   },
   cast: {
@@ -109,6 +122,34 @@ export const poses: Record<PoseName, PoseSpec> = {
   },
 };
 
+/**
+ * How a hand is held, each 0..1: `curl` closes the fingers, `spread` fans them,
+ * `thumb` goes from out to the side (0) over relaxed (0.4) to tucked over a fist (1),
+ * `point` keeps the index finger straight while the others curl.
+ */
+export type HandShape = { curl: number; spread: number; thumb: number; point: number };
+
+export const handShapes = {
+  relaxed: { curl: 0.17, spread: 0.28, thumb: 0.4, point: 0 },
+  open: { curl: 0.02, spread: 0.9, thumb: 0, point: 0 },
+  soft: { curl: 0.36, spread: 0.12, thumb: 0.45, point: 0 },
+  fist: { curl: 1, spread: 0, thumb: 1, point: 0 },
+  point: { curl: 1, spread: 0, thumb: 1, point: 1 },
+} satisfies Record<string, HandShape>;
+export type HandShapeName = keyof typeof handShapes;
+
+/** The hand shape for each pose, per hand (her left / her right). */
+export const hands: Record<PoseName, { left: HandShapeName; right: HandShapeName }> = {
+  idle: { left: "relaxed", right: "relaxed" },
+  listen: { left: "relaxed", right: "soft" }, // right hand cupped on the headphones
+  wave: { left: "relaxed", right: "open" },
+  cast: { left: "open", right: "open" },
+  think: { left: "relaxed", right: "point" }, // index finger out (Skills: at the orbs)
+  walk: { left: "relaxed", right: "relaxed" },
+  greet: { left: "soft", right: "soft" },
+  cheer: { left: "fist", right: "fist" },
+};
+
 export const character = {
   /**
    * Path to a VRM (0.x or 1.0), e.g. "/models/character.vrm". While this is
@@ -132,15 +173,25 @@ export type TouchZone =
  * How she reacts when a zone is touched: how long it lasts (seconds) and the
  * face she makes. The matching body motion is in `reactions` (three/choreo.ts).
  */
-export const touches: Record<TouchZone, { duration: number; expression: ExpressionSpec }> = {
+export const touches: Record<
+  TouchZone,
+  {
+    duration: number;
+    expression: ExpressionSpec;
+    /** Hand shape while reacting: on the touched hand (`touched`) or her right hand (`right`). */
+    hand?: { which: "touched" | "right"; shape: HandShapeName };
+  }
+> = {
   head: { duration: 1.8, expression: { happy: 1 } },
   cheek: { duration: 1.3, expression: { surprised: 1 } },
   hair: { duration: 1.2, expression: { surprised: 0.8 } },
   ahoge: { duration: 1.1, expression: { surprised: 0.6 } },
   headphones: { duration: 2.2, expression: { relaxed: 1 } },
-  hand: { duration: 1.4, expression: { happy: 1 } },
+  // High five: the touched hand opens.
+  hand: { duration: 1.4, expression: { happy: 1 }, hand: { which: "touched", shape: "open" } },
   shoe: { duration: 0.9, expression: { surprised: 0.9 } },
-  body: { duration: 1.8, expression: { happy: 0.9 } },
+  // Wave hello with an open right hand.
+  body: { duration: 1.8, expression: { happy: 0.9 }, hand: { which: "right", shape: "open" } },
 };
 
 /** The world: a Neo-Tokyo rooftop. Character stands at y = -1, a torii shrine sits at z = -10. */
@@ -168,7 +219,8 @@ export const scenes: Record<SceneId, SceneKey> = {
     character: { position: [-3.3, -1, 0], rotationY: 0.45, scale: 1 },
     mobile: { position: [0, -2.4, -1.5], scale: 0.7 },
     camera: { position: [-0.6, 0.8, 7.2], target: [-0.6, -0.1, 0], fov: 34 },
-    pose: "cast",
+    // Points at the skill orbs circling her.
+    pose: "think",
     expression: { surprised: 0.7 },
     night: 0.3,
     orbs: 1,
@@ -176,7 +228,7 @@ export const scenes: Record<SceneId, SceneKey> = {
   projects: {
     character: { position: [-3, -1, 1.5], rotationY: 0.8, scale: 1 },
     camera: { position: [-1.5, 0.6, 7], target: [-1.5, -0.2, 0], fov: 34 },
-    pose: "think",
+    pose: "cast",
     expression: { relaxed: 0.6 },
     night: 0.45,
   },

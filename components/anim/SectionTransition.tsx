@@ -92,7 +92,7 @@ export function SectionTransition() {
       <div ref={flash} className="absolute inset-0 bg-white opacity-0" />
       <div
         ref={cut}
-        className="border-paper absolute inset-x-0 top-[32%] h-[24svh] min-h-28 -skew-y-3 overflow-hidden border-y-4 opacity-0 shadow-[0_10px_0_var(--sakura)]"
+        className="border-paper absolute inset-x-0 top-[32%] h-[min(24svh,32vw)] min-h-28 -skew-y-3 overflow-hidden border-y-4 opacity-0 shadow-[0_10px_0_var(--sakura)]"
       >
         <div ref={eyes} className="absolute -inset-x-[6%] inset-y-0">
           <EyeCutIn className="h-full w-full" />
