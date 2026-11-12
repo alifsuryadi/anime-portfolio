@@ -195,7 +195,9 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
         [0.021, 0.19],
         [0, 0.205],
       ]),
-      skirt: pleatedSkirt(0.084, 0.158, 0.25),
+      // Wide enough at every height that the thighs (hip offset 0.058 + radius 0.068)
+      // stay inside, even in the pleat valleys and with the legs posed.
+      skirt: pleatedSkirt(0.1, 0.18, 0.25),
       bangs: BANGS.map(([, w, len, , bend]) => strand(w, len, 0.03, bend, 0.06)),
       sideLock: [-1, 1].map((s) => strand(0.042, 0.23, 0.026, s * -0.1, 0.05)),
       hem: HEM.map((a, i) =>
