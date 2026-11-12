@@ -144,7 +144,7 @@ export const hands: Record<PoseName, { left: HandShapeName; right: HandShapeName
   listen: { left: "relaxed", right: "soft" }, // right hand cupped on the headphones
   wave: { left: "relaxed", right: "open" },
   cast: { left: "open", right: "open" },
-  think: { left: "relaxed", right: "point" }, // index finger at the chin
+  think: { left: "relaxed", right: "point" }, // index finger out (Skills: at the orbs)
   walk: { left: "relaxed", right: "relaxed" },
   greet: { left: "soft", right: "soft" },
   cheer: { left: "fist", right: "fist" },
@@ -219,7 +219,8 @@ export const scenes: Record<SceneId, SceneKey> = {
     character: { position: [-3.3, -1, 0], rotationY: 0.45, scale: 1 },
     mobile: { position: [0, -2.4, -1.5], scale: 0.7 },
     camera: { position: [-0.6, 0.8, 7.2], target: [-0.6, -0.1, 0], fov: 34 },
-    pose: "cast",
+    // Points at the skill orbs circling her.
+    pose: "think",
     expression: { surprised: 0.7 },
     night: 0.3,
     orbs: 1,
@@ -227,7 +228,7 @@ export const scenes: Record<SceneId, SceneKey> = {
   projects: {
     character: { position: [-3, -1, 1.5], rotationY: 0.8, scale: 1 },
     camera: { position: [-1.5, 0.6, 7], target: [-1.5, -0.2, 0], fov: 34 },
-    pose: "think",
+    pose: "cast",
     expression: { relaxed: 0.6 },
     night: 0.45,
   },
