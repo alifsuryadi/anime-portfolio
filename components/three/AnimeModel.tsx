@@ -20,6 +20,7 @@ import { BONES, world, type CharacterDriver } from "./choreo";
 import { celMaterial, setCelMood } from "./cel";
 import { HEAD_R, faceGeo, headGeo, lathe, pleatedSkirt, strand } from "./animeGeometry";
 import { palette } from "./toon";
+import { AnimeHand } from "./AnimeHand";
 import * as face from "./faceTextures";
 
 const INK = "#1c1026";
@@ -531,23 +532,7 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
                       {ink}
                     </mesh>
                     <group ref={bind(`${L}Hand` as BoneName)} position={[side * 0.2, 0, 0]}>
-                      <mesh
-                        position={[side * 0.042, 0, 0]}
-                        scale={[0.046, 0.014, 0.03]}
-                        material={mats.skin}
-                      >
-                        <sphereGeometry args={[1, 14, 10]} />
-                        {ink}
-                      </mesh>
-                      <mesh
-                        position={[side * 0.03, -0.002, 0.03]}
-                        rotation={[0, side * -0.6, 0]}
-                        scale={[0.021, 0.01, 0.011]}
-                        material={mats.skin}
-                      >
-                        <sphereGeometry args={[1, 10, 8]} />
-                        {fine}
-                      </mesh>
+                      <AnimeHand side={side} material={mats.skin} outline={fine} />
                       <mesh position={[side * 0.04, 0, 0]} {...zone("hand", side)}>
                         <sphereGeometry args={[0.085, 8, 6]} />
                       </mesh>
