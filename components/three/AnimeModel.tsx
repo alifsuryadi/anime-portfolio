@@ -23,6 +23,8 @@ import { palette } from "./toon";
 import * as face from "./faceTextures";
 
 const INK = "#1c1026";
+/** Front-to-back squash of the skirt at rest. */
+const SKIRT_DEPTH = 0.84;
 /** Clicks on these never reach the character. */
 const NOT_HER =
   "a, button, input, textarea, select, label, summary, [role='button'], [data-cursor], [data-covers-canvas]";
@@ -87,6 +89,7 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
   const springs = useRef<Spring[]>([]);
   const hits = useRef<Mesh[]>([]);
   const hovered = useRef<TouchZone | null>(null);
+  const skirt = useRef<Mesh>(null);
 
   const tex = useMemo(
     () => ({
@@ -304,6 +307,16 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
     const body = bones.current.body;
     if (body) body.scale.set(1, 1 + Math.sin(time * 1.8) * 0.012, 1);
 
+    // The skirt flares with the stride so a swinging thigh never pokes through.
+    const sk = skirt.current;
+    if (sk) {
+      const stride = Math.max(
+        Math.abs(driver.bones.leftUpperLeg[0]),
+        Math.abs(driver.bones.rightUpperLeg[0]),
+      );
+      sk.scale.set(1 + stride * 0.12, 1, SKIRT_DEPTH * (1 + stride * 0.95));
+    }
+
     // Face: pick the drawn frame that matches the expression.
     const e = driver.expressions;
     mats.eyes.map =
@@ -417,9 +430,10 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
           <sphereGeometry args={[1, 16, 12]} />
         </mesh>
         <mesh
+          ref={skirt}
           geometry={geo.skirt}
           position={[0, -0.045, 0]}
-          scale={[1, 1, 0.84]}
+          scale={[1, 1, SKIRT_DEPTH]}
           material={mats.navy}
         >
           {ink}
