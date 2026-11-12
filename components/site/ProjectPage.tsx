@@ -119,7 +119,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
           </div>
 
           <div className="mt-12 grid gap-10 md:grid-cols-12">
-            <div className="bg-ink/80 text-paper/90 border-line space-y-4 border-2 p-6 text-lg leading-relaxed backdrop-blur-sm md:col-span-8 md:p-8">
+            <div className="koma text-paper/90 space-y-4 p-6 text-lg leading-relaxed md:col-span-8 md:p-8">
               <p className="text-paper font-semibold">{p.summary[lang]}</p>
               {p.description[lang].map((d) => (
                 <p key={d}>{d}</p>
@@ -127,7 +127,10 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
             </div>
             <aside className="md:col-span-4 md:self-start">
               {p.stack.length > 0 && (
-                <div className="bg-ink/80 border-line mb-6 border-2 p-5 backdrop-blur-sm">
+                <div
+                  className="koma mb-8 p-5"
+                  style={{ "--koma-accent": "var(--neon-cyan)" } as React.CSSProperties}
+                >
                   <h2 className="text-muted text-sm font-bold tracking-widest uppercase">
                     {t("techStack")}
                   </h2>
@@ -175,7 +178,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
           >
             <Link
               href={href(`/projects/${prev.slug}`)}
-              className="group border-line hover:border-sakura bg-ink/85 border-2 p-5 backdrop-blur-sm"
+              className="group border-paper hover:border-sakura bg-ink border-2 p-5"
             >
               <span className="text-muted text-xs">{t("prev")}</span>
               <span className="font-display group-hover:text-sakura mt-1 block text-2xl">
@@ -184,7 +187,7 @@ export function ProjectPage({ slug, lang }: { slug: string; lang: Lang }) {
             </Link>
             <Link
               href={href(`/projects/${next.slug}`)}
-              className="group border-line hover:border-cyan bg-ink/85 border-2 p-5 text-right backdrop-blur-sm"
+              className="group border-paper hover:border-cyan bg-ink border-2 p-5 text-right"
             >
               <span className="text-muted text-xs">{t("next")}</span>
               <span className="font-display group-hover:text-cyan mt-1 block text-2xl">

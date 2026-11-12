@@ -30,7 +30,7 @@ export type BoneName =
 /** Euler rotations (radians) on VRM *normalized* bones: T-pose rest, arms along ±X. */
 export type PoseSpec = Partial<Record<BoneName, Vec3>>;
 
-export type PoseName = "idle" | "wave" | "cast" | "think" | "walk" | "greet" | "cheer";
+export type PoseName = "idle" | "listen" | "wave" | "cast" | "think" | "walk" | "greet" | "cheer";
 
 /** VRM 1.0 preset expression names. */
 export type ExpressionSpec = Partial<
@@ -53,14 +53,27 @@ export type SceneKey = {
 };
 
 const ARMS_DOWN: PoseSpec = {
-  leftUpperArm: [0, 0, -1.22],
-  rightUpperArm: [0, 0, 1.22],
-  leftLowerArm: [0, 0, -0.12],
-  rightLowerArm: [0, 0, 0.12],
+  leftUpperArm: [0, 0, -1.2],
+  rightUpperArm: [0, 0, 1.2],
+  leftLowerArm: [0, -0.12, 0.04],
+  rightLowerArm: [0, 0.12, -0.04],
 };
 
 export const poses: Record<PoseName, PoseSpec> = {
   idle: { ...ARMS_DOWN, spine: [0.02, 0, 0] },
+  // Key-visual pose: one hand on her headphones, weight on one leg.
+  listen: {
+    ...ARMS_DOWN,
+    rightUpperArm: [0, 0.25, -0.3],
+    rightLowerArm: [0, 0.2, -2.3],
+    rightHand: [0, 0, -0.3],
+    leftUpperArm: [0, 0.15, -1.3],
+    spine: [0.02, 0, -0.05],
+    chest: [0, 0, -0.03],
+    neck: [0, 0, 0.1],
+    leftUpperLeg: [0, 0, 0.05],
+    rightUpperLeg: [0, 0, 0.03],
+  },
   wave: {
     ...ARMS_DOWN,
     rightUpperArm: [0, 0.1, -1.05],
@@ -111,15 +124,35 @@ export const character = {
   sequenceManifest: null as string | null,
 };
 
+/** Parts of the character that answer a click or tap. */
+export type TouchZone =
+  "head" | "cheek" | "hair" | "ahoge" | "headphones" | "hand" | "shoe" | "body";
+
+/**
+ * How she reacts when a zone is touched: how long it lasts (seconds) and the
+ * face she makes. The matching body motion is in `reactions` (three/choreo.ts).
+ */
+export const touches: Record<TouchZone, { duration: number; expression: ExpressionSpec }> = {
+  head: { duration: 1.8, expression: { happy: 1 } },
+  cheek: { duration: 1.3, expression: { surprised: 1 } },
+  hair: { duration: 1.2, expression: { surprised: 0.8 } },
+  ahoge: { duration: 1.1, expression: { surprised: 0.6 } },
+  headphones: { duration: 2.2, expression: { relaxed: 1 } },
+  hand: { duration: 1.4, expression: { happy: 1 } },
+  shoe: { duration: 0.9, expression: { surprised: 0.9 } },
+  body: { duration: 1.8, expression: { happy: 0.9 } },
+};
+
 /** The world: a Neo-Tokyo rooftop. Character stands at y = -1, a torii shrine sits at z = -10. */
 export const scenes: Record<SceneId, SceneKey> = {
+  // Key visual: she fills the right half, cropped at the thigh, the name runs across her.
   hero: {
-    character: { position: [0, -1, 0], rotationY: 0, scale: 1 },
-    mobile: { position: [0, -1, 0], scale: 0.8 },
-    // Frame the character in the empty sky above the hero copy.
-    mobileCamera: { position: [0, -0.3, 5.3], target: [0, -1.45, 0], fov: 44 },
-    camera: { position: [0, 0.15, 5.4], target: [0, -0.05, 0], fov: 32 },
-    pose: "idle",
+    character: { position: [0.52, -1, 0], rotationY: -0.32, scale: 1 },
+    mobile: { position: [0, -1, 0], rotationY: 0, scale: 0.8 },
+    // Narrow screens: the same close crop, held in the sky above the hero copy.
+    mobileCamera: { position: [0, -0.4, 2.7], target: [0, -0.58, 0], fov: 44 },
+    camera: { position: [0, 0.1, 2.7], target: [0, 0.2, 0], fov: 32 },
+    pose: "listen",
     expression: { relaxed: 0.35 },
     night: 0,
   },

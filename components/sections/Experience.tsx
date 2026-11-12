@@ -20,9 +20,7 @@ export function Experience({ lang }: { lang: Lang }) {
         <h2 id="experience-title" className="heading-section max-w-3xl">
           {t("expTitleA")} <span className="text-sunset">{t("expTitleB")}</span>
         </h2>
-        <p className="text-paper/90 bg-ink/60 mt-6 mb-16 max-w-xl rounded-sm p-1 text-lg backdrop-blur-[2px]">
-          {t("expIntro")}
-        </p>
+        <p className="narration mt-6 mb-16 max-w-xl text-lg">{t("expIntro")}</p>
         <div className="lg:w-2/3">
           <Timeline stations={experience.filter((s) => s.featured !== false)} />
           <div className="mt-20 ml-4 md:ml-10">
@@ -35,7 +33,7 @@ export function Experience({ lang }: { lang: Lang }) {
                 .map((s) => (
                   <li
                     key={s.id}
-                    className="bg-ink/75 border-line grid gap-x-4 gap-y-0.5 border-l-2 px-4 py-2.5 backdrop-blur-sm sm:grid-cols-[1fr_auto]"
+                    className="bg-ink border-paper grid gap-x-4 gap-y-0.5 border-2 px-4 py-2.5 sm:grid-cols-[1fr_auto]"
                   >
                     <span>
                       <span className="font-semibold">{s.title}</span>

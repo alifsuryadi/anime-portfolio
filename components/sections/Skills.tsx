@@ -24,11 +24,14 @@ export function Skills({ lang }: { lang: Lang }) {
             <h2 id="skills-title" className="heading-section">
               {t("skillsTitleA")} <span className="text-cyan">{t("skillsTitleB")}</span>
             </h2>
-            <p className="bg-ink/75 text-paper/90 max-w-md rounded-sm p-3 text-base leading-relaxed backdrop-blur-sm">
+            <p className="narration max-w-md text-base leading-relaxed">
               {skills.length} {t("skillsIntro")}
             </p>
           </div>
-          <div className="bg-ink/75 ring-line mt-8 rounded-sm p-5 ring-1 backdrop-blur-sm md:p-8">
+          <div
+            className="koma mt-8 p-5 md:p-8"
+            style={{ "--koma-accent": "var(--neon-cyan)" } as React.CSSProperties}
+          >
             <SkillTree />
             <p className="border-line text-muted mt-10 border-t pt-5 text-sm">
               <span className="text-paper font-semibold">{t("alsoUsed")}:</span>{" "}

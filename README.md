@@ -2,7 +2,7 @@
 
 Portfolio Alif Suryadi, Full-Stack Developer & Machine Learning Enthusiast dari Indonesia.
 Konsepnya: kamu masuk ke dunia anime. Sebuah rooftop di Neo-Tokyo saat senja, dengan
-kuil torii kecil, sakura yang tertiup angin, dan karakter chibi yang menemani dari hero
+kuil torii kecil, sakura yang tertiup angin, dan karakter anime yang menemani dari hero
 sampai footer.
 
 Next.js 15 (App Router, SSG) · TypeScript · Tailwind CSS v4 · three / React Three Fiber /
@@ -47,14 +47,15 @@ app/                (en)/ dan (id)/id/: root layout per bahasa, page, projects/[
                     opengraph-image (next/og), 404; plus sitemap, robots, manifest, ikon
 components/
   site/             RootDocument, HomePage, ProjectPage, NotFoundPage (dipakai kedua bahasa)
-  three/            Scene (satu <Canvas> global), CameraRig, Character (VRM / chibi),
-                    ChibiModel, faceTextures (mata/mulut/blush anime), VrmModel, SakuraField, SkillOrbs, Torii, Rooftop,
+  three/            Scene (satu <Canvas> global), CameraRig, Character (VRM / prosedural),
+                    AnimeModel, animeGeometry, cel (shader), faceTextures (wajah anime),
+                    VrmModel, SakuraField, SkillOrbs, Torii, Rooftop,
                     Skyline, Sky, ShootingStars, Effects, choreo.ts (driver pose)
   anim/             KanjiScramble, DecodeText, SplitText, CursorFollower,
                     SectionTransition, SectionTitle, Backdrop
   sections/         Hero, About, Skills, Projects, Experience, Contact, Footer
   ui/               Navbar, LoadingScreen, TiltCard, SkillTree, ProjectsTrack,
-                    Timeline, ContactForm, StatBars, ChibiArt, StaticCharacter
+                    Timeline, ContactForm, StatBars, ChibiArt, StaticCharacter, TouchBubble
 content/            profile, projects, skills, experience, japanese-phrases
 lib/                i18n, scenes.config.ts, gsap, lenis, quality, scroll-state, seo, og, fonts
 assets/             subset font (dibuat oleh `npm run fonts`)
@@ -85,29 +86,61 @@ mode tertentu di perangkat apa pun, tambahkan `?quality=high`, `?quality=low`, a
 
 ## Konsep tiap section
 
-| Section         | Momen interaktif                                                                                                                                                                                                             |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Hero 始まり     | Karakter di tengah rooftop, langit senja shader (matahari bergaris, awan fbm). Huruf nama "melompat" saat disentuh kursor, `KanjiScramble` men-decode peran, scroll indicator berbentuk kunai.                               |
-| About 自己紹介  | Karakter pindah ke kanan dan melambai. Kartu profil karakter (SSR, kelas "Full-Stack Mage", stat bar) miring 3D mengikuti kursor dengan kilau holo.                                                                          |
-| Skills 技術     | Pose "cast", orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi.                                                                            |
-| Projects 作品   | Halaman manga kertas, panel horizontal yang di-pin. Hover: halftone hitam-putih jadi berwarna + distorsi (SVG displacement). Masuk/keluar dengan panel wipe. Canvas di-pause selama halaman kertas menutupi layar.           |
-| Experience 経験 | Timeline jalur kereta Tokyo: kereta mini berjalan ikut scroll dan menyalakan stasiun. Karakter berjalan menyamping, langkahnya mengikuti kecepatan scroll.                                                                   |
-| Contact 連絡    | Karakter menghadap kamera dan tersenyum dengan balon "お待ちしています!". Form tervalidasi Zod, tombol magnetic, link sosial efek glitch.                                                                                    |
-| Footer 終わり   | Malam: kamera menghadap torii, karakter bersorak. Klik langit untuk bintang jatuh, gerakkan kursor untuk meniup sakura, ありがとう men-decode, tombol kembali-ke-atas berbentuk kunai. Easter egg: Konami code → mode chibi. |
+| Section         | Momen interaktif                                                                                                                                                                                                                                                                  |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hero 始まり     | Key visual: karakter besar di sisi kanan (terpotong di paha, tangan di headphone), nama melintang di depannya, langit senja shader (matahari bergaris, awan fbm). Huruf nama "melompat" saat disentuh kursor, `KanjiScramble` men-decode peran, scroll indicator berbentuk kunai. |
+| About 自己紹介  | Satu halaman manga berwarna (`.manga-page`): panel potret, bio dalam dua balon ucapan, tiga panel fakta miring berwarna, dan strip penutup berisi elemen. Karakter melambai di sisi kanan.                                                                                        |
+| Skills 技術     | Pose "cast", orb tiap cabang skill mengorbit karakter. Skill tree ala RPG: hover menyalakan jalur dan orb 3D yang sesuai, klik membuka deskripsi.                                                                                                                                 |
+| Projects 作品   | Halaman manga kertas, panel horizontal yang di-pin. Hover: halftone hitam-putih jadi berwarna + distorsi (SVG displacement). Masuk/keluar dengan panel wipe. Canvas di-pause selama halaman kertas menutupi layar.                                                                |
+| Experience 経験 | Timeline jalur kereta Tokyo: kereta mini berjalan ikut scroll dan menyalakan stasiun. Karakter berjalan menyamping, langkahnya mengikuti kecepatan scroll.                                                                                                                        |
+| Contact 連絡    | Karakter menghadap kamera dan tersenyum dengan balon "お待ちしています!". Form tervalidasi Zod, tombol magnetic, link sosial efek glitch.                                                                                                                                         |
+| Footer 終わり   | Malam: kamera menghadap torii, karakter bersorak. Klik langit untuk bintang jatuh, gerakkan kursor untuk meniup sakura, ありがとう men-decode, tombol kembali-ke-atas berbentuk kunai. Easter egg: Konami code → mode chibi.                                                      |
 
 Global: cursor titik + hitodama (roh api kecil bermata) dengan pegas dan jejak kelopak
 sakura. Kursor membesar dengan 見る di atas link, jadi lingkaran panah di atas panel proyek,
 dan menempel di tombol magnetic. Di layar sentuh diganti efek ripple. Transisi antar
-section: ledakan speed lines + flash singkat saat scroll cepat.
+section: ledakan speed lines + flash singkat saat scroll cepat. Paling sering tiap 3,5 detik, pindah
+section juga memunculkan cut-in: strip close-up mata karakter (`components/ui/EyeCutIn.tsx`)
+yang menyapu layar searah scroll.
+
+Loader ditutup tiga kartu judul ala opening anime dengan potongan keras (nama, peran, judul
+episode) sebelum panel terbuka ke hero. Kartu ini diputar di setiap muat halaman dan dilewati
+di mode Static (`components/ui/LoadingScreen.tsx`).
+
+Teks yang berada di atas scene 3D memakai dua gaya panel manga di `app/globals.css`, keduanya
+solid tanpa blur: `.narration` (kotak narasi kertas) untuk paragraf dan `.koma` (bingkai tinta
+dengan bayangan offset dan screentone) untuk kartu. Warna aksen `.koma` diatur lewat
+`--koma-accent`.
 
 ## Mengganti karakter (VRM)
 
-Sekarang situs memakai **karakter chibi prosedural** (`components/three/ChibiModel.tsx`),
-desain original bergaya moe: rambut lavender dengan twin tail dan pita sakura, headphone
-telinga kucing, mata besar berkilau, mulut "ω", hoodie kebesaran, dan rok lipit. Wajahnya
-digambar sebagai tekstur canvas di `components/three/faceTextures.ts` (ganti warna iris,
-bentuk mulut, atau blush di sana), dan rig-nya sama seperti VRM. Ilustrasi 2D yang sama
-ada di `components/ui/ChibiArt.tsx`. Jangan memakai karakter anime berhak cipta.
+Sekarang situs memakai **karakter anime prosedural** (`components/three/AnimeModel.tsx`),
+desain original dengan proporsi anime (sekitar 6,5 kepala): rambut lavender twin tail dengan
+poni runcing, headphone telinga kucing, seragam sailor, rok lipit, dan stocking. Tampilan
+"anime, bukan kartun" datang dari tiga hal:
+
+- **Cel shading** (`components/three/cel.ts`): dua nada warna dengan batas tegas, bayangan
+  yang bergeser ke ungu-pink (bukan sekadar lebih gelap), rim light dari matahari senja, dan
+  "angel ring" di rambut. Arah cahaya dikunci ke kamera supaya wajah selalu terbaca.
+- **Garis tinta**: outline setebal piksel yang konstan di layar, seperti garis gambar.
+- **Wajah digambar** (`components/three/faceTextures.ts`): mata, alis, hidung, mulut, dan blush
+  adalah gambar canvas yang dibungkus ke lengkung wajah (`faceGeo` di `animeGeometry.ts`).
+  Ganti warna iris, bentuk mulut, atau blush di sana.
+
+Rig-nya sama seperti VRM. Ilustrasi 2D-nya (`components/ui/ChibiArt.tsx`, dipakai loader,
+eyecatch, dan mode Static) adalah versi SD dari karakter yang sama: kalau pakaian atau rambut
+model 3D diubah, ubah juga di sana. Jangan memakai karakter anime berhak cipta.
+
+### Menyentuh karakter
+
+Klik atau tap bagian tubuhnya dan dia bereaksi: elus kepala, colek pipi, tarik twin tail,
+sentil ahoge, headphone, tos tangan, sepatu, atau di mana saja untuk lambaian. Tiap zona punya
+volume hit tak terlihat yang ikut bergerak dengan tulang (`zone(...)` di `AnimeModel.tsx`).
+Durasi dan ekspresi tiap zona ada di `touches` (`lib/scenes.config.ts`), gerak tubuhnya di
+`reactions` (`components/three/choreo.ts`), dan kalimat balonnya di `dict` (`touch*`).
+Canvas berada di bawah halaman, jadi klik dibaca dari `window` lalu di-raycast; klik pada
+link, tombol, dan form tidak pernah diteruskan ke karakter.
+
 Untuk memakai model VRM:
 
 1. Buat karakter original di [VRoid Studio](https://vroid.com/en/studio) (atau pakai model
@@ -121,7 +154,7 @@ Untuk memakai model VRM:
 5. Tambahkan lisensi model di `CREDITS.md`.
 
 Pose, ekspresi (`happy`, `surprised`, `relaxed`, kedip otomatis), posisi, dan kamera tiap
-section ada di `lib/scenes.config.ts`. Model VRM dan chibi membaca driver yang sama, jadi
+section ada di `lib/scenes.config.ts`. Model VRM dan model prosedural membaca driver yang sama, jadi
 mengganti model tidak butuh refactor. Kepala menoleh ke kursor dan mata memakai VRM `lookAt`.
 Rambut/rok VRM bergoyang lewat spring bone bawaan (`vrm.update`).
 

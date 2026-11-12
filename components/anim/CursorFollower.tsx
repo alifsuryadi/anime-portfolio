@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
-import { pointerState } from "@/lib/scroll-state";
+import { bus, pointerState } from "@/lib/scroll-state";
 import { useQuality } from "@/components/QualityProvider";
 
 type Mode = "default" | "link" | "project" | "magnetic";
@@ -102,6 +102,10 @@ export function CursorFollower() {
       modeRef.current = m;
       setMode(m);
     };
+    let domMode: Mode = "default";
+    let overCharacter = false;
+    const sync = () =>
+      setModeBoth(domMode !== "default" ? domMode : overCharacter ? "link" : "default");
 
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
@@ -134,11 +138,21 @@ export function CursorFollower() {
         magnet = mag;
       }
       const explicit = t?.closest<HTMLElement>("[data-cursor]")?.dataset.cursor as Mode | undefined;
-      if (explicit) return setModeBoth(explicit);
-      if (mag) return setModeBoth("magnetic");
-      if (t?.closest("a, button, [role='button'], summary, label[for]")) return setModeBoth("link");
-      setModeBoth("default");
+      domMode = explicit
+        ? explicit
+        : mag
+          ? "magnetic"
+          : t?.closest("a, button, [role='button'], summary, label[for]")
+            ? "link"
+            : "default";
+      sync();
     };
+
+    // The 3D character is under the page, so it reports hover itself (see AnimeModel).
+    const offHover = bus.on("character-hover", (zone) => {
+      overCharacter = zone != null;
+      sync();
+    });
 
     const onLeave = () => {
       visible = false;
@@ -234,6 +248,7 @@ export function CursorFollower() {
     window.addEventListener("resize", resize);
     return () => {
       cancelAnimationFrame(raf);
+      offHover();
       html.classList.remove("has-cursor");
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerover", onOver);

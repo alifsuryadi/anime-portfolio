@@ -5,17 +5,24 @@ import { gsap } from "@/lib/gsap";
 import { bus } from "@/lib/scroll-state";
 import { useQuality } from "@/components/QualityProvider";
 import { ChibiArt } from "./ChibiArt";
-import { useT } from "@/components/LangProvider";
+import { useLang, useT } from "@/components/LangProvider";
+import { profile } from "@/content/profile";
+import { heroPhrases, sectionTitles } from "@/content/japanese-phrases";
 
 const MAX_WAIT = 3200;
+const OP_CARDS = ["name", "role", "episode"] as const;
 
 /**
  * Rendered in the static HTML so it covers the first paint; a CSS failsafe
  * hides it if JS never runs. Progress = fonts + window load + 3D scene ready.
+ *
+ * Every load ends like an anime opening: three title cards on hard cuts (name,
+ * role, episode title) before the panels part. Static mode skips them.
  */
 export function LoadingScreen() {
   const { quality, setReady } = useQuality();
   const t = useT();
+  const lang = useLang();
   // Progress is written straight to the DOM: no React re-render every frame.
   const barA = useRef<HTMLDivElement>(null);
   const barB = useRef<HTMLDivElement>(null);
@@ -54,15 +61,29 @@ export function LoadingScreen() {
         bus.emit("loader-done");
         return;
       }
-      gsap
+      const tl = gsap
         .timeline({ onComplete: () => setGone(true) })
         .fromTo(
           chibi.current,
           { xPercent: -260, rotate: -20, opacity: 1 },
           { xPercent: 0, rotate: 0, duration: 0.55, ease: "back.out(2.2)" },
         )
-        .to(chibi.current, { y: -24, duration: 0.16, yoyo: true, repeat: 1, ease: "power2.out" })
-        .add(() => bus.emit("loader-done"))
+        .to(chibi.current, { y: -24, duration: 0.16, yoyo: true, repeat: 1, ease: "power2.out" });
+      {
+        tl.set("[data-loader-content]", { opacity: 0 }, "+=0.1");
+        for (const card of OP_CARDS) {
+          const sel = `[data-op='${card}']`;
+          // Hard cut in, a short push-in while it holds, hard cut out.
+          tl.set(sel, { autoAlpha: 1 })
+            .fromTo(
+              `${sel} [data-op-in]`,
+              { scale: 1.16 },
+              { scale: 1, duration: 0.46, ease: "power3.out" },
+            )
+            .set(sel, { autoAlpha: 0 });
+        }
+      }
+      tl.add(() => bus.emit("loader-done"))
         .to(
           "[data-loader-panel='top']",
           { yPercent: -100, duration: 0.7, ease: "power4.inOut" },
@@ -121,6 +142,49 @@ export function LoadingScreen() {
       <div data-loader-panel="top" className="bg-ink absolute inset-x-0 top-0 h-1/2" />
       <div data-loader-panel="bottom" className="bg-ink absolute inset-x-0 bottom-0 h-1/2">
         <div className="halftone text-night absolute inset-0" />
+      </div>
+      {/* Opening title cards (decorative; the hero repeats all of this as real text). */}
+      <div aria-hidden="true">
+        <div
+          data-op="name"
+          className="bg-ink invisible absolute inset-0 grid place-items-center overflow-hidden opacity-0"
+        >
+          <div data-op-in className="flex items-center gap-6 md:gap-10">
+            <span lang="ja" className="vertical-jp text-sakura text-4xl font-bold md:text-6xl">
+              {profile.nameJa}
+            </span>
+            <span className="bg-paper h-40 w-0.5 md:h-64" />
+            <span className="font-display text-3xl leading-none md:text-6xl">{profile.name}</span>
+          </div>
+        </div>
+        <div
+          data-op="role"
+          className="bg-paper text-ink invisible absolute inset-0 grid place-items-center overflow-hidden opacity-0"
+        >
+          <div className="halftone text-ink/10 absolute inset-0" />
+          <div data-op-in className="relative px-6 text-center">
+            <p lang="ja" className="font-jp text-xl font-bold md:text-3xl">
+              {heroPhrases[0].ja}
+            </p>
+            <p className="font-display mx-auto mt-3 max-w-[min(90vw,60rem)] text-[clamp(1.9rem,6vw,4.5rem)] leading-none text-balance">
+              {profile.role}
+            </p>
+          </div>
+        </div>
+        <div
+          data-op="episode"
+          className="bg-sakura text-ink invisible absolute inset-0 grid place-items-center overflow-hidden opacity-0"
+        >
+          <div className="speedlines absolute -inset-[20%] opacity-40" />
+          <div data-op-in className="relative text-center">
+            <p lang="ja" className="font-jp text-7xl font-bold md:text-9xl">
+              {sectionTitles.hero.ja}
+            </p>
+            <p className="font-display mt-2 text-xl md:text-3xl">
+              {sectionTitles.hero.translation[lang]}
+            </p>
+          </div>
+        </div>
       </div>
       <div data-loader-content className="absolute inset-0 grid place-items-center">
         <div className="flex w-[min(80vw,26rem)] flex-col items-start gap-4">
