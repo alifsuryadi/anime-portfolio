@@ -127,8 +127,8 @@ export function Timeline({ stations }: { stations: Station[] }) {
                 </span>
               </p>
               <div
-                className="bg-ink/75 mt-3 border-l-4 p-5 backdrop-blur-sm transition-transform duration-300 group-hover:translate-x-1"
-                style={{ borderColor: color }}
+                className="koma mt-3 p-5 transition-transform duration-300 group-hover:translate-x-1"
+                style={{ "--koma-accent": color } as React.CSSProperties}
               >
                 <h3 className="font-display text-xl md:text-2xl">{s.title}</h3>
                 <p className="text-cyan mt-1 text-sm">{s.org}</p>

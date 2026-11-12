@@ -31,15 +31,16 @@ export function Hero({ lang }: { lang: Lang }) {
 
         <div className="mt-6 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
           <div className="max-w-xl">
-            <KanjiScramble
-              phrases={heroPhrases}
-              label={t("heroRoleLabel")}
-              className="text-cyan text-2xl md:text-4xl"
-              translationClassName="mt-1 text-sm tracking-[0.2em] text-muted uppercase"
-            />
-            <p className="text-paper/90 mt-5 text-base leading-relaxed md:text-lg">
-              {t("heroLine")}
-            </p>
+            {/* Opaque boxes: the key visual behind this copy is bright and busy. */}
+            <div className="bg-ink border-paper inline-block border-2 px-4 py-3 shadow-[5px_5px_0_var(--sakura)]">
+              <KanjiScramble
+                phrases={heroPhrases}
+                label={t("heroRoleLabel")}
+                className="text-cyan text-2xl md:text-4xl"
+                translationClassName="mt-1 text-sm tracking-[0.2em] text-muted uppercase"
+              />
+            </div>
+            <p className="narration mt-5 text-base leading-relaxed md:text-lg">{t("heroLine")}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <a href="#projects" className="btn-neon" data-magnetic>
