@@ -1,11 +1,14 @@
 import { MathUtils, Vector3 } from "three";
 import { pointerState, scrollState } from "@/lib/scroll-state";
 import {
+  handShapes,
+  hands,
   poses,
   scenes,
   touches,
   type BoneName,
   type ExpressionSpec,
+  type HandShape,
   type PoseName,
   type SceneKey,
   type TouchZone,
@@ -192,6 +195,9 @@ const reactions: Record<TouchZone, Reaction> = {
   },
 };
 
+const HAND_KEYS = ["curl", "spread", "thumb", "point"] as const;
+type Side = "left" | "right";
+
 const zero = (): Record<BoneName, Vec3> =>
   Object.fromEntries(BONES.map((n) => [n, [0, 0, 0] as Vec3])) as Record<BoneName, Vec3>;
 
@@ -220,6 +226,11 @@ export class CharacterDriver {
   hairKick = 0;
   /** 0..1 while a touch reaction plays (drives the blush). */
   flustered = 0;
+  /** Damped hand shapes (her left / her right), read by the model's fingers each frame. */
+  hands: Record<Side, HandShape> = {
+    left: { ...handShapes.relaxed },
+    right: { ...handShapes.relaxed },
+  };
   private reaction: { zone: TouchZone; side: number; t: number } | null = null;
   /** Angular velocity of the head, for spring hair on the procedural model. */
   headVel = { x: 0, y: 0 };
@@ -270,6 +281,21 @@ export class CharacterDriver {
       }
     }
     this.flustered = env;
+
+    // Hands: blend the two poses' shapes, let a touch reaction take over one hand.
+    const kh = this.first ? 1 : 1 - Math.exp(-dt * 12);
+    const over = r && env > 0 ? touches[r.zone].hand : undefined;
+    for (const s of ["left", "right"] as const) {
+      const ha = handShapes[hands[a.pose][s]];
+      const hb = handShapes[hands[b.pose][s]];
+      const mine =
+        over && (over.which === "right" ? s === "right" : r!.side > 0 === (s === "left"));
+      for (const key of HAND_KEYS) {
+        let tg = MathUtils.lerp(ha[key], hb[key], t);
+        if (mine) tg = MathUtils.lerp(tg, handShapes[over.shape][key], env);
+        this.hands[s][key] = MathUtils.lerp(this.hands[s][key], tg, kh);
+      }
+    }
 
     lerp3(this.targetPos, ca.position, cb.position, t);
     this.targetPos.y += out.lift;

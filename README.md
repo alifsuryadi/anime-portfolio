@@ -126,6 +126,10 @@ poni runcing, headphone telinga kucing, seragam sailor, rok lipit, dan stocking.
 - **Wajah digambar** (`components/three/faceTextures.ts`): mata, alis, hidung, mulut, dan blush
   adalah gambar canvas yang dibungkus ke lengkung wajah (`faceGeo` di `animeGeometry.ts`).
   Ganti warna iris, bentuk mulut, atau blush di sana.
+- **Tangan** (`components/three/AnimeHand.tsx`): telapak, empat jari dua ruas dengan kuku, dan
+  jempol. Bentuknya ikut pose: `handShapes` (santai, terbuka, lembut, kepal, menunjuk) dan
+  `hands` per pose ada di `lib/scenes.config.ts`, berpindah halus saat scroll. Saat disentuh,
+  tangan yang ditos membuka, dan lambaian memakai tangan terbuka (`touches[...].hand`).
 
 Rig-nya sama seperti VRM. Ilustrasi 2D-nya (`components/ui/ChibiArt.tsx`, dipakai loader,
 eyecatch, dan mode Static) adalah versi SD dari karakter yang sama: kalau pakaian atau rambut

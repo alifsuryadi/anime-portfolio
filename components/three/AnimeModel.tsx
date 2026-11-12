@@ -532,7 +532,12 @@ export function AnimeModel({ driver }: { driver: CharacterDriver }) {
                       {ink}
                     </mesh>
                     <group ref={bind(`${L}Hand` as BoneName)} position={[side * 0.2, 0, 0]}>
-                      <AnimeHand side={side} material={mats.skin} outline={fine} />
+                      <AnimeHand
+                        side={side}
+                        shape={driver.hands[L]}
+                        material={mats.skin}
+                        outline={fine}
+                      />
                       <mesh position={[side * 0.04, 0, 0]} {...zone("hand", side)}>
                         <sphereGeometry args={[0.085, 8, 6]} />
                       </mesh>

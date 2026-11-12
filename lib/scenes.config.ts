@@ -109,6 +109,34 @@ export const poses: Record<PoseName, PoseSpec> = {
   },
 };
 
+/**
+ * How a hand is held, each 0..1: `curl` closes the fingers, `spread` fans them,
+ * `thumb` goes from out to the side (0) over relaxed (0.4) to tucked over a fist (1),
+ * `point` keeps the index finger straight while the others curl.
+ */
+export type HandShape = { curl: number; spread: number; thumb: number; point: number };
+
+export const handShapes = {
+  relaxed: { curl: 0.17, spread: 0.28, thumb: 0.4, point: 0 },
+  open: { curl: 0.02, spread: 0.9, thumb: 0, point: 0 },
+  soft: { curl: 0.36, spread: 0.12, thumb: 0.45, point: 0 },
+  fist: { curl: 1, spread: 0, thumb: 1, point: 0 },
+  point: { curl: 1, spread: 0, thumb: 1, point: 1 },
+} satisfies Record<string, HandShape>;
+export type HandShapeName = keyof typeof handShapes;
+
+/** The hand shape for each pose, per hand (her left / her right). */
+export const hands: Record<PoseName, { left: HandShapeName; right: HandShapeName }> = {
+  idle: { left: "relaxed", right: "relaxed" },
+  listen: { left: "relaxed", right: "soft" }, // right hand cupped on the headphones
+  wave: { left: "relaxed", right: "open" },
+  cast: { left: "open", right: "open" },
+  think: { left: "relaxed", right: "point" }, // index finger at the chin
+  walk: { left: "relaxed", right: "relaxed" },
+  greet: { left: "soft", right: "soft" },
+  cheer: { left: "fist", right: "fist" },
+};
+
 export const character = {
   /**
    * Path to a VRM (0.x or 1.0), e.g. "/models/character.vrm". While this is
@@ -132,15 +160,25 @@ export type TouchZone =
  * How she reacts when a zone is touched: how long it lasts (seconds) and the
  * face she makes. The matching body motion is in `reactions` (three/choreo.ts).
  */
-export const touches: Record<TouchZone, { duration: number; expression: ExpressionSpec }> = {
+export const touches: Record<
+  TouchZone,
+  {
+    duration: number;
+    expression: ExpressionSpec;
+    /** Hand shape while reacting: on the touched hand (`touched`) or her right hand (`right`). */
+    hand?: { which: "touched" | "right"; shape: HandShapeName };
+  }
+> = {
   head: { duration: 1.8, expression: { happy: 1 } },
   cheek: { duration: 1.3, expression: { surprised: 1 } },
   hair: { duration: 1.2, expression: { surprised: 0.8 } },
   ahoge: { duration: 1.1, expression: { surprised: 0.6 } },
   headphones: { duration: 2.2, expression: { relaxed: 1 } },
-  hand: { duration: 1.4, expression: { happy: 1 } },
+  // High five: the touched hand opens.
+  hand: { duration: 1.4, expression: { happy: 1 }, hand: { which: "touched", shape: "open" } },
   shoe: { duration: 0.9, expression: { surprised: 0.9 } },
-  body: { duration: 1.8, expression: { happy: 0.9 } },
+  // Wave hello with an open right hand.
+  body: { duration: 1.8, expression: { happy: 0.9 }, hand: { which: "right", shape: "open" } },
 };
 
 /** The world: a Neo-Tokyo rooftop. Character stands at y = -1, a torii shrine sits at z = -10. */
